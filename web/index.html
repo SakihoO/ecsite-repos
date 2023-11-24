@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DockerTest</title>
+    </head>
+    <body>
+    <div id="db">初期表示</div>
+
+    <script>
+        console.log('実行');
+        (async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/getAll/');
+            const data = await response.json();
+            document.getElementById('db').innerText = data[0].description;
+        } catch(error) {
+            console.error(error);
+        }
+        })();
+
+    </script>
+    </body>
+</html>
