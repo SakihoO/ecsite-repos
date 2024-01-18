@@ -1,0 +1,57 @@
+.prdDetailArea {
+    display: flex;
+    width: auto;
+    justify-content: space-around;
+    background-color: #fff;
+    height: auto;
+    margin: 1.5vw;
+    padding: 3vw;
+}
+.leftArea {
+    width: 50%;
+}
+.leftArea img {
+    width: 100%;
+}
+.rightArea {
+    width: 50%;
+    padding-left: 5vw;
+    color: #707070;
+    font-size: 1.2vw;
+    font-weight: 600;
+    line-height: 3vw;
+}
+.prdName {
+    font-size: 2vw;
+    padding: 1vw 0;
+}
+.prdSubmit {
+    // margin-top: auto;
+    position: absolute;
+    // bottom: 22rem;
+	display: block;
+	// width: 100px;
+}
+.prdQty {
+    display: flex;
+    font-size: 1.4vw;
+    font-weight: 400;
+    box-sizing: border-box;
+    padding-bottom: 1vw;
+    margin-top: 8vw;
+}
+.prdQty input[type="number"] {
+    font-size: 1.2vw;
+    color: #707070;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-sizing: border-box;
+    width: 5vw;
+    margin-left: 1vw;
+    padding-left: 1.5vw;
+}
+.prdPrice {
+    padding-bottom: 2vw;
+    font-size: 2vw;
+    font-weight: 400;
+}

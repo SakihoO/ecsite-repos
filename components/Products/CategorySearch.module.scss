@@ -1,0 +1,36 @@
+.categoryArea {
+    background-color: #D4DDA6;
+    display: flex;
+    margin: 1rem;
+}
+.catBox {
+  text-align: center;
+  background-color: #fff;
+  margin: 0.5rem 1rem;
+}
+.thumbnailImage {
+  width: 90%;
+  margin: 1rem auto;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.thumbnailImage:hover {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+.catButton {
+  color: #fff;
+  text-align: center;
+  background-color: #6B8264;
+  width: 60%;
+  margin: 0 auto 1rem;
+  padding: 5px 5px;
+  border-radius: 100vh;
+  box-shadow: 0 5px 10px -5px rgba(0,0,0,0.5);
+  transition: all 0.3s;
+  justify-content: center;
+}
+.catButton:hover {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}

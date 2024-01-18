@@ -1,0 +1,12 @@
+.body {
+    padding-top: 80px;
+}
+.boxparent {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;/* これを指定する */
+    justify-content: space-between;
+    row-gap: 2rem;
+    margin-bottom: 2rem;
+}

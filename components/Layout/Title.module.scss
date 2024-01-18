@@ -1,0 +1,19 @@
+.titleBox {
+    background-color: #D4DDA6;
+    margin: 1rem;
+}
+.contentTitle {
+    color: #6B8264;
+    font-family: Hiragino Kaku Gothic ProN, Hiragino Sans, YuGothic, sans-serif;
+    line-height: 1rem;
+    letter-spacing: 0.1rem;
+    position: relative;
+    padding: 0.4rem 1rem 0.2rem 3rem;
+    background-image: repeating-linear-gradient(45deg, #F5F5F5 0px 2px, transparent 2px, transparent 6px);
+    background-repeat: no-repeat;
+    background-size: 2rem;
+}
+.subTitle {
+    font-size: 0.6rem;
+    letter-spacing: 0.2rem;
+}

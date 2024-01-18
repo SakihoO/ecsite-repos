@@ -1,0 +1,38 @@
+.prdBox {
+    width: calc(100%/3 - 1rem);/* 横幅を3等分 */
+    height: auto;
+    display: flex;/* 高さを揃えるための指定 */
+    flex-direction: column;/* 高さを揃えるための指定 */
+    cursor: pointer;
+}
+.thumbnailImage {
+    width: 90%;
+    height: auto;
+    margin: 0 1rem 0.5rem;
+    padding: 0.5rem;
+    background-color: #fff;
+    border: 1px solid rgba(112,112,112,0.5);
+    transition: all 0.3s;
+}
+.thumbnailImage:hover {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+.thumbnailImage img {
+    width: 90%;
+    height: auto;
+}
+.prdName,
+.prdPrice {
+    flex-grow: 1;/* 高さを揃えるため指定 */
+    margin-left: 1rem;
+    text-decoration: none;
+    color: #707070;
+}
+.prdPrice {
+    text-align: end;
+    margin-right: 2rem;
+}
+.prdName:hover {
+    color: rgba(112,112,112,0.8);;
+}

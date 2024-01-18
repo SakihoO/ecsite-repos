@@ -1,2 +1,0 @@
-FROM mysql/mysql-server:5.7.28
-ENV MYSQL_ROOT_PASSWORD=int20051220

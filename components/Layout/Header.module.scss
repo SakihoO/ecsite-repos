@@ -1,0 +1,81 @@
+.header {
+    width: 100%;
+    height: 80px;
+    background-color: #fff;
+    position: fixed;
+    display: flex;
+    padding: 0 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+    z-index: 9999;
+}
+.left {
+    display: flex;
+    align-items: center;
+    width: 20%;
+}
+.left img {
+    width: 130px;
+}
+.right {
+    display: flex;
+    justify-content: flex-end;
+    width: 80%;
+}
+.iconLogin,
+.iconCart {
+    padding-top: 8px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+.iconCart {
+    margin-left: -40px;
+}
+.iconTxt {
+    color: #6B8264;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+.iconLogin img,
+.iconCart img {
+    width: 35%;
+}
+// 商品検索フォーム
+.searchForm {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 3px;
+}
+.searchForm input {
+    width: 250px;
+    height: 45px;
+    padding: 5px 15px;
+    border-radius: 3px 0 0 3px;
+    border-color: #6B8264;
+    box-sizing: border-box;
+    background-color: #fff;
+    font-size: 1em;
+    outline: none;
+}
+.searchForm input::placeholder {
+    color: #BFBFBF;
+}
+.searchForm button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 45px;
+    border: none;
+    border-radius: 0 3px 3px 0;
+    background-color: #6B8264;
+    cursor: pointer;
+}
+.searchForm button::after {
+    width: 20px;
+    height: 20px;
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%20%3Cpath%20d%3D%22M23.7%2020.8%2019%2016.1c-.2-.2-.5-.3-.8-.3h-.8c1.3-1.7%202-3.7%202-6C19.5%204.4%2015.1%200%209.7%200S0%204.4%200%209.7s4.4%209.7%209.7%209.7c2.3%200%204.3-.8%206-2v.8c0%20.3.1.6.3.8l4.7%204.7c.4.4%201.2.4%201.6%200l1.3-1.3c.5-.5.5-1.2.1-1.6zm-14-5.1c-3.3%200-6-2.7-6-6s2.7-6%206-6%206%202.7%206%206-2.6%206-6%206z%22%20fill%3D%22%23fff%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    content: '';
+}
