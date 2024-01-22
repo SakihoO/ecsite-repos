@@ -8,7 +8,7 @@ export default function() {
     return (
         <div className={styles.prdDetailArea}>
             <div className={styles.leftArea}>
-                <img src="/products/chair01white.png" alt=""/>
+                <img src="/products/01chair01.png" alt=""/>
             </div>
             <div className={styles.rightArea}>
                 <div className={styles.prdName}>アームレスチェア ホワイト</div>

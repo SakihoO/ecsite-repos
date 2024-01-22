@@ -23,37 +23,37 @@ export default function sofa() {
                     <div className={utilStyles.boxparent}>
                         <SearchProducts
                             prdDetailLink={'/detail/detailPrd'}
-                            prdImage={'/products/chair01white.png'}
+                            prdImage={'/products/01chair01.png'}
                             prdName={'アームレスチェア ホワイト'}
                             prdPrice={'¥ 40,000'}
                         />
                         <SearchProducts
                             prdDetailLink={'/'}
-                            prdImage={'/products/chair02blue.png'}
+                            prdImage={'/products/01chair02.png'}
                             prdName={'ベルベッド アームチェア ブルー'}
                             prdPrice={'¥ 45,000'}
                         />
                         <SearchProducts
                             prdDetailLink={'/'}
-                            prdImage={'/products/chair03gray.png'}
+                            prdImage={'/products/01chair03.png'}
                             prdName={'ウィングチェア グレー オットマン付'}
                             prdPrice={'¥ 50,000'}
                         />
                         <SearchProducts
                             prdDetailLink={'/'}
-                            prdImage={'/products/chair04brown.png'}
+                            prdImage={'/products/01chair04.png'}
                             prdName={'ベルベッド アームチェア ブラウン'}
                             prdPrice={'¥ 80,000'}
                         />
                         <SearchProducts
                             prdDetailLink={'/'}
-                            prdImage={'/products/sofa01black.png'}
+                            prdImage={'/products/01sofa01.png'}
                             prdName={'布張りソファ 2人掛け ブラック'}
                             prdPrice={'¥ 60,000'}
                         />
                         <SearchProducts
                             prdDetailLink={'/'}
-                            prdImage={'/products/sofa02white.png'}
+                            prdImage={'/products/01sofa02.png'}
                             prdName={'布張りソファ 3人掛け ホワイト'}
                             prdPrice={'¥ 90,000'}
                         />
