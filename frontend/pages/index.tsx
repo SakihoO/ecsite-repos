@@ -13,6 +13,8 @@ import styles from "../styles/Home.module.scss"
 import utilStyles from "../styles/utils.module.scss";
 import { getCatsData } from "../lib/category";
 
+// const apiUrl = 'http://localhost:80/api';  // バックエンドのAPIエンドポイント
+
 //SSGでカテゴリーデータを持ってくる
 export async function getStaticProps() {
     const allCatData = getCatsData(); //id, title, thumbnail

@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "root",
-    "password": "int20051220",
+    "username": "sakihookamoto",
+    "password": "int01",
     "database": "repos_db",
     "host": "mysql_container",
     "dialect": "mysql"

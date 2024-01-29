@@ -1,4 +1,4 @@
 .next
 node_modules
 api/node_modules
-docker/mysql/mysql_data/*
+api/docker/mysql/mysql_data/*
