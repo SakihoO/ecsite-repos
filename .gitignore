@@ -1,4 +1,4 @@
-.next
-node_modules
+frontend/.next
+frontend/node_modules
 api/node_modules
 api/docker/mysql/mysql_data/*
