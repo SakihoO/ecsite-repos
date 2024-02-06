@@ -4,7 +4,8 @@
     "password": "int01",
     "database": "repos_db",
     "host": "mysql_container",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": "3306"
   },
   "test": {
     "username": "root",

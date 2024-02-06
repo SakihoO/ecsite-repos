@@ -16,14 +16,14 @@ interface Product {
     img_full_path: string;
 }
 
-export default function sofa() {
+export default function Lamp() {
     const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
       const fetchData = async () => {
         try {
-            // category_idが1（ソファ・チェア）の商品データのみを取得する
-            const response = await fetch('/api?category_id=1');
+            // category_idが3（照明）の商品データのみを取得する
+            const response = await fetch('/api?category_id=3');
             const data = await response.json();
             setProducts(data);
         } catch (error) {
@@ -38,8 +38,8 @@ export default function sofa() {
             <Header />
                 <div className={utilStyles.body}>
                     <Title
-                        contentTitle={'ソファ・チェア'}
-                        subTitle={'Sofa / chair'}
+                        contentTitle={'照明'}
+                        subTitle={'Lamp'}
                     />
                     <SearchResult
                         resultNumber={products.length.toString()}

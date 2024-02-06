@@ -2,6 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const mst_category = sequelize.define('mst_category', {
     category_name: DataTypes.STRING,
+    category_sub_name: DataTypes.STRING,
   }, {
     underscored: true,
     freezeTableName: true,

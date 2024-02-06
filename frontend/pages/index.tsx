@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
+import { useState, useEffect } from "react";
 import Layouts from "../components/Layouts";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
@@ -13,7 +14,14 @@ import styles from "../styles/Home.module.scss"
 import utilStyles from "../styles/utils.module.scss";
 import { getCatsData } from "../lib/category";
 
-// const apiUrl = 'http://localhost:80/api';  // バックエンドのAPIエンドポイント
+// const db = require('../../api/models');
+
+// export const getAllData = async(req, res) => {
+//     db.user.findAll({}).then((instances) => {
+//         console.log(instances);
+//         res.status(200).json({ message: instances });
+//     });
+// };
 
 //SSGでカテゴリーデータを持ってくる
 export async function getStaticProps() {
@@ -28,6 +36,21 @@ export async function getStaticProps() {
 }
 
 export default function Home({ allCatData }) {
+    const [ message, setMessage ] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('/api');
+            const data = await response.json();
+            setMessage(data.message);
+          } catch (error) {
+            console.error('データの取得中にエラーが発生しました', error);
+          }
+        };
+        fetchData();
+    }, []);
+
     return (
         <Layouts>
             <div>
@@ -42,6 +65,7 @@ export default function Home({ allCatData }) {
                         contentTitle={'カテゴリから探す'}
                         subTitle={'search by category'}
                     />
+                    <p>{message}</p>
                     {/* カテゴリから探す mdファイル */}
                     {/* <div className={styles.categoryArea}>
                         {allCatData.map(({ id, titleButton, thumbnail }) => (
