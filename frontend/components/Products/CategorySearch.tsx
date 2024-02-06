@@ -15,19 +15,19 @@ const CategorySearch = () => {
                     </Link>
                 </section>
                 <section className={styles.catBox}>
-                    <Link href="/pages/category/table">
+                    <Link href="/category/table">
                         <img src="/category/catTable.png" className={styles.thumbnailImage} />
                         <div className={styles.catButton}>テーブル</div>
                     </Link>
                 </section>
                 <section className={styles.catBox}>
-                    <Link href="/pages/category/lamp">
+                    <Link href="/category/lamp">
                         <img src="/category/catLamp.png" className={styles.thumbnailImage} />
                         <div className={styles.catButton}>照明</div>
                     </Link>
                 </section>
                 <section className={styles.catBox}>
-                    <Link href="/pages/category/goods">
+                    <Link href="/category/goods">
                         <img src="/category/catGoods.png" className={styles.thumbnailImage} />
                         <div className={styles.catButton}>インテリア雑貨</div>
                     </Link>
