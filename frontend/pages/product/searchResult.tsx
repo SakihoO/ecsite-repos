@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import React from "react";
 
 import Layouts from "../../components/Layouts";
 import Header from "../../components/Layout/Header";

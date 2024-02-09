@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
+import React from "react";
 import { useState, useEffect } from "react";
 import Layouts from "../components/Layouts";
 import Header from "../components/Layout/Header";
@@ -14,20 +15,10 @@ import styles from "../styles/Home.module.scss"
 import utilStyles from "../styles/utils.module.scss";
 import { getCatsData } from "../lib/category";
 
-// const db = require('../../api/models');
-
-// export const getAllData = async(req, res) => {
-//     db.user.findAll({}).then((instances) => {
-//         console.log(instances);
-//         res.status(200).json({ message: instances });
-//     });
-// };
-
 //SSGでカテゴリーデータを持ってくる
 export async function getStaticProps() {
     const allCatData = getCatsData(); //id, title, thumbnail
     // console.log(allCatData);
-    
     return {
         props: {
             allCatData,
@@ -54,9 +45,7 @@ export default function Home({ allCatData }) {
     return (
         <Layouts>
             <div>
-                <Header />
-
-                {/* <Image src="/topSlide2.png" alt="スライド画像2" width={500} height={300}/> */}
+                <Header searchQuery={undefined} />
 
                 <div className={utilStyles.body}>
                     <Slider />
@@ -65,18 +54,6 @@ export default function Home({ allCatData }) {
                         contentTitle={'カテゴリから探す'}
                         subTitle={'search by category'}
                     />
-                    <p>{message}</p>
-                    {/* カテゴリから探す mdファイル */}
-                    {/* <div className={styles.categoryArea}>
-                        {allCatData.map(({ id, titleButton, thumbnail }) => (
-                            <section key={id} className={styles.catBox}>
-                                <Link href={`/posts/${id}`}>
-                                    <img src={`${thumbnail}`} className={styles.thumbnailImage} />
-                                    <div className={styles.catButton}>{titleButton}</div>
-                                </Link>
-                            </section>
-                        ))}
-                    </div> */}
 
                     <CategorySearch />
 

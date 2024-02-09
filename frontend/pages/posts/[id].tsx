@@ -1,3 +1,4 @@
+import React from "react";
 import Layouts from "../../components/Layouts";
 import { getAllCatIds, getCatData } from "../../lib/category";
 import utilStyles from "../../styles/utils.module.scss";

@@ -1,7 +1,5 @@
-// import Head from "next/head";
+import React from "react";
 import styles from "./Title.module.scss";
-// import utilStyles from "../styles/utils.module.scss";
-
 
 const Title = (props) => {
     return (

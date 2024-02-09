@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import React from "react";
 
 import Link from "next/link";
 import RegisterBtn from "../../components/Button/Button";

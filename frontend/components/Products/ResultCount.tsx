@@ -1,5 +1,6 @@
 /* 商品検索/カテゴリーから探すの検索結果件数表示用コンポーネント */
 
+import React from "react";
 import styles from "./ResultCount.module.scss";
 
 const ResultCount = (props) => {

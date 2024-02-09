@@ -1,7 +1,5 @@
-import style from "./DetailProduct.module.scss";
-import Link from "next/link";
+import React from "react";
 import styles from "./DetailProduct.module.scss";
-import sofa from "../../pages/category/sofa";
 import RegisterBtn from "../Button/Button";
 
 export default function() {

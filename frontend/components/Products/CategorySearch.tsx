@@ -1,10 +1,8 @@
 /* カテゴリから探すコンポーネント */
 
-// import Head from "next/head";
+import React from "react";
 import Link from "next/link";
 import styles from "./CategorySearch.module.scss";
-// import utilStyles from "../styles/utils.module.scss";
-
 
 const CategorySearch = () => {
     return (
