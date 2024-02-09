@@ -1,9 +1,10 @@
 import Link from "next/link";
-import styles from './Header.module.scss';
+import styles from "./Header.module.scss";
 import SearchForm from "../Products/SearchForm";
 import SearchResultList from "../Products/SearchResultList";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import React from "react";
 
 const Header = ({ searchQuery }) => {
     const [searchResults, setSearchResults] = useState(null);  // 検索結果の状態を管理する

@@ -1,6 +1,7 @@
 /* 検索フォーム用のコンポーネント */
 
 import { useState } from "react";
+import React from "react";
 import styles from "./SearchForm.module.scss";
 
 export default function SearchForm({ onSearch }) {

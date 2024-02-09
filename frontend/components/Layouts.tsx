@@ -1,4 +1,5 @@
 import Head from "next/head";
+import React from "react";
 import styles from "./Layouts.module.scss";
 import utilStyles from "../styles/utils.module.scss";
 import { Children } from "react";

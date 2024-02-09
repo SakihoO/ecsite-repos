@@ -1,4 +1,5 @@
 // import Head from "next/head";
+import React from "react";
 import styles from "./Slider.module.scss";
 import Image from "next/image";
 // import utilStyles from "../styles/utils.module.scss";
