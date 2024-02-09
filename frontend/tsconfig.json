@@ -31,8 +31,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/index.js",
-    "pages/_app.js"
-, "pages/posts/[id].tsx"  ],
+    "pages/_app.js",
+    "pages/posts/[id].tsx"  ],
   "exclude": [
     "node_modules"
   ]

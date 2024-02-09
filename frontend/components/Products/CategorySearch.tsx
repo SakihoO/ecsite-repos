@@ -1,7 +1,8 @@
+/* カテゴリから探すコンポーネント */
+
 // import Head from "next/head";
 import Link from "next/link";
 import styles from "./CategorySearch.module.scss";
-import sofa from "../../pages/category/sofa";
 // import utilStyles from "../styles/utils.module.scss";
 
 
