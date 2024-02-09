@@ -1,3 +1,5 @@
+/* 商品詳細ページ用APIエンドポイント */
+
 import connection from "../../../../api/mysql/connection";
 import { createRouter } from "next-connect";
 

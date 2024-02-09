@@ -1,3 +1,5 @@
+/* 商品詳細ページ */
+
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -49,7 +51,7 @@ export default function() {
 
     return (
         <Layouts>
-            <Header />
+            <Header searchQuery={undefined} />
             <div className={utilStyles.body}>
                 <Title
                     contentTitle={product.category_name}

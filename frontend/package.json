@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@types/material-ui": "^0.21.16",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",

@@ -4,7 +4,7 @@ import Layouts from "../../components/Layouts";
 import Header from "../../components/Layout/Header";
 import Footer from "../../components/Layout/Footer";
 import Title from "../../components/Layout/Title";
-import SearchResult from "../../components/Products/SearchResult";
+import ResultCount from "../../components/Products/ResultCount";
 import utilStyles from "../../styles/utils.module.scss";
 import SearchProducts from "../../components/Products/SearchProducts";
 
@@ -35,13 +35,13 @@ export default function table() {
 
     return (
         <Layouts>
-            <Header />
+            <Header searchQuery={undefined} />
                 <div className={utilStyles.body}>
                     <Title
                         contentTitle={'テーブル'}
                         subTitle={'Table'}
                     />
-                    <SearchResult
+                    <ResultCount
                         resultNumber={products.length.toString()}
                     />
                     <div className={utilStyles.boxParent}>
