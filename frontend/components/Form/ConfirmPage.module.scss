@@ -1,0 +1,28 @@
+.inner {
+    display: block;
+    width: auto;
+    margin: 3vw;
+    padding: 5vw;
+    background-color: #fff;
+    border: 1px solid #6B8264;
+    font-size: 1.5vw;
+    font-weight: 500;
+    color: #707070;
+}
+.section {
+    display: flex;
+    padding: 5px 1.6vw;
+    // align-items: center;
+    // border-bottom: 1px solid #ddd;
+}
+.title {
+    width: 40%;
+    padding: 5px 0 5px 20px;
+    background-color: #F5F5F5;
+    border: 1px solid #7070706a;
+}
+.value {
+    width: 60%;
+    padding: 5px 0 5px 20px;
+    border: 1px solid #7070706a;
+}
