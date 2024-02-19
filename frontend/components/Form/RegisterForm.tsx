@@ -337,7 +337,7 @@ const RegisterForm = ({ onSubmit }) => {
                 <div className={styles.section}>
                     <div className={styles.title}><label htmlFor="password">パスワード</label><span className={styles.required}>必須</span></div>
                     <div className={styles.box}>
-                        <input id="password" {...register('password', {
+                        <input id="password" type='password' {...register('password', {
                             required: true,
                             pattern: { value: /^[a-z\d]{8,100}$/i }
                         })} placeholder="半角英数字8文字以上" />
@@ -352,7 +352,7 @@ const RegisterForm = ({ onSubmit }) => {
                 <div className={styles.section}>
                     <div className={styles.title}><label htmlFor="password_confirmation">パスワード（確認）</label><span className={styles.required}>必須</span></div>
                     <div className={styles.box}>
-                        <input id="password_confirmation" {...register('password_confirmation', {
+                        <input id="password_confirmation" type='password' {...register('password_confirmation', {
                             required: true
                         })}
                         placeholder="英数字8文字以上"

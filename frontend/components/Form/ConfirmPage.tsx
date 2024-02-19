@@ -154,11 +154,11 @@ const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister }) =
                 </div>
                 <div className={styles.section}>
                     <div className={styles.title}>パスワード</div>
-                    <div className={styles.value}>{formData.password}</div>
+                    <div className={styles.value}>{formData.password.replace(/./g, '*')}</div>
                 </div>
                 <div className={styles.section}>
                     <div className={styles.title}>パスワード（確認）</div>
-                    <div className={styles.value}>{formData.password_confirmation}</div>
+                    <div className={styles.value}>{formData.password_confirmation.replace(/./g, '*')}</div>
                 </div>
 
                 {/* <button onClick={handleSubmit}>この内容で登録する</button>
