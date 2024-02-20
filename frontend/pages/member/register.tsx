@@ -20,24 +20,21 @@ export default function Page() {
 
   return (
     <FormProvider {...methods}>
-
-    <Layouts>
-                <Header searchQuery={undefined} />
-                <div className={utilStyles.body}>
-                    <Title
-                        contentTitle={'新規会員登録'}
-                        subTitle={'Membership'}
-                    />
-
-                    <div className={utilStyles.inner}>
-                        <div className="register-page">
-                            <RegisterForm onSubmit={onSubmit} />
-                        </div>
-                    </div>
-
-                </div>
-                <Footer />
-            </Layouts>
+      <Layouts>
+        <Header searchQuery={undefined} />
+        <div className={utilStyles.body}>
+          <Title
+              contentTitle={'新規会員登録'}
+              subTitle={'Membership'}
+          />
+          <div className={utilStyles.inner}>
+              <div className="register-page">
+                  <RegisterForm onSubmit={onSubmit} />
+              </div>
+          </div>
+        </div>
+        <Footer />
+      </Layouts>
     </FormProvider>
   );
 }

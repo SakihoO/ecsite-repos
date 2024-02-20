@@ -1,186 +1,7 @@
-// import { useState } from "react";
-// import { useForm } from "react-hook-form";
-// import { useRouter } from "next/router";
-// import styles from "./RegisterForm.module.scss"
-// import Button from "../Button/Button";
-// import { useFormData } from "../../context/FormDataContext";
-// import { japaneseCharactersRegex, postalCodeRegex, emailRegex, passwordRegex } from '../../utils/validations';
-// import { prefectures } from "../../utils/constants";
-// import ConfirmPage from "./ConfirmPage";
-
-// type FormData = {
-//     family_name: string;
-//     first_name: string;
-//     post_code: string;
-//     prefecture: string;
-//     municipalities: string;
-//     apartment: string;
-//     user_name: string;
-//     emailConfirmation: string;
-//     password: string;
-//     passwordConfirmation: string;
-//     street_address: string;
-// };
-
-// const RegisterForm = (props) => {
-//     const { register, handleSubmit, formState: { errors } } = useForm();
-//     const router = useRouter();
-//     // const { formData, setFormData } = useFormData(); // FormDataContext からデータとセッターを取得
-//     const { formData } = useFormData();
-//     console.log("RegisterForm - FormData:", formData);
-
-//     const [showConfirmPage, setShowConfirmPage] = useState(false); // 確認ページを表示するかどうかの状態を管理
-
-//     // console.log("FormData:", formData);
-
-//     const onSubmit = (data) => {
-//         // console.log("RegisterForm - FormData:", data); // フォームデータの値をコンソールログに出力
-        
-//         // 各項目のバリデーションを実行
-//         if (!data.family_name || !japaneseCharactersRegex.test(data.family_name)) {
-//             alert('「姓」を日本語で入力してください');
-//             return;
-//         }
-//         if (!data.first_name || !japaneseCharactersRegex.test(data.first_name)) {
-//             alert('「名」を日本語で入力してください');
-//             return;
-//         }
-//         if (!data.post_code || !postalCodeRegex.test(data.post_code)) {
-//             alert('郵便番号が正しくありません');
-//             return;
-//         }
-//         if (!data.user_name || !emailRegex.test(data.user_name)) {
-//             alert('メールアドレスが正しくありません');
-//             return;
-//         }
-//         if (data.user_name !== data.emailConfirmation) {
-//             alert('メールアドレスが一致しません');
-//             return;
-//         }
-//         if (!data.password || !passwordRegex.test(data.password)) {
-//             alert('パスワードが正しくありません');
-//             return;
-//         }
-//         if (data.password !== data.passwordConfirmation) {
-//             alert('パスワードが一致しません');
-//             return;
-//         }
-
-//         // フォームデータをコンテキストに保存
-//         // setFormData(data);
-
-//         // バリデーションが成功した場合、入力内容を確認ページに渡して遷移する
-//         router.push('/member/confirm');
-
-//         // 確認ページを表示する
-//         // setShowConfirmPage(true);
-//     };
-
-//     // console.log("FormData:", formData);
-
-
-//     return (
-//         <div>
-//                         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-//                         <div className={styles.section}>
-//                             <div className={styles.title}><label>姓</label><span className={styles.required}>必須</span></div>
-//                             <div className={styles.box}>
-//                                 <input {...register('family_name', { required: true })} placeholder="例）山田" />
-//                             </div>
-//                         </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>名</label><span className={styles.required}>必須</span></div>
-                        //     <div className={styles.box}>
-                        //         <input {...register('first_name', { required: true })} placeholder="例）太郎" />
-                        //     </div>
-                        // </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>郵便番号</label><span className={styles.required}>必須</span></div>
-                        //     <div className={styles.box}>
-                        //         <input {...register('post_code', { required: true })} placeholder="111111（ハイフンの入力は不要です）" />
-                        //     </div>
-                        // </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>都道府県</label><span className={styles.required}>必須</span></div>
-                        //     <div className={styles.box}>
-                        //         <select {...register('prefecture', { required: true })}>
-                        //             {prefectures.map((prefecture) => (
-                        //                 <option key={prefecture.value} value={prefecture.value}>
-                        //                     {prefecture.label}
-                        //                 </option>
-                        //             ))}
-                        //         </select>
-                        //         {errors.prefecture && <span>都道府県を入力してください</span>}
-                        //     </div>
-                        // </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>市区町村</label><span className={styles.required}>必須</span></div>
-                        //     <div className={styles.box}>
-                        //         <input {...register('municipalities', { required: true })} placeholder="例）港区六本木" />
-                        //     </div>
-                        // </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>番地</label><span className={styles.required}>必須</span></div>
-                        //     <div className={styles.box}>
-                        //         <input {...register('street_address', { required: true })} placeholder="例）1-9-9" />
-                        //     </div>
-                        // </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>建物</label></div>
-                        //     <div className={styles.box}>
-                        //         <input {...register('apartment', { required: false })} />
-                        //     </div>
-                        // </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>メールアドレス</label><span className={styles.required}>必須</span></div>
-                        //     <div className={styles.box}>
-                        //         <input {...register('user_name', { required: true })} placeholder="例）abcde@reposec.com" />
-                        //     </div>
-                        // </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>メールアドレス（確認）</label><span className={styles.required}>必須</span></div>
-                        //     <div className={styles.box}>
-                        //         <input {...register('emailConfirmation', { required: true })} placeholder="例）abcde@reposec.com" />
-                        //     </div>
-                        // </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>パスワード</label><span className={styles.required}>必須</span></div>
-                        //     <div className={styles.box}>
-                        //         <input {...register('password', { required: true })} placeholder="英数字8文字以上" />
-                        //     </div>
-                        // </div>
-                        // <div className={styles.section}>
-                        //     <div className={styles.title}><label>パスワード（確認）</label><span className={styles.required}>必須</span></div>
-                        //     <div className={styles.box}>
-                        //         <input {...register('passwordConfirmation', { required: true })} placeholder="英数字8文字以上" />
-                        //     </div>
-                        // </div>
-            
-//                         <button type="submit">次へ
-//                             {/* <Button
-//                                 // link={'/member/kakunin'}
-//                                 text={'次へ'}
-//                                 onClick={() => {}}
-//                             /> */}
-//                         </button>
-            
-//                         {/* {errorMessage && <div>{errorMessage}</div>} */}
-            
-//                     </form>
-
-
-//         </div>
-
-//     );
-// };
-
-// export default RegisterForm;
-
-
 /* 会員登録フォームコンポーネント */
 
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { prefectures } from "../../utils/constants";
 import ErrorMessages from './ErrorMessage';
 import styles from "./RegisterForm.module.scss";
@@ -188,7 +9,30 @@ import styles from "./RegisterForm.module.scss";
 const RegisterForm = ({ onSubmit }) => {
     const [userNameError, setUserNameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const [formData, setFormData] = useState(null);
+
+    // 確認画面の「戻る」ボタンを押下した際は、フォームに入力値を保持した状態で戻る
+    useEffect(() => {
+        const storedData = sessionStorage.getItem('formData');
+        const previousPage = sessionStorage.getItem('previousPage');  // 前のページの情報を取得
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setFormData(parsedData);
+            // セッションストレージから取得したデータをフォームの初期値として設定
+            Object.keys(parsedData).forEach(key => {
+                setValue(key, parsedData[key]);
+            });
+        }
+
+        if (previousPage === '/member/confirm') {
+            // 条件１：確認画面から戻ってきた場合はセッションストレージからデータを削除しない
+            sessionStorage.removeItem('previousPage');
+        } else {
+            // 条件２：確認画面から戻ってきた場合以外はセッションストレージからデータを削除
+            sessionStorage.removeItem('formData');
+        }
+    }, []);
 
     // メールアドレス確認（user_name_confirmation）がメールアドレスと一致しているかを確認する
     const handleUserNameConfirmChange = (e) => {
@@ -204,7 +48,7 @@ const RegisterForm = ({ onSubmit }) => {
         setPasswordError(value !== originalValue || value === '' || originalValue === '');
     };
 
-    // 各項目のエラーが出ている場合は、フォームの送信を中止する。それ以外の場合はフォームのデータを送信する。
+    // 各項目のエラーが出ている場合は、フォームの送信を中止する。それ以外の場合はフォームのデータを送信する
     const onSubmitForm = (data) => {
         if (userNameError || passwordError || errors.user_name || errors.user_name_confirmation || errors.password || errors.password_confirmation) return;
         onSubmit(data);

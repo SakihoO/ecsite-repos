@@ -18,7 +18,7 @@ export default function Page() {
     console.log('storedData:', storedData); // storedData の値をログ出力
     if (storedData) {
       setFormData(JSON.parse(storedData)); // セッションストレージからフォームの値を取得
-      sessionStorage.removeItem('formData'); // 取得した後はセッションストレージから削除
+      // sessionStorage.removeItem('formData'); // 取得した後はセッションストレージから削除
     }
   }, []);
 
@@ -48,6 +48,11 @@ export default function Page() {
     }
   };
 
+  const handleGoBack = () => {
+    // ブラウザの戻るボタンをクリックした際の挙動を実装する
+    router.back();
+  };
+
   return (
     <Layouts>
       <Header searchQuery={undefined} />
@@ -57,7 +62,7 @@ export default function Page() {
               subTitle={'Membership'}
           />
           <div className={utilStyles.inner}>
-            <ConfirmPage formData={formData} handleRegister={handleRegister} />;
+            <ConfirmPage formData={formData} handleRegister={handleRegister} handleGoBack={handleGoBack} />
           </div>
       </div>
       <Footer />
