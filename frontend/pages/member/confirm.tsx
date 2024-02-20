@@ -35,21 +35,21 @@ export default function Page() {
         },
         body: JSON.stringify(formData),
       });
-      if (response.ok) {
+      if (response.ok) { // レスポンスのステータスコードが成功を示すものかどうか
         console.log('User registered successfully!');
         router.push('/member/thanks'); // ユーザーが正常に登録された場合のリダイレクト先
-      } else {
+      } else { // ユーザーの登録に失敗した場合
         console.error('Failed to register user.');
-        // エラー処理
+        alert("このメールアドレスは既に使用されています");
       }
-    } catch (error) {
+    } catch (error) { // 非同期処理中にエラーが発生した場合に実行される
       console.error('Error registering user:', error);
-      // エラー処理
+      alert("申し訳ありませんが、ユーザーの登録中にエラーが発生しました。後でもう一度お試しください。");
     }
   };
 
   const handleGoBack = () => {
-    // ブラウザの戻るボタンをクリックした際の挙動を実装する
+    // ブラウザの戻るボタンをクリックした際の挙動
     router.back();
   };
 
