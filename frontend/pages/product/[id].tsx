@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 
 import Link from "next/link";
-import RegisterBtn from "../../components/Button/Button";
+import Button from "../../components/Button/Button";
 import Layouts from "../../components/Layouts";
 import Header from "../../components/Layout/Header";
 import Footer from "../../components/Layout/Footer";
@@ -69,8 +69,11 @@ export default function() {
                         <div className={utilStyles.prdSubmit}>
                             <div className={utilStyles.prdQty}>個数<input type="number" placeholder="1" min="1" max="10" /></div>
                             <div className={utilStyles.prdPrice}>¥{Number(product.price).toLocaleString()}</div>
-                            <RegisterBtn
-                                button={'/button/cartBtn.png'} />
+                            {/* <Button
+                                // link={'/member/kakunin'}
+                                text={'カートに入れる'}
+                                onClick={() => {}}
+                            /> */}
                         </div>
                         {/* <input type="submit" /> */}
                     </div>

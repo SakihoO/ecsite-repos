@@ -1,0 +1,101 @@
+/* 確認画面コンポーネント */
+
+import { useEffect, useState } from 'react';
+import { prefectures } from "../../utils/constants";
+import styles from "./ConfirmPage.module.scss";
+import { useRouter } from 'next/router';
+
+interface ConfirmPageProps {
+  formData: {
+    family_name: string;
+    first_name: string;
+    post_code: number;
+    prefecture: string;
+    municipalities: string;
+    street_address: string;
+    apartment: string;
+    user_name: string;
+    user_name_confirmation: string;
+    password: string;
+    password_confirmation: string;
+  };
+  handleRegister: () => void;
+  handleGoBack: () => void;
+}
+
+const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, handleGoBack }) => {
+    const router = useRouter();
+
+      // 都道府県の値をlabelに変換する関数
+  const getPrefectureLabel = (value: string) => {
+    const prefecture = prefectures.find(pref => pref.value === value);
+    return prefecture ? prefecture.label : '';
+  }
+
+  useEffect(() => {
+    // ここでセッションストレージから値を取得し、stateにセットする。
+    const storedFormDataString = sessionStorage.getItem('formData');
+    if (storedFormDataString) {
+      const storedData = JSON.parse(storedFormDataString);
+      setStoredFormData(storedData);
+    }
+  }, []);
+
+  // stateを追加
+  const [storedFormData, setStoredFormData] = useState<FormData | null>(null);
+
+  return (
+    <div className={styles.inner}>
+        <div className={styles.section}>
+            <div className={styles.title}>姓</div>
+            <div className={styles.value}>{formData.family_name}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>名</div>
+            <div className={styles.value}>{formData.first_name}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>郵便番号</div>
+            <div className={styles.value}>{formData.post_code}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>都道府県</div>
+            <div className={styles.value}>{getPrefectureLabel(formData.prefecture)}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>市区町村</div>
+            <div className={styles.value}>{formData.municipalities}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>番地</div>
+            <div className={styles.value}>{formData.street_address}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>建物</div>
+            <div className={styles.value}>{formData.apartment}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>メールアドレス</div>
+            <div className={styles.value}>{formData.user_name}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>メールアドレス（確認）</div>
+            <div className={styles.value}>{formData.user_name_confirmation}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>パスワード</div>
+            <div className={styles.value}>{formData.password.replace(/./g, '*')}</div>
+        </div>
+        <div className={styles.section}>
+            <div className={styles.title}>パスワード（確認）</div>
+            <div className={styles.value}>{formData.password_confirmation.replace(/./g, '*')}</div>
+        </div>
+
+        <button onClick={handleGoBack}>戻る</button>
+        <button onClick={handleRegister} className={styles.registerButton}>会員登録する</button>
+
+    </div>
+  );
+};
+
+export default ConfirmPage;
