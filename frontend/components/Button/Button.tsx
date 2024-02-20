@@ -1,20 +1,51 @@
+import React from "react";
 import styles from "./Button.module.scss";
 
+// interface ButtonProps {
+//     text: string;
+//     onClick: () => void;
+// }
+
+// const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
+//     return (
+//         <button type="button" onClick={onClick}>
+//             {text}
+//         </button>
+//     )
+// }
 
 const Button = (props) => {
+    // const handleSubmit = () => {
+    //     //フォームの送信処理を実行する関数を呼び出す
+    //     props.onSubmit()
+    // };
+
+    // return (
+    //     <div className={styles.buttonArea}>
+    //         {/* onClickプロパティでhandleSubmit関数を呼び出す */}
+    //         <button type="submit" onClick={handleSubmit}>
+    //             <a href={props.link}><img src={props.button} className={styles.button}/></a>
+    //         </button>
+    //     </div>
+
+
+    // );
+
     return (
-        <div className={styles.buttonArea}>
-            <a href="/"><img src={props.button} className={styles.button}/></a>
+        // <div className={styles.container}>
+        //     <button className={styles.button}>
+        //         <a href={props.link}>
+        //             <span>{props.text}</span>
+        //         <img src={props.arrowSrc}alt="Arrow" className={styles.arrow} /></a>
+        //     </button>
+        // </div>
+        <div className={styles.container}>
+            <a href={props.link} className={styles.arrow}>{props.text}
+            </a>
         </div>
 
-        // <div className={styles.buttonArea}>
-        //     <a className={styles.button}>会員登録<img src="/btnArrow.png" /></a>
-        // </div>
-
-        // <div className={styles.buttonBox}>
-        //      <a href="#" className={`${styles.arrow_btn} ${styles["arrow_03"]}`}>会員登録する</a>
-        // </div>
     );
+
 };
 
 export default Button;

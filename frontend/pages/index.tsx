@@ -8,7 +8,7 @@ import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import Title from "../components/Layout/Title";
 import CategorySearch from "../components/Products/CategorySearch";
-import RegisterBtn from "../components/Button/Button";
+import Button from "../components/Button/Button";
 import Slider from "../components/Slider";
 import styles from "../styles/Home.module.scss"
 
@@ -62,8 +62,9 @@ export default function Home({ allCatData }) {
                             <Image src="/bodyLogo.png" className={styles.ctaLogoImg} alt="Reposロゴ" width={300} height={300}/>
                         </div>
                         <p className={styles.ctaTxt}><strong>新規会員登録</strong>は<strong>こちら</strong></p>
-                        <RegisterBtn
-                            button={'/button/registerBtn.png'}
+                        <Button
+                            link={'/member/register'}
+                            text={'会員登録する'}
                         />
 
                     </div>
