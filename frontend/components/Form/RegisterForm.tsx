@@ -183,7 +183,7 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.box}>
                         <input id="password" type='password' {...register('password', {
                             required: true,
-                            pattern: { value: /^[a-z\d]{8,100}$/i }
+                            pattern: { value: /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,}$/i }
                         })} placeholder="半角英数字8文字以上" />
                         {errors.password && errors.password.type === "pattern" && (
                             <div className={styles.error}>パスワードが正しくありません。</div>
