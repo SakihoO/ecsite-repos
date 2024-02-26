@@ -109,7 +109,7 @@ const RegisterForm = ({ onSubmit }) => {
                         <select id="prefecture" {...register('prefecture', { required: true })}>
                             {prefectures.map((prefecture) => (
                                 <option key={prefecture.value} value={prefecture.value}>
-                                    {prefecture.label}
+                                    {prefecture.value}
                                 </option>
                             ))}
                         </select>

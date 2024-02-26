@@ -15,22 +15,16 @@ interface ConfirmPageProps {
     street_address: string;
     apartment: string;
     user_name: string;
-    user_name_confirmation: string;
     password: string;
-    password_confirmation: string;
   };
   handleRegister: () => void;
   handleGoBack: () => void;
 }
 
 const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, handleGoBack }) => {
-    const router = useRouter();
+  const router = useRouter();
 
-      // 都道府県の値をlabelに変換する関数
-  const getPrefectureLabel = (value: string) => {
-    const prefecture = prefectures.find(pref => pref.value === value);
-    return prefecture ? prefecture.label : '';
-  }
+
 
   useEffect(() => {
     // ここでセッションストレージから値を取得し、stateにセットする。
@@ -60,7 +54,7 @@ const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, han
         </div>
         <div className={styles.section}>
             <div className={styles.title}>都道府県</div>
-            <div className={styles.value}>{getPrefectureLabel(formData.prefecture)}</div>
+            <div className={styles.value}>{formData.prefecture}</div>
         </div>
         <div className={styles.section}>
             <div className={styles.title}>市区町村</div>
@@ -79,16 +73,8 @@ const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, han
             <div className={styles.value}>{formData.user_name}</div>
         </div>
         <div className={styles.section}>
-            <div className={styles.title}>メールアドレス（確認）</div>
-            <div className={styles.value}>{formData.user_name_confirmation}</div>
-        </div>
-        <div className={styles.section}>
             <div className={styles.title}>パスワード</div>
             <div className={styles.value}>{formData.password.replace(/./g, '*')}</div>
-        </div>
-        <div className={styles.section}>
-            <div className={styles.title}>パスワード（確認）</div>
-            <div className={styles.value}>{formData.password_confirmation.replace(/./g, '*')}</div>
         </div>
 
         <button onClick={handleGoBack}>戻る</button>
