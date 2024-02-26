@@ -6,8 +6,8 @@ import ConfirmPage from '../../components/Form/ConfirmPage';
 import Layouts from '../../components/Layouts';
 import Header from '../../components/Layout/Header';
 import Title from '../../components/Layout/Title';
-import utilStyles from "../../styles/utils.module.scss"
 import Footer from '../../components/Layout/Footer';
+import utilStyles from "../../styles/utils.module.scss"
 
 export default function Page() {
   const [formData, setFormData] = useState(null);
@@ -18,7 +18,6 @@ export default function Page() {
     console.log('storedData:', storedData); // storedData の値をログ出力
     if (storedData) {
       setFormData(JSON.parse(storedData)); // セッションストレージからフォームの値を取得
-      // sessionStorage.removeItem('formData'); // 取得した後はセッションストレージから削除
     }
   }, []);
 
