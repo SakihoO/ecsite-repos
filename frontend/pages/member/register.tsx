@@ -8,10 +8,16 @@ import Header from '../../components/Layout/Header';
 import Title from '../../components/Layout/Title';
 import Footer from '../../components/Layout/Footer';
 import utilStyles from "../../styles/utils.module.scss"
+import { useEffect } from 'react';
 
 export default function Page() {
   const router = useRouter();
   const methods = useForm();
+
+  // 初回のレンダリング時にセッションストレージの値を削除
+  useEffect(() => {
+    sessionStorage.removeItem("formData"); // セッションストレージの値を削除
+  }, []);
 
   const onSubmit = async (data) => {
     sessionStorage.setItem('formData', JSON.stringify(data)); // フォームの値をセッションストレージに保存

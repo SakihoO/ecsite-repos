@@ -14,6 +14,7 @@ import styles from "../styles/Home.module.scss"
 
 import utilStyles from "../styles/utils.module.scss";
 import { getCatsData } from "../lib/category";
+import { useRouter } from "next/router";
 
 //SSGでカテゴリーデータを持ってくる
 export async function getStaticProps() {
@@ -28,6 +29,13 @@ export async function getStaticProps() {
 
 export default function Home({ allCatData }) {
     const [ message, setMessage ] = useState('');
+    const router = useRouter();
+
+    // 会員登録ページへの遷移時にセッションストレージの値を削除
+    const handleMemberRegistration = () => {
+        sessionStorage.removeItem("formData"); // セッションストレージの値を削除
+        router.push("/member/register"); // 会員登録ページへ遷移
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -61,11 +69,13 @@ export default function Home({ allCatData }) {
                         <div className={styles.ctaLogoImg}>
                             <Image src="/bodyLogo.png" className={styles.ctaLogoImg} alt="Reposロゴ" width={300} height={300}/>
                         </div>
-                        <p className={styles.ctaTxt}><strong>新規会員登録</strong>は<strong>こちら</strong></p>
-                        <Button
+                        <p className={styles.ctaTxt}><strong>新規会員登録はこちら</strong></p>
+                        {/* <Button
                             link={'/member/register'}
                             text={'会員登録する'}
-                        />
+                            onClick={handleMemberRegistration}
+                        /> */}
+                        <button onClick={handleMemberRegistration}>会員登録する</button>
 
                     </div>
                 </div>
