@@ -37,6 +37,7 @@ export default function Home({ allCatData }) {
         router.push("/member/register"); // 会員登録ページへ遷移
     };
 
+
     useEffect(() => {
         const fetchData = async () => {
           try {
