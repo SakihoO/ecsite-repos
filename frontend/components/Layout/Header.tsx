@@ -2,14 +2,39 @@ import Link from "next/link";
 import styles from "./Header.module.scss";
 import SearchForm from "../Products/SearchForm";
 import SearchResultList from "../Products/SearchResultList";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import React from "react";
+import { useRouter } from "next/router";
 
 const Header = ({ searchQuery }) => {
     const [searchResults, setSearchResults] = useState(null);  // 検索結果の状態を管理する
     const [showSearchResult] = useState(false);  // 検索結果リストを表示するかどうかを制御する
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // ログイン状態を管理する
     const router = useRouter();
+
+    /* ログイン状態をセッションストレージで管理する */
+    useEffect(() => {
+        // コンポーネントがマウントされた時に実行されるロジック
+        const checkLoggedIn = () => {
+            const isLoggedInSession = sessionStorage.getItem("isLoggedIn");
+            if (isLoggedInSession === "true") {
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+        };
+        checkLoggedIn(); // マウント時にログイン状態をチェックする
+    }, []);
+
+    /* ログアウトアイコンをクリックした際の挙動 */
+    const handleLogout = () => {
+        // セッションストレージからログイン状態を削除
+        sessionStorage.removeItem("isLoggedIn");
+        // ログアウト後はログイン状態を更新し、ログインアイコンに切り替える
+        setIsLoggedIn(false);
+        // ログアウト後はトップページに遷移する
+        router.push("/");
+    }
 
     const handleSearch = async (searchTerm) => {
         try {
@@ -51,12 +76,24 @@ const Header = ({ searchQuery }) => {
                 {showSearchResult && searchResults &&
                     <SearchResultList results={searchResults} searchQuery={searchQuery} />
                 }
-                <div className={styles.iconLogin}>
-                    <Link href="">
-                        <div className={styles.iconTxt}>ログイン</div>
-                        <img src="/icon/iconLogin.png" />
-                    </Link>
-                </div>
+
+                {/* ログイン状態に応じて、ログインアイコンを切り替える */}
+                {isLoggedIn ? (
+                    <div className={styles.iconLogin}>
+                        <button onClick={handleLogout} className={styles.button}>
+                            <div className={styles.iconTxt}>ログアウト</div>
+                            <img src="/icon/iconLogout.png" />
+                        </button>
+                    </div>
+                ) : (
+                    <div className={styles.iconLogin}>
+                        <Link href="/member/login">
+                            <div className={styles.iconTxt}>ログイン</div>
+                            <img src="/icon/iconLogin.png" />
+                        </Link>
+                    </div>
+                )}
+
                 <div className={styles.iconCart}>
                     <Link href="">
                         <div className={styles.iconTxt}>カート</div>
@@ -64,7 +101,6 @@ const Header = ({ searchQuery }) => {
                     </Link>
                 </div>
             </div>
-
         </div>
     );
 };

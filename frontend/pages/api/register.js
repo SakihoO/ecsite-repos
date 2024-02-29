@@ -1,8 +1,4 @@
 /* 会員登録用API */
-
-import { createRouter } from 'next-connect';
-import connection from '../../../api/mysql/connection';
-import mst_user from '../../../api/models/mst_user';
 import mysql from 'mysql';
 
 export default async function handler(req, res) {
@@ -20,7 +16,7 @@ export default async function handler(req, res) {
         password: 'int01',
         database: 'repos_db',
         port: '3306'
-    })
+    });
 
     // MySQL接続
     connection.connect();
