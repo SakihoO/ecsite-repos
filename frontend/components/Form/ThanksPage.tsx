@@ -1,3 +1,4 @@
+/* 完了画面コンポーネント */
 import Button from '../Button/Button';
 import styles from './ThanksPage.module.scss';
 

@@ -1,7 +1,5 @@
 /* 確認画面コンポーネント */
-
 import { useEffect, useState } from 'react';
-import { prefectures } from "../../utils/constants";
 import styles from "./ConfirmPage.module.scss";
 import { useRouter } from 'next/router';
 
@@ -23,9 +21,9 @@ interface ConfirmPageProps {
 
 const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, handleGoBack }) => {
   const router = useRouter();
+  const [storedFormData, setStoredFormData] = useState<FormData | null>(null);
 
-
-
+  /* 登録フォームに入力した値を確認画面にセットする処理 */
   useEffect(() => {
     // ここでセッションストレージから値を取得し、stateにセットする。
     const storedFormDataString = sessionStorage.getItem('formData');
@@ -34,9 +32,6 @@ const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, han
       setStoredFormData(storedData);
     }
   }, []);
-
-  // stateを追加
-  const [storedFormData, setStoredFormData] = useState<FormData | null>(null);
 
   return (
     <div className={styles.inner}>

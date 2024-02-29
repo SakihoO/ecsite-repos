@@ -1,3 +1,4 @@
+/* ログインコンポーネント */
 import { useState } from "react";
 import styles from "./Logion.module.scss";
 import Button from "../Button/Button";
@@ -12,7 +13,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            // ユーザー認証関連の機能を呼び出してログインの処理を行う
+            // ユーザー認証機能を呼び出してログイン処理を行う
             const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
@@ -29,7 +30,7 @@ const Login = () => {
                 setTimeout(() => {
                     sessionStorage.setItem("isLoggedIn", "true"); // ログイン成功をセッションストレージに保存
                     window.location.href = '/'; // トップページに遷移する
-                }, 3000); // 3秒後に遷移
+                }, 2000); // 2秒後に遷移
 
             } else {
                 // ログイン失敗時の処理
@@ -71,14 +72,12 @@ const Login = () => {
                     </div>
                 </div>
                 <button type="submit">ログイン</button>
-
                 <div className={styles.register}>初めてご利用のお客様はこちら</div>
                 <Button
                     link={'/member/register'}
                     text={'会員登録'}
                 />
             </form>
-
         </div>
     )
 }

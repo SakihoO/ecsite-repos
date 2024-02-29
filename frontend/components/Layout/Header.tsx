@@ -4,16 +4,15 @@ import SearchForm from "../Products/SearchForm";
 import SearchResultList from "../Products/SearchResultList";
 import { useEffect, useState } from "react";
 import React from "react";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 const Header = ({ searchQuery }) => {
     const [searchResults, setSearchResults] = useState(null);  // 検索結果の状態を管理する
     const [showSearchResult] = useState(false);  // 検索結果リストを表示するかどうかを制御する
-
     const [isLoggedIn, setIsLoggedIn] = useState(false); // ログイン状態を管理する
-
     const router = useRouter();
 
+    /* ログイン状態をセッションストレージで管理する */
     useEffect(() => {
         // コンポーネントがマウントされた時に実行されるロジック
         const checkLoggedIn = () => {
@@ -27,6 +26,7 @@ const Header = ({ searchQuery }) => {
         checkLoggedIn(); // マウント時にログイン状態をチェックする
     }, []);
 
+    /* ログアウトアイコンをクリックした際の挙動 */
     const handleLogout = () => {
         // セッションストレージからログイン状態を削除
         sessionStorage.removeItem("isLoggedIn");
@@ -35,7 +35,6 @@ const Header = ({ searchQuery }) => {
         // ログアウト後はトップページに遷移する
         router.push("/");
     }
-
 
     const handleSearch = async (searchTerm) => {
         try {
@@ -78,7 +77,6 @@ const Header = ({ searchQuery }) => {
                     <SearchResultList results={searchResults} searchQuery={searchQuery} />
                 }
 
-
                 {/* ログイン状態に応じて、ログインアイコンを切り替える */}
                 {isLoggedIn ? (
                     <div className={styles.iconLogin}>
@@ -103,7 +101,6 @@ const Header = ({ searchQuery }) => {
                     </Link>
                 </div>
             </div>
-
         </div>
     );
 };

@@ -1,12 +1,11 @@
-import Footer from "../../components/Layout/Footer";
+/* ログインページ */
 import Header from "../../components/Layout/Header";
+import Footer from "../../components/Layout/Footer";
 import Title from "../../components/Layout/Title";
 import Layouts from "../../components/Layouts";
 import Login from "../../components/Form/Login";
 import utilStyles from "../../styles/utils.module.scss";
 import Button from "../../components/Button/Button";
-import { useState } from "react";
-import { useRouter } from "next/router";
 
 export default function Page() {
 

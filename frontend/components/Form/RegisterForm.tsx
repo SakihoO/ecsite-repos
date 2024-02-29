@@ -1,18 +1,18 @@
 /* 会員登録フォームコンポーネント */
-
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { prefectures } from "../../utils/constants";
-import ErrorMessages from './ErrorMessage';
 import styles from "./RegisterForm.module.scss";
 
 const RegisterForm = ({ onSubmit }) => {
     const [userNameError, setUserNameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [formData, setFormData] = useState(null);
+    // useFormフックを使用してフォームの状態を管理する {}内はプロパティ
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
-    // 確認画面の「戻る」ボタンを押下した際は、フォームに入力値を保持した状態で戻る
+    /* セッションストレージからフォームデータを取得し、フォームの各フィールドに値を設定する
+    確認画面の「戻る」ボタンをクリックした際は、登録フォームに入力値を保持した状態で戻る */
     useEffect(() => {
         const storedData = sessionStorage.getItem('formData');
         const previousPage = sessionStorage.getItem('previousPage');  // 前のページの情報を取得
@@ -34,28 +34,28 @@ const RegisterForm = ({ onSubmit }) => {
         }
     }, []);
 
-    // メールアドレス確認（user_name_confirmation）がメールアドレスと一致しているかを確認する
+    /* メールアドレス確認（user_name_confirmation）がメールアドレスと一致しているかを確認する */
     const handleUserNameConfirmChange = (e) => {
         const { value } = e.target;
         const originalValue = e.target.form.user_name.value;
         setUserNameError(value !== originalValue || value === '' || originalValue === '');
     };
 
-    // パスワード確認（password_confirmation）がパスワードと一致しているかを確認する
+    /* パスワード確認（password_confirmation）がパスワードと一致しているかを確認する */
     const handlePasswordConfirmChange = (e) => {
         const { value } = e.target;
         const originalValue = e.target.form.password.value;
         setPasswordError(value !== originalValue || value === '' || originalValue === '');
     };
 
-    // 各項目のエラーが出ている場合は、フォームの送信を中止する。それ以外の場合はフォームのデータを送信する
+    /* 各項目のエラーが出ている場合は、フォームの送信を中止する。それ以外の場合はフォームのデータを送信する */
     const onSubmitForm = (data) => {
         if (userNameError || passwordError || errors.user_name || errors.user_name_confirmation || errors.password || errors.password_confirmation) return;
         onSubmit(data);
     };
 
     return (
-        <div className="contact-form">
+        <div className={styles.form}>
             <form onSubmit={handleSubmit(onSubmitForm)} action='/frontend/pages/api/register.js' method='POST'>
 
                 <div className={styles.section}>
