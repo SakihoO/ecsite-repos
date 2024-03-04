@@ -95,7 +95,7 @@ const Header = ({ searchQuery }) => {
                 )}
 
                 <div className={styles.iconCart}>
-                    <Link href="">
+                    <Link href="/purchase/cart">
                         <div className={styles.iconTxt}>カート</div>
                         <img src="/icon/iconCart.png" />
                     </Link>

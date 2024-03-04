@@ -1,6 +1,5 @@
 /* 商品詳細ページ */
-
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import React from "react";
 
@@ -24,10 +23,11 @@ interface Product {
     img_full_path: string;
 }
 
-export default function() {
+export default function ProductDetail() {
     const router = useRouter();
     const { id } =router.query;
     const [product, setProduct] = useState<Product | null>(null);
+    const [ quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         // 商品の詳細情報を取得するAPIを呼び出す
@@ -50,6 +50,35 @@ export default function() {
         return <div>Loading...</div>;
     }
 
+    /* 商品をカートに追加する処理 */
+    const addToCart = async() => {
+        if(product) {
+            router.push(`/purchase/cart?productName=${encodeURIComponent(product.product_name)}&price=${product.price}&quantity=${quantity}`);
+            // try {
+            //     // バックエンドのエンドポイントURLを構築
+            //     const apiUrl = `/pages/api/addCart.js`;
+            //     const quantityToAdd = { product_name: product.product_name, price: product.price, quantity:quantity };
+            //     // POSTリクエストを送信してカートに商品を追加
+            //     const response = await fetch(apiUrl, {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify({ product: quantityToAdd }), // 商品情報と個数をリクエストボディに追加
+            //     });
+            //     if (response.ok) {
+            //         console.log('商品がカートに正常に追加されました。');
+            //         // カートに追加された場合、カートページに遷移
+            //         router.push('/purchase/cart')
+            //     } else {
+            //         console.error('商品をカートに追加できませんでした。');
+            //     }
+            // } catch(error) {
+            //     console.log('カートへの商品追加エラー：', error);
+            // }
+        }
+    };
+
     return (
         <Layouts>
             <Header searchQuery={undefined} />
@@ -67,15 +96,17 @@ export default function() {
                         <div className={utilStyles.prdTxt}><span>Category -</span>{product.category_name}</div>
                         <div className={utilStyles.prdSize}><span>Size -</span>{product.product_size}</div>
                         <div className={utilStyles.prdSubmit}>
-                            <div className={utilStyles.prdQty}>個数<input type="number" placeholder="1" min="1" max="10" /></div>
+                            <div className={utilStyles.prdQty}>個数
+                                <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} placeholder="1" min="1" max="10" />
+                            </div>
                             <div className={utilStyles.prdPrice}>¥{Number(product.price).toLocaleString()}</div>
                             {/* <Button
-                                // link={'/member/kakunin'}
+                                // link={'/purchase/cart'}
                                 text={'カートに入れる'}
-                                onClick={() => {}}
+                                onClick={addToCart}
                             /> */}
+                            <button onClick={addToCart}>カートに入れる</button>
                         </div>
-                        {/* <input type="submit" /> */}
                     </div>
                 </div>
             </div>

@@ -1,0 +1,56 @@
+.body {
+    background-color: #fefefe;
+    margin: 2rem;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // width: 100vw;
+    // height: 100vw;
+    box-sizing: border-box;
+    padding: 0 1rem;
+}
+.table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    // border-spacing: 0;
+    color: #353535;
+    // border-spacing: 1rem;
+}
+.table thead {
+    
+}
+
+.table th,
+.table td {
+    padding: 2rem 0;
+}
+.table tr {
+    border-bottom: 1px solid #BFBFBF;
+}
+.prdQty {
+    // display: flex;
+    // font-size: 1.4vw;
+    // font-weight: 400;
+    // box-sizing: border-box;
+    // padding-bottom: 1vw;
+}
+.prdQty input[type="number"] {
+    // font-size: 1.2vw;
+    color: #707070;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-sizing: border-box;
+    width: 5vw;
+}
+.totalAmount {
+    text-align: right;
+    margin: 1rem 3rem 1rem 0;
+
+    span {
+        font-size: 2rem;
+        padding-left: 2rem;
+    }
+}
