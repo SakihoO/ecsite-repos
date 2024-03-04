@@ -14,12 +14,57 @@ export default function Cart() {
     const router = useRouter();
     const [products, setProducts] = useState<Product[]>([]);
 
+    /* 商品詳細ページから［商品名／価格／個数］の値をクエリで取得する処理 */
     useEffect(() => {
         const { productName, price, quantity } = router.query;
-        if(productName && price &&quantity ) {
-            setProducts([{ product_name: productName as string, price: parseInt(price as string), quantity: parseInt(quantity as string) }]);
+        if ( productName && price && quantity ) {
+            const productToAdd: Product = {
+                product_name: productName as string,
+                price: parseInt(price as string),
+                quantity: parseInt(quantity as string)
+            };
+            addToCart(productToAdd);
         }
     }, [router.query]);
+
+    /* カート画面読み込み時にセッションストレージから商品情報と数量を取得して設定する */
+    useEffect(() => {
+        // セッションストレージから既存の商品情報と数量を取得する（セッションストレージからキーがcartに紐づく値を取得し、JSON形式の文字列からJSオブジェクトに変換する。cartキーが存在しない場合は空の配列を使用する。）
+        const storedProducts = JSON.parse(sessionStorage.getItem("cart") || "[]");
+        setProducts(storedProducts);
+    }, []);
+
+    /* 商品をカートに追加する処理 */
+    const addToCart = (product: Product) => {
+        // セッションストレージから既存の商品情報と数量を取得する
+        const storedProducts = JSON.parse(sessionStorage.getItem("cart") || "[]");
+
+        // 既存の商品がカートに含まれているかを確認する（配列storedProductsの中から、引数productと同じproduct_nameを持つ商品を探す）
+        const existingProductIndex = storedProducts.findIndex(
+            (p: Product) => p.product_name === product.product_name
+        );
+
+        if (existingProductIndex === -1) {
+            // 既存の商品が見つからなかった場合は、新しい商品を追加する
+            const updatedProducts = [...storedProducts, product];
+            // 更新した商品情報と個数をセッションストレージに保存する
+            sessionStorage.setItem("cart", JSON.stringify(updatedProducts));
+            // stateを更新して画面に反映
+            setProducts(updatedProducts);
+        }
+    };
+
+    /* 商品をカートから削除する処理 */
+    const handleDelete = (index: number) => {
+        // セッションストレージから既存の商品情報と個数を取得する
+        const storedProducts = JSON.parse(sessionStorage.getItem("cart") || "[]");
+        // 該当商品を削除する
+        storedProducts.splice(index, 1);
+        // 更新した商品情報と個数をセッションストレージに保存する
+        sessionStorage.setItem("cart", JSON.stringify(storedProducts));
+        // stateを更新して画面に反映
+        setProducts([...storedProducts]);
+    };
 
 
     return (
@@ -45,17 +90,9 @@ export default function Cart() {
                                     {product.quantity}
                                 </td>
                                 <td>¥{product.price * product.quantity}</td>
-                                <td><button>削除</button></td>
+                                <td><button onClick={() => handleDelete(index)}>削除</button></td>
                             </tr>
                         ))}
-
-                        <tr>
-                            <td>商品名２</td>
-                            <td>単価２</td>
-                            <td className={styles.prdQty}><input type="number" placeholder="1" min="1" max="10" /></td>
-                            <td>¥80000</td>
-                            <td><button>削除</button></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
