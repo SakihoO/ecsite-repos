@@ -18,10 +18,10 @@ export default function Cart() {
 
     /* 商品詳細ページから［商品名／価格／個数］の値をクエリで取得する処理 */
     useEffect(() => {
-        const { productName, price, quantity, prdImg } = router.query;
-        if ( productName && price && quantity && prdImg ) {
+        const { prdName, price, quantity, prdImg } = router.query;
+        if ( prdName && price && quantity && prdImg ) {
             const productToAdd: Product = {
-                product_name: productName as string,
+                product_name: prdName as string,
                 price: parseInt(price as string),
                 quantity: parseInt(quantity as string),
                 img_full_path: prdImg as string,
@@ -61,12 +61,30 @@ export default function Cart() {
     const removeFromCart = (index: number) => {
         // セッションストレージから既存の商品情報と個数を取得する
         const storedProducts = JSON.parse(sessionStorage.getItem("cart") || "[]");
+        // 削除する商品のクエリパラメータを取得
+        const productToDelete = storedProducts[index];
         // 該当商品を削除する
         storedProducts.splice(index, 1);
         // 更新した商品情報と個数をセッションストレージに保存する
         sessionStorage.setItem("cart", JSON.stringify(storedProducts));
         // stateを更新して画面に反映
         setProducts([...storedProducts]);
+
+        // 削除した商品のクエリパタメータを取得して削除する
+        const { prdName, price, quantity, prdImg } = router.query;
+        if(prdName === productToDelete.product_name &&
+            price === String(productToDelete.price) &&
+            quantity === String(productToDelete.quantity) &&
+            prdImg === productToDelete.img_full_path) {
+                // 削除するクエリパラメータを削除して新しいURLを作成
+                const updatedQuery = { ...router.query };
+                delete updatedQuery.prdName;
+                delete updatedQuery.price;
+                delete updatedQuery.quantity;
+                delete updatedQuery.prdImg;
+                // 新しいURLに遷移
+                router.push({ pathname:router.pathname, query: updatedQuery });
+            }
     };
 
     /* 商品の個数を更新できるようにする処理（引数indexは更新する商品のインデックス、引数newQuantityはその商品の新しい個数） */

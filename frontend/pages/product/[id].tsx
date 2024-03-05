@@ -53,7 +53,7 @@ export default function ProductDetail() {
     /* 商品をカートに追加する処理 */
     const addToCart = async() => {
         if(product) {
-            router.push(`/purchase/cart?productName=${encodeURIComponent(product.product_name)}&price=${product.price}&quantity=${quantity}&prdImg=${product.img_full_path}`);
+            router.push(`/purchase/cart?prdName=${encodeURIComponent(product.product_name)}&price=${product.price}&quantity=${quantity}&prdImg=${product.img_full_path}`);
             // try {
             //     // バックエンドのエンドポイントURLを構築
             //     const apiUrl = `/pages/api/addCart.js`;
