@@ -1,6 +1,7 @@
 .body {
     background-color: #fefefe;
     margin: 2rem;
+    font-size: 1.3vw;
 }
 .container {
     display: flex;
@@ -25,25 +26,42 @@
 
 .table th,
 .table td {
-    padding: 2rem 0;
+    padding: 1rem 0;
 }
 .table tr {
     border-bottom: 1px solid #BFBFBF;
 }
-.prdQty {
-    // display: flex;
-    // font-size: 1.4vw;
-    // font-weight: 400;
-    // box-sizing: border-box;
-    // padding-bottom: 1vw;
+.prdImg {
+    width: 20%;
+    img {
+        width: 50%;
+    }
 }
-.prdQty input[type="number"] {
-    // font-size: 1.2vw;
-    color: #707070;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    box-sizing: border-box;
-    width: 5vw;
+.prdName {
+    width: 20%;
+}
+.prdPrice,
+.prdQty,
+.subTotal {
+    width: 15%;
+}
+.prdQty {
+    input[type="text"] {
+        font-size: 1.2vw;
+        border: none;
+        border-radius: 3px;
+        box-sizing: border-box;
+        width: 3vw;
+        text-align: center;
+    }
+    button {
+        width: 3vw;
+        height: 3vw;
+        text-align: center;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        cursor: pointer;
+    }
 }
 .totalAmount {
     text-align: right;

@@ -62,20 +62,27 @@
 .prdQty {
     display: flex;
     font-size: 1.4vw;
-    font-weight: 400;
-    box-sizing: border-box;
-    padding-bottom: 1vw;
-    margin-top: 8vw;
-}
-.prdQty input[type="number"] {
-    font-size: 1.2vw;
-    color: #707070;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    box-sizing: border-box;
-    width: 5vw;
-    margin-left: 1vw;
-    padding-left: 1.5vw;
+    font-weight: 500;
+    margin: 7vw 0 2vw;
+    span {
+        padding-right: 2vw;
+    }
+    input[type="text"] {
+        font-size: 1.4vw;
+        border: none;
+        border-radius: 3px;
+        box-sizing: border-box;
+        width: 3vw;
+        text-align: center;
+    }
+    button {
+        width: 3vw;
+        height: 3vw;
+        text-align: center;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        cursor: pointer;
+    }
 }
 .prdPrice {
     padding-bottom: 2vw;

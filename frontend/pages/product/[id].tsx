@@ -53,7 +53,7 @@ export default function ProductDetail() {
     /* 商品をカートに追加する処理 */
     const addToCart = async() => {
         if(product) {
-            router.push(`/purchase/cart?productName=${encodeURIComponent(product.product_name)}&price=${product.price}&quantity=${quantity}`);
+            router.push(`/purchase/cart?productName=${encodeURIComponent(product.product_name)}&price=${product.price}&quantity=${quantity}&prdImg=${product.img_full_path}`);
             // try {
             //     // バックエンドのエンドポイントURLを構築
             //     const apiUrl = `/pages/api/addCart.js`;
@@ -96,8 +96,15 @@ export default function ProductDetail() {
                         <div className={utilStyles.prdTxt}><span>Category -</span>{product.category_name}</div>
                         <div className={utilStyles.prdSize}><span>Size -</span>{product.product_size}</div>
                         <div className={utilStyles.prdSubmit}>
-                            <div className={utilStyles.prdQty}>個数
-                                <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} placeholder="1" min="1" max="10" />
+                            <div className={utilStyles.prdQty}><span>個数</span>
+                                <button onClick={() => setQuantity(Math.max(quantity - 1, 1))}>-</button>
+                                <input
+                                    type="text"
+                                    value={quantity}
+                                    readOnly
+                                    placeholder="1"
+                                />
+                                <button onClick={() => setQuantity(Math.min(quantity + 1, 10))}>+</button>
                             </div>
                             <div className={utilStyles.prdPrice}>¥{Number(product.price).toLocaleString()}</div>
                             {/* <Button

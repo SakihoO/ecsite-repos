@@ -2,12 +2,14 @@
 import { useEffect, useState } from "react";
 import styles from "./Cart.module.scss"
 import { useRouter } from "next/router";
+import session from "next-session";
 
 // 各カラムのデータ型を指定
 interface Product {
     product_name: string;
     price: number;
     quantity: number;
+    img_full_path: string;
 }
 
 export default function Cart() {
@@ -16,12 +18,13 @@ export default function Cart() {
 
     /* 商品詳細ページから［商品名／価格／個数］の値をクエリで取得する処理 */
     useEffect(() => {
-        const { productName, price, quantity } = router.query;
-        if ( productName && price && quantity ) {
+        const { productName, price, quantity, prdImg } = router.query;
+        if ( productName && price && quantity && prdImg ) {
             const productToAdd: Product = {
                 product_name: productName as string,
                 price: parseInt(price as string),
-                quantity: parseInt(quantity as string)
+                quantity: parseInt(quantity as string),
+                img_full_path: prdImg as string,
             };
             addToCart(productToAdd);
         }
@@ -55,7 +58,7 @@ export default function Cart() {
     };
 
     /* 商品をカートから削除する処理 */
-    const handleDelete = (index: number) => {
+    const removeFromCart = (index: number) => {
         // セッションストレージから既存の商品情報と個数を取得する
         const storedProducts = JSON.parse(sessionStorage.getItem("cart") || "[]");
         // 該当商品を削除する
@@ -66,6 +69,15 @@ export default function Cart() {
         setProducts([...storedProducts]);
     };
 
+    /* 商品の個数を更新できるようにする処理（引数indexは更新する商品のインデックス、引数newQuantityはその商品の新しい個数） */
+    const updateQuantity = (index: number, newQuantity: number) => {
+        // products配列内の要素を新しい配列updatedProductsにコピーする（＝updatedProductsを変更してもproductsに影響しない）
+        const updatedProducts = [...products];
+        // updatedProducts内の商品（引数index）の個数を更新する
+        updatedProducts[index].quantity = newQuantity;
+        sessionStorage.setItem("cart", JSON.stringify(updatedProducts));
+        setProducts(updatedProducts);
+    };
 
     return (
         <div className={styles.body}>
@@ -73,24 +85,33 @@ export default function Cart() {
                 <table className={styles.table}>
                     <thead>
                         <tr>
+                            <th></th>
                             <th>商品名</th>
                             <th>単価</th>
                             <th>個数</th>
                             <th>小計</th>
-                            <th>削除</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {products.map((product, index) => (
                             <tr key={index}>
-                                <td>{product.product_name}</td>
-                                <td>{product.price}</td>
-                                <td className={styles.prdQty}>
-                                    {/* <input type="number" placeholder="1" min="1" max="10" /> */}
-                                    {product.quantity}
+                                <td className={styles.prdImg}>
+                                    <img src={`/products/${product.img_full_path}`} alt={product.product_name} />
                                 </td>
-                                <td>¥{product.price * product.quantity}</td>
-                                <td><button onClick={() => handleDelete(index)}>削除</button></td>
+                                <td className={styles.prdName}>{product.product_name}</td>
+                                <td className={styles.prdPrice}>¥{Number(product.price).toLocaleString()}</td>
+                                <td className={styles.prdQty}>
+                                    <button onClick={() => updateQuantity(index, Math.max(product.quantity - 1, 1))}>-</button>
+                                    <input
+                                        type="text"
+                                        value={product.quantity}
+                                        readOnly
+                                    />
+                                    <button onClick={() => updateQuantity(index, Math.min(product.quantity + 1, 10))}>+</button>
+                                </td>
+                                <td className={styles.subTotal}>¥{Number(product.price * product.quantity).toLocaleString()}</td>
+                                <td><button onClick={() => removeFromCart(index)}>削除</button></td>
                             </tr>
                         ))}
                     </tbody>
