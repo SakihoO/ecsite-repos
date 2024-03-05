@@ -79,6 +79,15 @@ export default function Cart() {
         setProducts(updatedProducts);
     };
 
+    /*  各商品の小計を計算する関数 */
+    const calSubTotal = (product: Product) => {
+        return product.price * product.quantity;
+    };
+    /*  全ての商品の小計を合計する関数 */
+    const calTotal = () => {
+        return products.reduce((total, product) => total + calSubTotal(product), 0);
+    };
+
     return (
         <div className={styles.body}>
             <div className={styles.container}>
@@ -110,14 +119,14 @@ export default function Cart() {
                                     />
                                     <button onClick={() => updateQuantity(index, Math.min(product.quantity + 1, 10))}>+</button>
                                 </td>
-                                <td className={styles.subTotal}>¥{Number(product.price * product.quantity).toLocaleString()}</td>
-                                <td><button onClick={() => removeFromCart(index)}>削除</button></td>
+                                <td className={styles.subTotal}>¥{calSubTotal(product).toLocaleString()}</td>
+                                <td className={styles.deleteBtn}><button onClick={() => removeFromCart(index)}>削除</button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-            <div className={styles.totalAmount}>商品合計（税込）<span>小計の総額</span></div>
+            <div className={styles.totalAmount}>商品合計（税込）<span>¥{calTotal().toLocaleString()}</span></div>
             <button>買い物を続ける</button>
             <button>購入手続きに進む</button>
         </div>
