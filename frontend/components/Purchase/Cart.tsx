@@ -121,26 +121,32 @@ export default function Cart() {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map((product, index) => (
-                            <tr key={index}>
-                                <td className={styles.prdImg}>
-                                    <img src={`/products/${product.img_full_path}`} alt={product.product_name} />
-                                </td>
-                                <td className={styles.prdName}>{product.product_name}</td>
-                                <td className={styles.prdPrice}>¥{Number(product.price).toLocaleString()}</td>
-                                <td className={styles.prdQty}>
-                                    <button onClick={() => updateQuantity(index, Math.max(product.quantity - 1, 1))}>-</button>
-                                    <input
-                                        type="text"
-                                        value={product.quantity}
-                                        readOnly
-                                    />
-                                    <button onClick={() => updateQuantity(index, Math.min(product.quantity + 1, 10))}>+</button>
-                                </td>
-                                <td className={styles.subTotal}>¥{calSubTotal(product).toLocaleString()}</td>
-                                <td className={styles.deleteBtn}><button onClick={() => removeFromCart(index)}>削除</button></td>
+                        {products.length === 0 ? (
+                            <tr>
+                                <td colSpan={6} className={styles.emptyCartMsg}>カートに商品が入っていません。</td>
                             </tr>
-                        ))}
+                        ) : (
+                            products.map((product, index) => (
+                                <tr key={index}>
+                                    <td className={styles.prdImg}>
+                                        <img src={`/products/${product.img_full_path}`} alt={product.product_name} />
+                                    </td>
+                                    <td className={styles.prdName}>{product.product_name}</td>
+                                    <td className={styles.prdPrice}>¥{Number(product.price).toLocaleString()}</td>
+                                    <td className={styles.prdQty}>
+                                        <button onClick={() => updateQuantity(index, Math.max(product.quantity - 1, 1))}>-</button>
+                                        <input
+                                            type="text"
+                                            value={product.quantity}
+                                            readOnly
+                                        />
+                                        <button onClick={() => updateQuantity(index, Math.min(product.quantity + 1, 10))}>+</button>
+                                    </td>
+                                    <td className={styles.subTotal}>¥{calSubTotal(product).toLocaleString()}</td>
+                                    <td className={styles.deleteBtn}><button onClick={() => removeFromCart(index)}>削除</button></td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
