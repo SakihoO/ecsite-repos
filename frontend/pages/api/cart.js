@@ -16,9 +16,14 @@ export default async function handler(req, res) {
 
             connection.connect();
             connection.query(
-                `SELECT cart.product_count, mst_product.product_name, mst_product.price, mst_product.img_full_path
+                `SELECT
+                    mst_product.product_name,
+                    mst_product.price,
+                    mst_product.img_full_path,
+                    SUM(cart.product_count) as total_count
                 FROM cart
-                INNER JOIN mst_product ON cart.product_id = mst_product.id`,
+                INNER JOIN mst_product ON cart.product_id = mst_product.id
+                GROUP BY mst_product.id`,
                 function (error, result, fields) {
                     if (error) {
                         console.error('カートアイテムの取得に失敗しました:', error);

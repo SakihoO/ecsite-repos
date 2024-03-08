@@ -9,7 +9,7 @@ interface Product {
     // id: number;
     product_name: string;
     price: number;
-    product_count: number;
+    total_count: number;
     img_full_path: string;
 }
 
@@ -56,7 +56,7 @@ export default function Cart() {
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            {/* <th></th> */}
+                            <th></th>
                             <th>商品名</th>
                             <th>単価</th>
                             <th>個数</th>
@@ -72,8 +72,8 @@ export default function Cart() {
                                 </td>
                                 <td className={styles.prdName}>{product.product_name}</td>
                                 <td className={styles.prdPrice}>¥{Number(product.price).toLocaleString()}</td>
-                                <td className={styles.prdQty}>{product.product_count}</td>
-                                <td className={styles.subTotal}>¥{(product.price * product.product_count).toLocaleString()}</td>
+                                <td className={styles.prdQty}>{product.total_count}</td>
+                                <td className={styles.subTotal}>¥{(product.price * product.total_count).toLocaleString()}</td>
                                 {/* <td className={styles.deleteBtn}>
                                     <button onClick={() => handleDelete(product.id)}>削除</button>
                                 </td> */}
