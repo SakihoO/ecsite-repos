@@ -20,7 +20,8 @@ export default async function handler(req, res) {
                     mst_product.product_name,
                     mst_product.price,
                     mst_product.img_full_path,
-                    SUM(cart.product_count) as total_count
+                    SUM(cart.product_count) as total_count,
+                    cart.product_id
                 FROM cart
                 INNER JOIN mst_product ON cart.product_id = mst_product.id
                 GROUP BY mst_product.id`,

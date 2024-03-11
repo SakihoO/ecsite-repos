@@ -6,7 +6,7 @@ import session from "next-session";
 
 // 各カラムのデータ型を指定
 interface Product {
-    // id: number;
+    product_id: number;
     product_name: string;
     price: number;
     total_count: number;
@@ -34,21 +34,23 @@ export default function Cart() {
         fetchCartItems();
     }, []);
 
-    // const handleDelete = async (productId: number) => {
-    //     try {
-    //         const response = await fetch(`/api/${productId}`, {
-    //             method: 'DELETE',
-    //         });
-    //         if (response.ok) {
-    //             const updatedProducts = products.filter(product => product.id !== productId);
-    //             setProducts(updatedProducts);
-    //         } else {
-    //             console.error('商品の削除に失敗しました:', response.statusText);
-    //         }
-    //     } catch (error) {
-    //         console.error('商品の削除に失敗しました:', error);
-    //     }
-    // };
+    /* カート商品の削除処理（product_idを使用） */
+    const handleDelete = async (product_id: number) => {
+        try {
+            const response = await fetch(`/api/deleteProduct/${product_id}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                // 削除された商品を除いた新しいカート商品リストを作成する（配列productsから削除された商品をフィルタリングする）
+                const updatedProducts = products.filter(product => product.product_id !== product_id);
+                setProducts(updatedProducts);
+            } else {
+                console.error('商品の削除に失敗しました:', response.statusText);
+            }
+        } catch (error) {
+            console.error('商品の削除に失敗しました:', error);
+        }
+    };
 
     return (
         <div className={styles.body}>
@@ -74,9 +76,12 @@ export default function Cart() {
                                 <td className={styles.prdPrice}>¥{Number(product.price).toLocaleString()}</td>
                                 <td className={styles.prdQty}>{product.total_count}</td>
                                 <td className={styles.subTotal}>¥{(product.price * product.total_count).toLocaleString()}</td>
-                                {/* <td className={styles.deleteBtn}>
-                                    <button onClick={() => handleDelete(product.id)}>削除</button>
-                                </td> */}
+                                <td className={styles.deleteBtn}>
+                                    <button onClick={() => {
+                                        console.log('削除Product ID:', product.product_id);
+                                        handleDelete(product.product_id);
+                                    }}>削除</button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
