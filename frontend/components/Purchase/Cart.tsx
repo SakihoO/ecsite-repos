@@ -106,8 +106,12 @@ export default function Cart() {
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {products.map((product, index) => (
+                    <tbody>{products.length === 0 ? (
+                        <tr>
+                            <td colSpan={6} className={styles.emptyCartMsg}>カートに商品が入っていません。</td>
+                        </tr>
+                    ) : (
+                        products.map((product, index) => (
                             <tr key={index}>
                                 <td className={styles.prdImg}>
                                     <img src={`/products/${product.img_full_path}`} alt={product.product_name} />
@@ -137,7 +141,10 @@ export default function Cart() {
                                     }}>削除</button>
                                 </td>
                             </tr>
-                        ))}
+                        ))
+                    )
+                }
+
                     </tbody>
                 </table>
             </div>
