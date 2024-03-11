@@ -16,6 +16,7 @@ interface Product {
 export default function Cart() {
     const router = useRouter();
     const [products, setProducts] = useState<Product[]>([]);
+    const [totalAmount, setTotalAmount] = useState<number>(0);
 
     useEffect(() => {
         const fetchCartItems = async () => {
@@ -24,6 +25,7 @@ export default function Cart() {
                 if (response.ok) {
                     const data = await response.json();
                     setProducts(data);
+                    calTotalAmount(data);
                 } else {
                     console.error('カートアイテムの取得に失敗しました:', response.statusText);
                 }
@@ -54,6 +56,8 @@ export default function Cart() {
                 });
                 if(!response.ok) {
                     console.error('商品の個数の更新に失敗しました:' ,response.statusText);
+                } else {
+                    calTotalAmount(updatedProducts);
                 }
             } catch(error) {
                 console.error('商品の個数の更新に失敗しました:', error);
@@ -71,12 +75,21 @@ export default function Cart() {
                 // 削除された商品を除いた新しいカート商品リストを作成する（配列productsから削除された商品をフィルタリングする）
                 const updatedProducts = products.filter(product => product.product_id !== product_id);
                 setProducts(updatedProducts);
+                calTotalAmount(updatedProducts);
             } else {
                 console.error('商品の削除に失敗しました:', response.statusText);
             }
         } catch (error) {
             console.error('商品の削除に失敗しました:', error);
         }
+    };
+
+    /* 全ての商品の小計を合算する関数 */
+    const calTotalAmount = (products: Product[]) => {
+        const total = products.reduce((accumulator, product) => {
+            return accumulator + (product.price * product.total_count);
+        }, 0);
+        setTotalAmount(total);
     };
 
     return (
@@ -128,7 +141,7 @@ export default function Cart() {
                     </tbody>
                 </table>
             </div>
-            {/* <div className={styles.totalAmount}>商品合計（税込）<span>¥{calTotal().toLocaleString()}</span></div> */}
+            <div className={styles.totalAmount}>商品合計（税込）<span>¥{totalAmount.toLocaleString()}</span></div>
             <button>買い物を続ける</button>
             <button>購入手続きに進む</button>
         </div>
