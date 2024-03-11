@@ -66,6 +66,7 @@ export default function ProductDetail() {
                 router.push('/purchase/cart');
             } else {
                 console.error('カートに追加でエラーが発生しました:', response.statusText);
+                alert('ログインしていません。商品をカートに追加するために先にログインしてください。');
             }
         } catch (error) {
             console.error('カートに追加でエラーが発生しました:', error);

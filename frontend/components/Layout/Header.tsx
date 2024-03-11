@@ -26,10 +26,11 @@ const Header = ({ searchQuery }) => {
         checkLoggedIn(); // マウント時にログイン状態をチェックする
     }, []);
 
-    /* ログアウトアイコンをクリックした際の挙動 */
+    /* ログアウトアイコンをクリックした際の処理 */
     const handleLogout = () => {
-        // セッションストレージからログイン状態を削除
+        // セッションストレージからログイン状態／user_idを削除
         sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("user_id");
         // ログアウト後はログイン状態を更新し、ログインアイコンに切り替える
         setIsLoggedIn(false);
         // ログアウト後はトップページに遷移する
