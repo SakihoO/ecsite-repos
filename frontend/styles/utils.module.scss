@@ -79,9 +79,15 @@
         width: 3vw;
         height: 3vw;
         text-align: center;
-        border: 1px solid #fff;
+        border: none;
         border-radius: 50%;
         cursor: pointer;
+        box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+        transition: .3s;
+    }
+    button:hover {
+        transform: translateY(5px);
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.1);
     }
 }
 .prdPrice {
