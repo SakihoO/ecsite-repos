@@ -27,14 +27,18 @@ const Header = ({ searchQuery }) => {
     }, []);
 
     /* ログアウトアイコンをクリックした際の処理 */
-    const handleLogout = () => {
-        // セッションストレージからログイン状態／user_idを削除
-        sessionStorage.removeItem("isLoggedIn");
-        sessionStorage.removeItem("user_id");
-        // ログアウト後はログイン状態を更新し、ログインアイコンに切り替える
-        setIsLoggedIn(false);
-        // ログアウト後はトップページに遷移する
-        router.push("/");
+    const handleLogout = async () => {
+        try {
+            // セッションストレージからログイン状態／user_idを削除
+            sessionStorage.removeItem("isLoggedIn");
+            sessionStorage.removeItem("user_id");
+            // ログアウト後はログイン状態を更新し、ログインアイコンに切り替える
+            setIsLoggedIn(false);
+            // ログアウト後はトップページに遷移する
+            router.push("/");
+        } catch (error) {
+            console.error('ログアウト時にエラーが発生しました:', error);
+        }
     }
 
     const handleSearch = async (searchTerm) => {

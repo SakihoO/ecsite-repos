@@ -17,8 +17,21 @@ export default function Cart() {
     const router = useRouter();
     const [products, setProducts] = useState<Product[]>([]);
     const [totalAmount, setTotalAmount] = useState<number>(0);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
+        // セッションストレージからログイン状態を取得する
+        const isLoggedInSession = sessionStorage.getItem("isLoggedIn");
+        if (isLoggedInSession === "true" ) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+            // ログアウト時はカート情報をクリアする
+            setProducts([]);
+            setTotalAmount(0);
+        }
+
+        // カート情報を取得する関数
         const fetchCartItems = async () => {
             try {
                 const response = await fetch('/api/cart');
@@ -33,8 +46,12 @@ export default function Cart() {
                 console.error('カートアイテムの取得に失敗しました:', error);
             }
         };
-        fetchCartItems();
-    }, []);
+
+        // ログイン状態が変更された場合にカート状態を取得する
+        if (isLoggedIn) {
+            fetchCartItems();
+        }
+    }, [isLoggedIn]);
 
     /* 商品の個数を更新できるようにする処理 */
     const handlePrdCountUpdate = async (index: number, change: number) => {
