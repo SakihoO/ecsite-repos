@@ -1,16 +1,12 @@
 /* 商品詳細ページ */
-
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import React from "react";
-
-import Link from "next/link";
 import Button from "../../components/Button/Button";
 import Layouts from "../../components/Layouts";
 import Header from "../../components/Layout/Header";
 import Footer from "../../components/Layout/Footer";
 import Title from "../../components/Layout/Title";
-import DetailProduct from "../../components/Products/DetailProduct";
 import utilStyles from "../../styles/utils.module.scss";
 
 // 各カラムのデータ型を指定
@@ -24,24 +20,25 @@ interface Product {
     img_full_path: string;
 }
 
-export default function() {
+export default function ProductDetail() {
     const router = useRouter();
-    const { id } =router.query;
+    const { id } = router.query;
     const [product, setProduct] = useState<Product | null>(null);
+    const [product_count, setProduct_count] = useState(1);
 
     useEffect(() => {
-        // 商品の詳細情報を取得するAPIを呼び出す
-        const fetchProductDetail = async () => {
-            try {
-                // 商品のidに基づいて、/api/products/${id}エンドポイントに対してfetchメソッドを使用してデータを取得し、取得したデータをsetProductでproductステートに設定する
-                const response = await fetch(`/api/products/${id}`);
-                const data = await response.json();
-                setProduct(data);
-            } catch (error) {
-                console.error('Error fetching product details:', error);
-            }
-        };
         if(id) {
+            // 商品の詳細情報を取得するAPIを呼び出す
+            const fetchProductDetail = async () => {
+                try {
+                    // 商品のidに基づいて、/api/products/${id}エンドポイントに対してfetchメソッドを使用してデータを取得し、取得したデータをsetProductでproductステートに設定する
+                    const response = await fetch(`/api/products/${id}`);
+                    const data = await response.json();
+                    setProduct(data);
+                } catch (error) {
+                    console.error('Error fetching product details:', error);
+                }
+            };
             fetchProductDetail();
         }
     }, [id]);
@@ -49,6 +46,32 @@ export default function() {
     if (!product) {
         return <div>Loading...</div>;
     }
+
+    // 「カートに入れる」ボタンのクリックハンドラー関数
+    const handleAddToCart = async () => {
+        console.log('追加Product ID:', id);
+        try {
+            const response = await fetch('/api/addCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: sessionStorage.getItem("user_id"),
+                    product_id: id,
+                    product_count: product_count,
+                }),
+            });
+            if(response.ok) {
+                router.push('/purchase/cart');
+            } else {
+                console.error('カートに追加でエラーが発生しました:', response.statusText);
+                alert('ログインしていません。商品をカートに追加するために先にログインしてください。');
+            }
+        } catch (error) {
+            console.error('カートに追加でエラーが発生しました:', error);
+        }
+    };
 
     return (
         <Layouts>
@@ -67,15 +90,24 @@ export default function() {
                         <div className={utilStyles.prdTxt}><span>Category -</span>{product.category_name}</div>
                         <div className={utilStyles.prdSize}><span>Size -</span>{product.product_size}</div>
                         <div className={utilStyles.prdSubmit}>
-                            <div className={utilStyles.prdQty}>個数<input type="number" placeholder="1" min="1" max="10" /></div>
+                            <div className={utilStyles.prdQty}><span>個数</span>
+                                <button onClick={() => setProduct_count(Math.max(product_count - 1, 1))}>-</button>
+                                <input
+                                    type="text"
+                                    value={product_count}
+                                    readOnly
+                                    placeholder="1"
+                                />
+                                <button onClick={() => setProduct_count(Math.min(product_count + 1, 10))}>+</button>
+                            </div>
                             <div className={utilStyles.prdPrice}>¥{Number(product.price).toLocaleString()}</div>
                             {/* <Button
-                                // link={'/member/kakunin'}
+                                // link={'/purchase/cart'}
                                 text={'カートに入れる'}
-                                onClick={() => {}}
+                                onClick={addToCart}
                             /> */}
+                            <button onClick={handleAddToCart}>カートに入れる</button>
                         </div>
-                        {/* <input type="submit" /> */}
                     </div>
                 </div>
             </div>

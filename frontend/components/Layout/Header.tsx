@@ -26,14 +26,19 @@ const Header = ({ searchQuery }) => {
         checkLoggedIn(); // マウント時にログイン状態をチェックする
     }, []);
 
-    /* ログアウトアイコンをクリックした際の挙動 */
-    const handleLogout = () => {
-        // セッションストレージからログイン状態を削除
-        sessionStorage.removeItem("isLoggedIn");
-        // ログアウト後はログイン状態を更新し、ログインアイコンに切り替える
-        setIsLoggedIn(false);
-        // ログアウト後はトップページに遷移する
-        router.push("/");
+    /* ログアウトアイコンをクリックした際の処理 */
+    const handleLogout = async () => {
+        try {
+            // セッションストレージからログイン状態／user_idを削除
+            sessionStorage.removeItem("isLoggedIn");
+            sessionStorage.removeItem("user_id");
+            // ログアウト後はログイン状態を更新し、ログインアイコンに切り替える
+            setIsLoggedIn(false);
+            // ログアウト後はトップページに遷移する
+            router.push("/");
+        } catch (error) {
+            console.error('ログアウト時にエラーが発生しました:', error);
+        }
     }
 
     const handleSearch = async (searchTerm) => {
@@ -95,7 +100,7 @@ const Header = ({ searchQuery }) => {
                 )}
 
                 <div className={styles.iconCart}>
-                    <Link href="">
+                    <Link href="/purchase/cart">
                         <div className={styles.iconTxt}>カート</div>
                         <img src="/icon/iconCart.png" />
                     </Link>

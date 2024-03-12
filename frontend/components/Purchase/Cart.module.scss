@@ -1,0 +1,102 @@
+.body {
+    background-color: #fefefe;
+    margin: 2rem;
+    font-size: 1.3vw;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // width: 100vw;
+    // height: 100vw;
+    box-sizing: border-box;
+    padding: 0 1rem;
+}
+.table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    // border-spacing: 0;
+    color: #353535;
+    // border-spacing: 1rem;
+}
+.table thead {
+    
+}
+
+.table th,
+.table td {
+    padding: 1rem 0;
+}
+.table tr {
+    border-bottom: 1px solid #eae7e7;
+}
+.prdImg {
+    width: 20%;
+    img {
+        width: 50%;
+    }
+}
+.prdName {
+    width: 20%;
+}
+.prdPrice,
+.prdQty,
+.subTotal {
+    width: 15%;
+}
+.prdQty {
+    input[type="text"] {
+        font-size: 1.2vw;
+        border: none;
+        border-radius: 3px;
+        box-sizing: border-box;
+        width: 3vw;
+        text-align: center;
+    }
+    button {
+        width: 3vw;
+        height: 3vw;
+        text-align: center;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+        transition: .3s;
+    }
+    button:hover {
+        transform: translateY(5px);
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.1);
+    }
+}
+.totalAmount {
+    text-align: right;
+    margin: 1rem 3rem 1rem 0;
+
+    span {
+        font-size: 2rem;
+        padding-left: 2rem;
+    }
+}
+.deleteBtn {
+    button {
+        width: 5vw;
+        height: 3vw;
+        text-align: center;
+        border: none;
+        border-radius: 10%;
+        cursor: pointer;
+        box-shadow: 0 5px 5px 0 rgba(0,0,0,0.1);
+        transition: .3s;
+    }
+    :hover {
+        transform: translateY(5px);
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.1);
+    }
+}
+.emptyCartMsg {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 0.25rem;
+}

@@ -2,8 +2,11 @@
 import { useState } from "react";
 import styles from "./Logion.module.scss";
 import Button from "../Button/Button";
+import { useRouter } from "next/router";
 
 const Login = () => {
+    const router = useRouter();
+    const [id, setId] = useState('');
     const [user_name, setUser_name] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
@@ -19,22 +22,25 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ user_name, password }),
+                body: JSON.stringify({ id, user_name, password }),
             });
 
             if (response.ok) {
                 // ログイン成功時の処理
-                console.log('ログインに成功しました。')
                 setLoginMessage('ログインに成功しました。トップページに遷移します。');
-                setErrorMessage(''); // ログイン成功時にはエラーメッセージを空にする
+                // ログイン成功時にはエラーメッセージを空にする
+                setErrorMessage('');
+                // ログイン成功時にログイン状態をセッションストレージに保存する
+                const data = await response.json();
+                sessionStorage.setItem("isLoggedIn", "true");
+                sessionStorage.setItem("user_id", data.id); // ユーザーIDをセッションストレージに保存
+
                 setTimeout(() => {
-                    sessionStorage.setItem("isLoggedIn", "true"); // ログイン成功をセッションストレージに保存
                     window.location.href = '/'; // トップページに遷移する
                 }, 2000); // 2秒後に遷移
 
             } else {
                 // ログイン失敗時の処理
-                console.error('ログインに失敗しました。')
                 setErrorMessage('ログインに失敗しました。ユーザー名またはパスワードが正しくありません。')
             }
         } catch (error) {
@@ -42,6 +48,8 @@ const Login = () => {
             console.error('ログイン時にエラーが発生しました:', error);
         }
     };
+
+
 
     return (
         <div className={styles.body}>

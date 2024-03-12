@@ -31,7 +31,7 @@ export default async function handler(req, res) {
             } else {
                 if (result.length > 0) {
                     //ログイン成功
-                    res.status(200).json({ message: 'ログインに成功しました。' });
+                    res.status(200).json({ message: 'ログインに成功しました。', id: result[0].id }); // ユーザーIDを返す
                 } else {
                     // ログイン失敗
                     res.status(401).json({ message: 'ユーザー名またはパスワードが正しくありません。'});
