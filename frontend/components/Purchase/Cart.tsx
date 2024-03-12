@@ -31,10 +31,13 @@ export default function Cart() {
             setTotalAmount(0);
         }
 
+        // セッションストレージからユーザーIDを取得する
+        const user_id = sessionStorage.getItem("user_id");
+
         // カート情報を取得する関数
         const fetchCartItems = async () => {
             try {
-                const response = await fetch('/api/cart');
+                const response = await fetch(`/api/cart?user_id=${user_id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setProducts(data);

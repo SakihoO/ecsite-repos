@@ -5,6 +5,9 @@ export default async function handler(req, res) {
     if(req.method === 'GET') {
         // GET メソッドでのみリクエストを受け付ける
         try {
+            // リクエストからユーザーIDを取得する
+            const user_id = req.query.user_id;
+
             // データベースに接続してカート内の商品を取得する
             const connection = mysql.createConnection({
                 host: 'localhost',
@@ -24,7 +27,9 @@ export default async function handler(req, res) {
                     cart.product_id
                 FROM cart
                 INNER JOIN mst_product ON cart.product_id = mst_product.id
+                WHERE cart.user_id = ?
                 GROUP BY mst_product.id`,
+                [user_id],
                 function (error, result, fields) {
                     if (error) {
                         console.error('カートアイテムの取得に失敗しました:', error);
