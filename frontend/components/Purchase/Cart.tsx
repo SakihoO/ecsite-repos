@@ -112,6 +112,36 @@ export default function Cart() {
         setTotalAmount(total);
     };
 
+    /* 「買い物を続ける」をクリック->トップページに遷移 */
+    const handleTopPage = () => {
+        router.push('/');
+    };
+
+    /* 「購入手続きに進む」をクリック->購入手続き画面に遷移 */
+    const handlePurchaseConfirm = async () => {
+        // カートに商品が存在するかどうか
+        if (products.length > 0) {
+            try {
+                const user_id = sessionStorage.getItem("user_id");
+                const response = await fetch(`/api/purchaseInfo?user_id=${user_id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    // 取得した情報をセッションストレージに保存するなどして、購入手続き画面で利用する
+                    sessionStorage.setItem("purchase_information", JSON.stringify(data));
+                    router.push('/purchase/confirm');
+                } else {
+                    alert('購入情報の取得に失敗しました。');
+                }
+            } catch (error) {
+                console.error('購入情報の取得sに失敗しました:', error);
+                alert('購入情報の取得に失敗しました。catchエラー');
+            }
+        } else {
+            // カートに商品が存在しない場合はエラーダイアログを表示する
+            alert('カートに商品が入っていません。')
+        }
+    }
+
     return (
         <div className={styles.body}>
             <div className={styles.container}>
@@ -126,51 +156,50 @@ export default function Cart() {
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>{products.length === 0 ? (
-                        <tr>
-                            <td colSpan={6} className={styles.emptyCartMsg}>カートに商品が入っていません。</td>
-                        </tr>
-                    ) : (
-                        products.map((product, index) => (
-                            <tr key={index}>
-                                <td className={styles.prdImg}>
-                                    <img src={`/products/${product.img_full_path}`} alt={product.product_name} />
-                                </td>
-                                <td className={styles.prdName}>{product.product_name}</td>
-                                <td className={styles.prdPrice}>¥{Number(product.price).toLocaleString()}</td>
-                                <td className={styles.prdQty}>
-                                    <button onClick={() => {
-                                        console.log('+更新Product ID:', product.product_id);
-                                        handlePrdCountUpdate(index, -1)
-                                    }}>-</button>
-                                        <input
-                                            type="text"
-                                            value={product.total_count}
-                                            readOnly
-                                        />
-                                    <button onClick={() => {
-                                        console.log('-更新Product ID:', product.product_id);
-                                        handlePrdCountUpdate(index, +1)
-                                    }}>+</button>
-                                </td>
-                                <td className={styles.subTotal}>¥{(product.price * product.total_count).toLocaleString()}</td>
-                                <td className={styles.deleteBtn}>
-                                    <button onClick={() => {
-                                        console.log('削除Product ID:', product.product_id);
-                                        handleDelete(product.product_id);
-                                    }}>削除</button>
-                                </td>
+                    <tbody>
+                        {products.length === 0 ? (
+                            <tr>
+                                <td colSpan={6} className={styles.emptyCartMsg}>カートに商品が入っていません。</td>
                             </tr>
-                        ))
-                    )
-                }
-
+                        ) : (
+                            products.map((product, index) => (
+                                <tr key={index}>
+                                    <td className={styles.prdImg}>
+                                        <img src={`/products/${product.img_full_path}`} alt={product.product_name} />
+                                    </td>
+                                    <td className={styles.prdName}>{product.product_name}</td>
+                                    <td className={styles.prdPrice}>¥{Number(product.price).toLocaleString()}</td>
+                                    <td className={styles.prdQty}>
+                                        <button onClick={() => {
+                                            console.log('+更新Product ID:', product.product_id);
+                                            handlePrdCountUpdate(index, -1)
+                                        }}>-</button>
+                                            <input
+                                                type="text"
+                                                value={product.total_count}
+                                                readOnly
+                                            />
+                                        <button onClick={() => {
+                                            console.log('-更新Product ID:', product.product_id);
+                                            handlePrdCountUpdate(index, +1)
+                                        }}>+</button>
+                                    </td>
+                                    <td className={styles.subTotal}>¥{(product.price * product.total_count).toLocaleString()}</td>
+                                    <td className={styles.deleteBtn}>
+                                        <button onClick={() => {
+                                            console.log('削除Product ID:', product.product_id);
+                                            handleDelete(product.product_id);
+                                        }}>削除</button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
             <div className={styles.totalAmount}>商品合計（税込）<span>¥{totalAmount.toLocaleString()}</span></div>
-            <button>買い物を続ける</button>
-            <button>購入手続きに進む</button>
+            <button onClick={handleTopPage}>買い物を続ける</button>
+            <button onClick={handlePurchaseConfirm}>購入手続きに進む</button>
         </div>
     )
 }
