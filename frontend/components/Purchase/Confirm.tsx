@@ -26,9 +26,26 @@ export default function PurchaseConfirm()  {
     useEffect(() => {
         // セッションストレージから購入情報を取得
         const purchaseInfo = sessionStorage.getItem("purchase_information");
-        // const cart_id = sessionStorage.getItem("cart_id:", id);
         if (purchaseInfo !== null) {
             const data = JSON.parse(purchaseInfo);
+
+            // 商品名product_nameをキーとした商品情報を保持するオブジェクト（オブジェクトは空の状態で初期化される）
+            const mergedProducts: { [key: string]: Product } = {};
+            // 各商品に対して反復処理を行う
+            data.forEach((product: Product) => {
+                // 商品名product_nameをキーとしてmergedProductsオブジェクトから商品を取得する - 取得した商品が存在する場合:商品の個数を合算する
+                if (mergedProducts[product.product_name]) {
+                    mergedProducts[product.product_name].product_count += product.product_count;
+                } else {
+                    // 取得した商品が存在しない場合:その商品をmergedProductsオブジェクトに追加する
+                    mergedProducts[product.product_name] = product;
+                }
+            });
+            
+            // 統合された商品リストをセットし、合計金額を計算する
+            setProducts(Object.values(mergedProducts));
+            calculateTotalAmount(Object.values(mergedProducts));
+
             setAddress({
                 family_name: data[0].family_name,
                 first_name: data[0].first_name,
@@ -37,8 +54,6 @@ export default function PurchaseConfirm()  {
                 street_address: data[0].street_address,
                 apartment: data[0].apartment
             });
-            setProducts(data);
-            calculateTotalAmount(data);
         }
     }, []);
 
