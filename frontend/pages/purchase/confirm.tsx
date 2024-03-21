@@ -1,6 +1,5 @@
 /* 購入手続き画面 */
 import Header from "../../components/Layout/Header";
-import Title from "../../components/Layout/Title";
 import Layout from "../layout";
 import Footer from "../../components/Layout/Footer";
 import utilStyles from "../../styles/utils.module.scss";

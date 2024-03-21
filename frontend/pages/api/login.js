@@ -1,5 +1,4 @@
 /* ログイン認証用API */
-import { NextApiRequest, NextApiResponse } from 'next';
 import mysql from 'mysql';
 
 export default async function handler(req, res) {

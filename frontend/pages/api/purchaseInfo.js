@@ -26,7 +26,8 @@ export default async function handler(req,res) {
                     mst_product.product_name,
                     mst_product.price,
                     mst_product.img_full_path,
-                    cart.product_count
+                    cart.product_count,
+                    cart.id
                 FROM cart
                 INNER JOIN mst_user ON cart.user_id = mst_user.id
                 INNER JOIN mst_product ON cart.product_id = mst_product.id

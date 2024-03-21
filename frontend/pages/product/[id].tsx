@@ -57,6 +57,7 @@ export default function ProductDetail() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    // id: sessionStorage.getItem("cart_id"),
                     user_id: sessionStorage.getItem("user_id"),
                     product_id: id,
                     product_count: product_count,

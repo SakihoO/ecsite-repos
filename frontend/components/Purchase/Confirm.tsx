@@ -26,7 +26,8 @@ export default function PurchaseConfirm()  {
     useEffect(() => {
         // セッションストレージから購入情報を取得
         const purchaseInfo = sessionStorage.getItem("purchase_information");
-        if (purchaseInfo) {
+        // const cart_id = sessionStorage.getItem("cart_id:", id);
+        if (purchaseInfo !== null) {
             const data = JSON.parse(purchaseInfo);
             setAddress({
                 family_name: data[0].family_name,
@@ -52,6 +53,45 @@ export default function PurchaseConfirm()  {
     const handleCartPage = () => {
         router.push('/purchase/cart')
     }
+
+    /* 「購入を確定する」をクリック->購入完了画面に遷移 */
+    const handlePurchaseThanks = async () => {
+        try {
+            const user_id = sessionStorage.getItem('user_id');
+            const purchaseInformation = sessionStorage.getItem("purchase_information");
+
+            if (purchaseInformation !== null) {
+                // 複数の商品を持つ場合、それぞれの商品に対して処理を行う
+                JSON.parse(purchaseInformation).forEach(async (product) => {
+                    const cart_id = product.id;
+
+                    const response = await fetch("/api/purchaseHistory", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            user_id: user_id,
+                            cart_id: cart_id,
+                            status: 1,
+                        })
+                    });
+
+                if (response.ok) {
+                    console.log("購入が成功しました:", product.product_name);
+                } else {
+                    console.error('購入に失敗しました:', product.product_name);
+                }
+            });
+             router.push('/purchase/thanks');
+            } else {
+                console.error('購入情報が取得できませんでした');
+            }
+
+        } catch (error) {
+            console.error('購入時にエラーが発生しました:', error);
+        }
+    };
 
     return (
         <div>
@@ -119,7 +159,7 @@ export default function PurchaseConfirm()  {
                 </div>
             </div>
             <button onClick={handleCartPage}>カートに戻る</button>
-            <button>購入を確定する</button>
+            <button onClick={handlePurchaseThanks}>購入を確定する</button>
         </div>
 
     )

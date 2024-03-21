@@ -11,6 +11,7 @@ interface Product {
     price: number;
     total_count: number;
     img_full_path: string;
+    id: number;
 }
 
 export default function Cart() {
@@ -33,6 +34,7 @@ export default function Cart() {
 
         // セッションストレージからユーザーIDを取得する
         const user_id = sessionStorage.getItem("user_id");
+        // const cart_id = sessionStorage.getItem("cart_id");
 
         // カート情報を取得する関数
         const fetchCartItems = async () => {
@@ -128,6 +130,7 @@ export default function Cart() {
                     const data = await response.json();
                     // 取得した情報をセッションストレージに保存するなどして、購入手続き画面で利用する
                     sessionStorage.setItem("purchase_information", JSON.stringify(data));
+                    // sessionStorage.setItem("cart_id", id);
                     router.push('/purchase/confirm');
                 } else {
                     alert('購入情報の取得に失敗しました。');
