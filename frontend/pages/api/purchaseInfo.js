@@ -31,7 +31,7 @@ export default async function handler(req,res) {
                 FROM cart
                 INNER JOIN mst_user ON cart.user_id = mst_user.id
                 INNER JOIN mst_product ON cart.product_id = mst_product.id
-                WHERE cart.user_id = ?`,
+                WHERE cart.user_id = ? AND cart.purchase_status = '未購入'`,
                 [user_id],
                 function (error, result, fields) {
                     if (error) {

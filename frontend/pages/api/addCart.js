@@ -4,7 +4,7 @@ import mysql from 'mysql';
 export default async function handler(req, res) {
     if(req.method === 'POST') {
         // POST メソッドでのみリクエストを受け付ける
-        const { user_id, product_id, product_count } = req.body;
+        const { user_id, product_id, product_count, purchase_status } = req.body;
 
         // データベースに接続してカートに商品を追加する
         const connection = mysql.createConnection({
@@ -29,8 +29,8 @@ export default async function handler(req, res) {
                     if (result.length === 0) {
                         // Cartテーブルに同じproduct_idが存在しない場合、新規レコードを挿入する
                         connection.query(
-                            `INSERT INTO cart (user_id, product_id, product_count) VALUES (?, ?, ?)`,
-                            [user_id, product_id, product_count],
+                            `INSERT INTO cart (user_id, product_id, product_count, purchase_status) VALUES (?, ?, ?, ?)`,
+                            [user_id, product_id, product_count, purchase_status],
                             function (error, result, fields) {
                                 if (error) {
                                     console.error('カートに商品を追加中にエラーが発生しました:', error);

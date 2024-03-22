@@ -39,7 +39,7 @@ export default function Cart() {
         // カート情報を取得する関数
         const fetchCartItems = async () => {
             try {
-                const response = await fetch(`/api/cart?user_id=${user_id}`);
+                const response = await fetch(`/api/cart?user_id=${user_id}&purchase_status=未購入`);
                 if (response.ok) {
                     const data = await response.json();
                     setProducts(data);

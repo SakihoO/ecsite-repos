@@ -60,6 +60,7 @@ export default function ProductDetail() {
                     user_id: sessionStorage.getItem("user_id"),
                     product_id: id,
                     product_count: product_count,
+                    purchase_status: '未購入',
                 }),
             });
             if(response.ok) {
