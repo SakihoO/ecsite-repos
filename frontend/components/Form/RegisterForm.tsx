@@ -35,7 +35,10 @@ const RegisterForm = ({ onSubmit }) => {
             setFormData(parsedData);
             // セッションストレージから取得したデータをフォームの初期値として設定
             Object.keys(parsedData).forEach(key => {
-                setValue(key, parsedData[key]);
+                // パスワード以外を初期値として設定する
+                if (key !== 'password' && key !== 'password_confirmation') {
+                    setValue(key, parsedData[key]);
+                }
             });
         }
 

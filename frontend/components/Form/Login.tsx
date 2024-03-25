@@ -1,6 +1,6 @@
 /* ログインコンポーネント */
 import { useState } from "react";
-import styles from "./Logion.module.scss";
+import styles from "./Login.module.scss";
 import Button from "../Button/Button";
 import { useRouter } from "next/router";
 
