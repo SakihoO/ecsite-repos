@@ -3,6 +3,20 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { prefectures } from "../../utils/constants";
 import styles from "./RegisterForm.module.scss";
+import bcrypt from 'bcryptjs';
+
+/* パスワードをハッシュ化する処理 */
+const hashPassword = async (password) => {
+    // ハッシュ化のためのラウンド数
+    const saltRounds = 10;
+    try {
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        return hashedPassword;
+    } catch (error) {
+        console.error('パスワードのハッシュ化エラー:', error);
+        throw new Error('パスワードのハッシュ化エラー');
+    }
+};
 
 const RegisterForm = ({ onSubmit }) => {
     const [userNameError, setUserNameError] = useState(false);
@@ -49,9 +63,16 @@ const RegisterForm = ({ onSubmit }) => {
     };
 
     /* 各項目のエラーが出ている場合は、フォームの送信を中止する。それ以外の場合はフォームのデータを送信する */
-    const onSubmitForm = (data) => {
+    const onSubmitForm = async (data) => {
         if (userNameError || passwordError || errors.user_name || errors.user_name_confirmation || errors.password || errors.password_confirmation) return;
-        onSubmit(data);
+
+        // パスワードをハッシュ化
+        const hashedPassword = await hashPassword(data.password);
+        //ハッシュ化したパスワードを含む新しいオブジェクトを作成
+        const newData = { ...data, password: hashedPassword };
+
+        // APIにデータを送信
+        onSubmit(newData);
     };
 
     return (
@@ -217,3 +238,5 @@ const RegisterForm = ({ onSubmit }) => {
 };
 
 export default RegisterForm;
+// hashPassword関数を他のファイルからも利用可能にするためのエクスポート文
+export { hashPassword };
