@@ -49,7 +49,10 @@ const Login = () => {
         }
     };
 
-
+    const handleRegisterClick = () => {
+        sessionStorage.clear();
+        router.push('/member/register');
+    }
 
     return (
         <div className={styles.body}>
@@ -68,7 +71,7 @@ const Login = () => {
                         />
                     </div>
                 </div>
-                <div className={styles.section}>
+                <div className={styles.sectionPass}>
                     <div className={styles.title}><label htmlFor="password">パスワード</label></div>
                     <div className={styles.box}>
                         <input
@@ -79,10 +82,14 @@ const Login = () => {
                         />
                     </div>
                 </div>
-                <button type="submit">ログイン</button>
+                <Button
+                    onClick={() => {}}
+                    type="submit"
+                    text={'ログイン'}
+                />
                 <div className={styles.register}>初めてご利用のお客様はこちら</div>
                 <Button
-                    link={'/member/register'}
+                    onClick={handleRegisterClick}
                     text={'会員登録'}
                 />
             </form>

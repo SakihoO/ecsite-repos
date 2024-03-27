@@ -9,10 +9,16 @@
     font-weight: bold;
     color: #707070;
 }
-.section {
+.section,
+.sectionPass {
     display: flex;
-    padding: 1.0vw 1.6vw;
     align-items: center;
+}
+.section {
+    padding: 1.0vw 1.6vw;
+}
+.sectionPass {
+    padding: 1.0vw 1.6vw 3.0vw;
 }
 .title {
     width: 40%;
@@ -46,5 +52,23 @@
 .register {
     text-align: center;
     font-size: 1.5rem;
-    margin: 1rem 0 0.5rem;
+    margin: 3rem 0 1rem;
+    display: flex;
+    align-items: center;
+}
+.register:before,
+.register:after {
+    content: "";
+    height: 1px;
+    flex-grow: 1;
+    // background-color: #666;
+    height: 8px;
+    background-image: repeating-linear-gradient(45deg, #ccc 0, #ccc 1px, transparent 0, transparent 50%);
+    background-size: 8px 8px;
+}
+.register:before {
+    margin-right: 1rem;
+}
+.register:after {
+    margin-left: 1rem;
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "./Cart.module.scss"
 import { useRouter } from "next/router";
 import session from "next-session";
+import Button from "../Button/Button";
 
 // 各カラムのデータ型を指定
 interface Product {
@@ -201,8 +202,15 @@ export default function Cart() {
                 </table>
             </div>
             <div className={styles.totalAmount}>商品合計（税込）<span>¥{totalAmount.toLocaleString()}</span></div>
-            <button onClick={handleTopPage}>買い物を続ける</button>
-            <button onClick={handlePurchaseConfirm}>購入手続きに進む</button>
+            <Button
+                onClick={handlePurchaseConfirm}
+                text={'購入手続きに進む'}
+            />
+            <Button
+                onClick={handleTopPage}
+                text={'買い物を続ける'}
+                variant={'back'}
+            />
         </div>
     )
 }

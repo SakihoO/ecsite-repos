@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { prefectures } from "../../utils/constants";
 import styles from "./RegisterForm.module.scss";
 import bcrypt from 'bcryptjs';
+import Button from '../Button/Button';
 
 /* パスワードをハッシュ化する処理 */
 const hashPassword = async (password) => {
@@ -234,7 +235,10 @@ const RegisterForm = ({ onSubmit }) => {
                     </div>
                 </div>
 
-                <button type="submit">次へ</button>
+                <Button
+                    onClick={handleSubmit(onSubmitForm)}
+                    text={'次へ'}
+                />
             </form>
         </div>
     );
