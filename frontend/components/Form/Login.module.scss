@@ -34,11 +34,9 @@
     box-sizing: border-box;
     padding: 10px 0 10px 10px;
     width: 25em;
-    // margin-right: 16px;
     outline: none;
     border: 1px solid #aaa;
     border-radius: 4px;
-    // color: #707070;
 }
 
 .loginSuccess {
@@ -49,6 +47,7 @@
     text-align: center;
     font-size: 1.2rem;
 }
+
 .register {
     text-align: center;
     font-size: 1.5rem;
@@ -61,7 +60,6 @@
     content: "";
     height: 1px;
     flex-grow: 1;
-    // background-color: #666;
     height: 8px;
     background-image: repeating-linear-gradient(45deg, #ccc 0, #ccc 1px, transparent 0, transparent 50%);
     background-size: 8px 8px;

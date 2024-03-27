@@ -1,3 +1,4 @@
+/* カート画面商品削除用エンドポイント */
 import mysql from 'mysql';
 
 export default async function handler(req, res) {

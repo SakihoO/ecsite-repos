@@ -15,7 +15,7 @@ export default function Page() {
   /* 登録フォームで入力した値をセッションストレージから取得する処理 */
   useEffect(() => {
     const storedData = sessionStorage.getItem('formData');
-    console.log('storedDataの値：', storedData); // storedData の値をログ出力
+    // console.log('storedDataの値：', storedData); // storedData の値をログ出力
     if (storedData) {
       setFormData(JSON.parse(storedData)); // セッションストレージからフォームの値を取得
     }

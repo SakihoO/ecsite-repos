@@ -35,7 +35,6 @@ export default function Cart() {
 
         // セッションストレージからユーザーIDを取得する
         const user_id = sessionStorage.getItem("user_id");
-        // const cart_id = sessionStorage.getItem("cart_id");
 
         // カート情報を取得する関数
         const fetchCartItems = async () => {

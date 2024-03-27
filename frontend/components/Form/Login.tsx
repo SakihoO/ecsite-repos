@@ -37,7 +37,7 @@ const Login = () => {
 
                 setTimeout(() => {
                     window.location.href = '/'; // トップページに遷移する
-                }, 2000); // 2秒後に遷移
+                }, 1000); // 1秒後に遷移
 
             } else {
                 // ログイン失敗時の処理

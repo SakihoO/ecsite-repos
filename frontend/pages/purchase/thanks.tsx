@@ -1,4 +1,4 @@
-/* 購入手続き画面 */
+/* 購入完了画面 */
 import Header from "../../components/Layout/Header";
 import Layout from "../layout";
 import Footer from "../../components/Layout/Footer";
@@ -17,6 +17,7 @@ export default function PurchaseThanks() {
                     <div className={utilStyles.thanksMsg}>ご注文ありがとうございました。</div>
                     <p className={utilStyles.thanksSubMsg}>注文内容がショップに送信されました。</p>
                     <Button
+                        onClick={() => {}}
                         link={'/'}
                         text={'トップページへ'}
                     />

@@ -42,7 +42,7 @@ export default function PurchaseConfirm()  {
                     mergedProducts[product.product_name] = product;
                 }
             });
-            
+
             // 統合された商品リストをセットし、合計金額を計算する
             setProducts(Object.values(mergedProducts));
             calculateTotalAmount(Object.values(mergedProducts));

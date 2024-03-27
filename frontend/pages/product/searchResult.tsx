@@ -1,9 +1,7 @@
 /* 商品検索結果ページ */
-
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import React from "react";
-
 import Layouts from "../../components/Layouts";
 import Header from "../../components/Layout/Header";
 import Footer from "../../components/Layout/Footer";
@@ -13,7 +11,6 @@ import SearchResultList from "../../components/Products/SearchResultList";
 export default function SearchResults() {
     const router = useRouter();
     const { query } = router.query; // クエリを取得
-
     const [searchResults,setSearchResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
