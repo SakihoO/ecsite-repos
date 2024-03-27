@@ -1,6 +1,6 @@
 /* 購入完了画面 */
 import Header from "../../components/Layout/Header";
-import Layout from "../layout";
+import Layouts from '../../components/Layouts';
 import Footer from "../../components/Layout/Footer";
 import utilStyles from "../../styles/utils.module.scss";
 import ThanksPage from "../../components/Form/ThanksPage";
@@ -9,7 +9,7 @@ import Button from "../../components/Button/Button";
 export default function PurchaseThanks() {
 
     return (
-        <Layout>
+        <Layouts>
             <Header searchQuery={undefined} />
             <div className={utilStyles.body}>
                 <div className={utilStyles.thanksBox}>
@@ -24,6 +24,6 @@ export default function PurchaseThanks() {
                 </div>
             </div>
             <Footer />
-        </Layout>
+        </Layouts>
     )
 }
