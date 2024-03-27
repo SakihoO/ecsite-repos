@@ -63,7 +63,8 @@ const RegisterForm = ({ onSubmit }) => {
     const handlePasswordConfirmChange = (e) => {
         const { value } = e.target;
         const originalValue = e.target.form.password.value;
-        setPasswordError(value !== originalValue || value === '' || originalValue === '');
+        const isPasswordValid = /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,}$/i.test(value);
+        setPasswordError(value !== originalValue || value === '' || originalValue === '' || !isPasswordValid);
     };
 
     /* 各項目のエラーが出ている場合は、フォームの送信を中止する。それ以外の場合はフォームのデータを送信する */
