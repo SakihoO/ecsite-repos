@@ -30,7 +30,9 @@ const RegisterForm = ({ onSubmit }) => {
     確認画面の「戻る」ボタンをクリックした際は、登録フォームに入力値を保持した状態で戻る */
     useEffect(() => {
         const storedData = sessionStorage.getItem('formData');
-        const previousPage = sessionStorage.getItem('previousPage');  // 前のページの情報を取得
+        const previousPage = sessionStorage.getItem('previousPage');  // 前のページの情報（会員登録フォームが表示される前にユーザーがいたページのパス）を取得
+
+        // セッションストレージに保存されているデータの存在チェック
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             setFormData(parsedData);
@@ -192,7 +194,8 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.title}><label htmlFor="user_name_confirmation">メールアドレス（確認）</label><span className={styles.required}>必須</span></div>
                     <div className={styles.box}>
                         <input id="user_name_confirmation" {...register('user_name_confirmation', {
-                            required: true
+                            required: true,
+                            pattern: { value: /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/ }
                         })}
                         placeholder="例）abcde@reposec.com"
                         onChange={handleUserNameConfirmChange} />
@@ -201,6 +204,9 @@ const RegisterForm = ({ onSubmit }) => {
                         )}
                         {errors.user_name_confirmation && errors.user_name_confirmation.type === "required" && (
                             <div className={styles.error}>メールアドレス（確認）を入力してください。</div>
+                        )}
+                        {errors.user_name_confirmation && errors.user_name_confirmation.type === "pattern" && (
+                            <div className={styles.error}>メールアドレスが正しくありません。</div>
                         )}
                     </div>
                 </div>
