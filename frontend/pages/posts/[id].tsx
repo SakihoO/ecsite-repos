@@ -3,8 +3,6 @@ import Layouts from "../../components/Layouts";
 import { getAllCatIds, getCatData } from "../../lib/category";
 import utilStyles from "../../styles/utils.module.scss";
 
-
-
 export async function getStaticPaths() {
     const paths = getAllCatIds();
 
@@ -30,7 +28,6 @@ export default function Post({ catsData }) {
         <Layouts>
             <div className={utilStyles.body}>
                 {catsData.title}
-                
                 <div dangerouslySetInnerHTML={{ __html: catsData.catContentHTML }}/>
             </div>
         </Layouts>

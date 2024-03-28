@@ -4,7 +4,7 @@ models.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER,
     cart_id: DataTypes.INTEGER,
     status: DataTypes.INTEGER,
-    purchased_at: DataTypes.INTEGER
+    purchased_at: DataTypes.DATE,
   }, {
     underscored: true,
     freezeTableName: true,

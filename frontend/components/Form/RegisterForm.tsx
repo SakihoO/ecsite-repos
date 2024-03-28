@@ -3,6 +3,21 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { prefectures } from "../../utils/constants";
 import styles from "./RegisterForm.module.scss";
+import bcrypt from 'bcryptjs';
+import Button from '../Button/Button';
+
+/* パスワードをハッシュ化する処理 */
+const hashPassword = async (password) => {
+    // ハッシュ化のためのラウンド数
+    const saltRounds = 10;
+    try {
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        return hashedPassword;
+    } catch (error) {
+        console.error('パスワードのハッシュ化エラー:', error);
+        throw new Error('パスワードのハッシュ化エラー');
+    }
+};
 
 const RegisterForm = ({ onSubmit }) => {
     const [userNameError, setUserNameError] = useState(false);
@@ -15,13 +30,18 @@ const RegisterForm = ({ onSubmit }) => {
     確認画面の「戻る」ボタンをクリックした際は、登録フォームに入力値を保持した状態で戻る */
     useEffect(() => {
         const storedData = sessionStorage.getItem('formData');
-        const previousPage = sessionStorage.getItem('previousPage');  // 前のページの情報を取得
+        const previousPage = sessionStorage.getItem('previousPage');  // 前のページの情報（会員登録フォームが表示される前にユーザーがいたページのパス）を取得
+
+        // セッションストレージに保存されているデータの存在チェック
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             setFormData(parsedData);
             // セッションストレージから取得したデータをフォームの初期値として設定
             Object.keys(parsedData).forEach(key => {
-                setValue(key, parsedData[key]);
+                // パスワード以外を初期値として設定する
+                if (key !== 'password' && key !== 'password_confirmation') {
+                    setValue(key, parsedData[key]);
+                }
             });
         }
 
@@ -45,13 +65,21 @@ const RegisterForm = ({ onSubmit }) => {
     const handlePasswordConfirmChange = (e) => {
         const { value } = e.target;
         const originalValue = e.target.form.password.value;
-        setPasswordError(value !== originalValue || value === '' || originalValue === '');
+        const isPasswordValid = /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,}$/i.test(value);
+        setPasswordError(value !== originalValue || value === '' || originalValue === '' || !isPasswordValid);
     };
 
     /* 各項目のエラーが出ている場合は、フォームの送信を中止する。それ以外の場合はフォームのデータを送信する */
-    const onSubmitForm = (data) => {
+    const onSubmitForm = async (data) => {
         if (userNameError || passwordError || errors.user_name || errors.user_name_confirmation || errors.password || errors.password_confirmation) return;
-        onSubmit(data);
+
+        // パスワードをハッシュ化
+        const hashedPassword = await hashPassword(data.password);
+        //ハッシュ化したパスワードを含む新しいオブジェクトを作成
+        const newData = { ...data, password: hashedPassword };
+
+        // APIにデータを送信
+        onSubmit(newData);
     };
 
     return (
@@ -166,7 +194,8 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.title}><label htmlFor="user_name_confirmation">メールアドレス（確認）</label><span className={styles.required}>必須</span></div>
                     <div className={styles.box}>
                         <input id="user_name_confirmation" {...register('user_name_confirmation', {
-                            required: true
+                            required: true,
+                            pattern: { value: /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/ }
                         })}
                         placeholder="例）abcde@reposec.com"
                         onChange={handleUserNameConfirmChange} />
@@ -175,6 +204,9 @@ const RegisterForm = ({ onSubmit }) => {
                         )}
                         {errors.user_name_confirmation && errors.user_name_confirmation.type === "required" && (
                             <div className={styles.error}>メールアドレス（確認）を入力してください。</div>
+                        )}
+                        {errors.user_name_confirmation && errors.user_name_confirmation.type === "pattern" && (
+                            <div className={styles.error}>メールアドレスが正しくありません。</div>
                         )}
                     </div>
                 </div>
@@ -210,10 +242,15 @@ const RegisterForm = ({ onSubmit }) => {
                     </div>
                 </div>
 
-                <button type="submit">次へ</button>
+                <Button
+                    onClick={handleSubmit(onSubmitForm)}
+                    text={'次へ'}
+                />
             </form>
         </div>
     );
 };
 
 export default RegisterForm;
+// hashPassword関数を他のファイルからも利用可能にするためのエクスポート文
+export { hashPassword };

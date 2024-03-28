@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import styles from "./ConfirmPage.module.scss";
 import { useRouter } from 'next/router';
+import Button from '../Button/Button';
 
 interface ConfirmPageProps {
   formData: {
@@ -35,46 +36,51 @@ const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, han
 
   return (
     <div className={styles.inner}>
-        <div className={styles.section}>
-            <div className={styles.title}>姓</div>
-            <div className={styles.value}>{formData.family_name}</div>
-        </div>
-        <div className={styles.section}>
-            <div className={styles.title}>名</div>
-            <div className={styles.value}>{formData.first_name}</div>
-        </div>
-        <div className={styles.section}>
-            <div className={styles.title}>郵便番号</div>
-            <div className={styles.value}>{formData.post_code}</div>
-        </div>
-        <div className={styles.section}>
-            <div className={styles.title}>都道府県</div>
-            <div className={styles.value}>{formData.prefecture}</div>
-        </div>
-        <div className={styles.section}>
-            <div className={styles.title}>市区町村</div>
-            <div className={styles.value}>{formData.municipalities}</div>
-        </div>
-        <div className={styles.section}>
-            <div className={styles.title}>番地</div>
-            <div className={styles.value}>{formData.street_address}</div>
-        </div>
-        <div className={styles.section}>
-            <div className={styles.title}>建物</div>
-            <div className={styles.value}>{formData.apartment}</div>
-        </div>
-        <div className={styles.section}>
-            <div className={styles.title}>メールアドレス</div>
-            <div className={styles.value}>{formData.user_name}</div>
-        </div>
-        <div className={styles.section}>
-            <div className={styles.title}>パスワード</div>
-            <div className={styles.value}>{formData.password.replace(/./g, '*')}</div>
-        </div>
-
-        <button onClick={handleGoBack}>戻る</button>
-        <button onClick={handleRegister} className={styles.registerButton}>会員登録する</button>
-
+      <div className={styles.section}>
+        <div className={styles.title}>姓</div>
+        <div className={styles.value}>{formData.family_name}</div>
+      </div>
+      <div className={styles.section}>
+        <div className={styles.title}>名</div>
+        <div className={styles.value}>{formData.first_name}</div>
+      </div>
+      <div className={styles.section}>
+        <div className={styles.title}>郵便番号</div>
+        <div className={styles.value}>{formData.post_code}</div>
+      </div>
+      <div className={styles.section}>
+        <div className={styles.title}>都道府県</div>
+        <div className={styles.value}>{formData.prefecture}</div>
+      </div>
+      <div className={styles.section}>
+        <div className={styles.title}>市区町村</div>
+        <div className={styles.value}>{formData.municipalities}</div>
+      </div>
+      <div className={styles.section}>
+        <div className={styles.title}>番地</div>
+        <div className={styles.value}>{formData.street_address}</div>
+      </div>
+      <div className={styles.section}>
+        <div className={styles.title}>建物</div>
+        <div className={styles.value}>{formData.apartment}</div>
+      </div>
+      <div className={styles.section}>
+        <div className={styles.title}>メールアドレス</div>
+        <div className={styles.value}>{formData.user_name}</div>
+      </div>
+      <div className={styles.section}>
+        <div className={styles.title}>パスワード</div>
+        <div className={styles.value}>{formData.password.replace(/./g, '*')}</div>
+      </div>
+      <Button
+        onClick={handleRegister}
+        text={'この内容で送信する'}
+      />
+      <Button
+        onClick={handleGoBack}
+        text={'戻る'}
+        variant={'back'}
+      />
     </div>
   );
 };

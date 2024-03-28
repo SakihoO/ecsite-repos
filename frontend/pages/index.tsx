@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Head from "next/head";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -30,10 +29,9 @@ export default function Home({ allCatData }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [ message, setMessage ] = useState('');
 
-    /* 会員登録ボタンがクリックされたら発火する処理2件 */
-    const handleMemberRegistration = () => {
-        sessionStorage.removeItem("formData"); // 1,セッションストレージの値を削除
-        router.push("/member/register"); // 2,会員登録ページへ遷移
+    /* 会員登録ボタンがクリックされたらセッションストレージの値を削除する */
+    const handleRegisterClick = () => {
+        sessionStorage.removeItem("formData");
     };
 
     /* ログイン状態をセッションストレージで管理 */
@@ -84,10 +82,14 @@ export default function Home({ allCatData }) {
 
                         {/* ログイン成功時は新規会員登録箇所を表示しない処理 */}
                         {!isLoggedIn && (
-                            <>
-                                <p className={styles.ctaTxt}><strong>新規会員登録はこちら</strong></p>
-                                <button onClick={handleMemberRegistration}>会員登録する</button>
-                            </>
+                            <div>
+                                <p className={styles.ctaTxt}>＼ 新規会員登録はこちら ／</p>
+                                <Button
+                                    onClick={handleRegisterClick}
+                                    link={'/member/register'}
+                                    text={'会員登録'}
+                                />
+                            </div>
                         )}
 
                     </div>

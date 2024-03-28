@@ -47,7 +47,7 @@ export default function ProductDetail() {
         return <div>Loading...</div>;
     }
 
-    // 「カートに入れる」ボタンのクリックハンドラー関数
+    // 「カートに入れる」ボタンをクリックした際の処理
     const handleAddToCart = async () => {
         console.log('追加Product ID:', id);
         try {
@@ -60,6 +60,7 @@ export default function ProductDetail() {
                     user_id: sessionStorage.getItem("user_id"),
                     product_id: id,
                     product_count: product_count,
+                    purchase_status: '未購入',
                 }),
             });
             if(response.ok) {
@@ -89,25 +90,22 @@ export default function ProductDetail() {
                         <div className={utilStyles.prdName}>{product.product_name}</div>
                         <div className={utilStyles.prdTxt}><span>Category -</span>{product.category_name}</div>
                         <div className={utilStyles.prdSize}><span>Size -</span>{product.product_size}</div>
-                        <div className={utilStyles.prdSubmit}>
-                            <div className={utilStyles.prdQty}><span>個数</span>
-                                <button onClick={() => setProduct_count(Math.max(product_count - 1, 1))}>-</button>
-                                <input
-                                    type="text"
-                                    value={product_count}
-                                    readOnly
-                                    placeholder="1"
-                                />
-                                <button onClick={() => setProduct_count(Math.min(product_count + 1, 10))}>+</button>
-                            </div>
-                            <div className={utilStyles.prdPrice}>¥{Number(product.price).toLocaleString()}</div>
-                            {/* <Button
-                                // link={'/purchase/cart'}
-                                text={'カートに入れる'}
-                                onClick={addToCart}
-                            /> */}
-                            <button onClick={handleAddToCart}>カートに入れる</button>
+                        <div className={utilStyles.prdQty}><span>個数</span>
+                            <button onClick={() => setProduct_count(Math.max(product_count - 1, 1))}>-</button>
+                            <input
+                                type="text"
+                                value={product_count}
+                                readOnly
+                                placeholder="1"
+                            />
+                            <button onClick={() => setProduct_count(Math.min(product_count + 1, 10))}>+</button>
                         </div>
+                        <div className={utilStyles.prdPrice}>¥{Number(product.price).toLocaleString()}</div>
+                        <Button
+                            onClick={handleAddToCart}
+                            text={'カートに入れる'}
+                            variant={'halfButton'}
+                        />
                     </div>
                 </div>
             </div>

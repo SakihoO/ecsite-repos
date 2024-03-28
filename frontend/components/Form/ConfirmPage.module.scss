@@ -13,6 +13,9 @@
     display: flex;
     padding: 5px 1.6vw;
 }
+.section:last-of-type {
+    padding: 5px 1.6vw 20px;
+}
 .title {
     width: 40%;
     padding: 5px 0 5px 20px;

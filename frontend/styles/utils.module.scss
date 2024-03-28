@@ -52,13 +52,6 @@
 .prdSize span{
     padding-right: 4.4vw;
 }
-.prdSubmit {
-    // margin-top: auto;
-    position: absolute;
-    // bottom: 22rem;
-	display: block;
-	// width: 100px;
-}
 .prdQty {
     display: flex;
     font-size: 1.4vw;
@@ -94,4 +87,26 @@
     padding-bottom: 2vw;
     font-size: 3vw;
     font-weight: 400;
+}
+.thanksBox {
+    width: auto;
+    // justify-content: space-around;
+    text-align: center;
+    background-color: #fff;
+    border: #2c372971 solid 1px;
+    height: auto;
+    margin: 1.5vw;
+    padding: 3vw;
+}
+.thanksPageImg {
+    width: 40%;
+}
+.thanksMsg {
+    font-size: 1.6rem;
+    color: #6B8264;
+    margin-top: 1rem;
+}
+.thanksSubMsg {
+    color: #707070;
+    margin: -0.2rem 0 2rem;
 }

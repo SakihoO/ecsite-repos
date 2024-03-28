@@ -1,14 +1,11 @@
-/* カート画面にCartテーブルの商品情報・個数を出力するAPIエンドポイント */
+/* 購入手続き画面へ情報を受け渡すAPIエンドポイント */
 import mysql from 'mysql';
 
-export default async function handler(req, res) {
-    if(req.method === 'GET') {
-        // GET メソッドでのみリクエストを受け付ける
+export default async function handler(req,res) {
+    if (req.method === 'GET') {
         try {
-            // リクエストからユーザーIDを取得する
             const user_id = req.query.user_id;
 
-            // データベースに接続してカート内の商品を取得する
             const connection = mysql.createConnection({
                 host: 'localhost',
                 user: 'sakihookamoto',
@@ -20,20 +17,26 @@ export default async function handler(req, res) {
             connection.connect();
             connection.query(
                 `SELECT
+                    mst_user.family_name,
+                    mst_user.first_name,
+                    mst_user.prefecture,
+                    mst_user.municipalities,
+                    mst_user.street_address,
+                    mst_user.apartment,
                     mst_product.product_name,
                     mst_product.price,
                     mst_product.img_full_path,
-                    SUM(cart.product_count) as total_count,
-                    cart.product_id
+                    cart.product_count,
+                    cart.id
                 FROM cart
+                INNER JOIN mst_user ON cart.user_id = mst_user.id
                 INNER JOIN mst_product ON cart.product_id = mst_product.id
-                WHERE cart.user_id = ? AND cart.purchase_status = '未購入'
-                GROUP BY mst_product.id`,
+                WHERE cart.user_id = ? AND cart.purchase_status = '未購入'`,
                 [user_id],
                 function (error, result, fields) {
                     if (error) {
-                        console.error('カートアイテムの取得に失敗しました:', error);
-                        res.status(500).json({ message: 'カートアイテムの取得に失敗しました。' });
+                        console.error('購入情報の取得に失敗しました:', error);
+                        res.status(500).json({ message: '購入情報の取得に失敗しました' });
                     } else {
                         res.status(200).json(result);
                     }
@@ -41,8 +44,8 @@ export default async function handler(req, res) {
             );
             connection.end();
         } catch (error) {
-            console.error('カートアイテムの取得に失敗しました:', error);
-            res.status(500).json({ message: 'カートアイテムの取得に失敗しました。' });
+            console.error('購入情報の取得に失敗しました。:', error);
+            res.status(500).json({ message: '購入情報の取得に失敗しました。:' });
         }
     } else {
         res.status(405).end(); // GET以外のリクエストは許可しない

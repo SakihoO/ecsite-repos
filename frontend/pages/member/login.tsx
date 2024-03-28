@@ -11,17 +11,17 @@ export default function Page() {
 
     return (
         <Layouts>
-        <Header searchQuery={undefined} />
-        <div className={utilStyles.body}>
-            <Title
-                contentTitle={'ログイン'}
-                subTitle={'Login'}
-            />
-            <div className={utilStyles.inner}>
-                <Login />
+            <Header searchQuery={undefined} />
+            <div className={utilStyles.body}>
+                <Title
+                    contentTitle={'ログイン'}
+                    subTitle={'Login'}
+                />
+                <div className={utilStyles.inner}>
+                    <Login />
+                </div>
             </div>
-        </div>
-        <Footer />
-      </Layouts>
+            <Footer />
+        </Layouts>
     )
 };
