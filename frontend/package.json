@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "cross-env APP_ENV=dev next dev",
+    "build": "cross-env APP_ENV=prod next build",
+    "start": "cross-env APP_ENV=prod next start",
+    "build-stg": "APP_ENV=staging npx next build",
+    "build-prod": "APP_ENV=production npx next build"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +18,7 @@
     "bcryptjs": "^2.4.3",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "gray-matter": "^4.0.3",
@@ -43,6 +46,7 @@
     "@types/react": "18.2.39",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "typescript": "5.3.2"
   }

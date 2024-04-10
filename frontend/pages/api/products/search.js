@@ -1,7 +1,8 @@
 /* 商品検索用APIエンドポイント */
 
-import connection from "../../../../api/mysql/connection";
+// import connection from "../../../../api/mysql/connection";
 import { createRouter } from "next-connect";
+import connection from '../db.connection.js';
 
 const router = createRouter();
 

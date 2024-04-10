@@ -73,10 +73,12 @@ const RegisterForm = ({ onSubmit }) => {
     const onSubmitForm = async (data) => {
         if (userNameError || passwordError || errors.user_name || errors.user_name_confirmation || errors.password || errors.password_confirmation) return;
 
+        console.log(data.password);
         // パスワードをハッシュ化
         const hashedPassword = await hashPassword(data.password);
         //ハッシュ化したパスワードを含む新しいオブジェクトを作成
         const newData = { ...data, password: hashedPassword };
+        console.log(hashedPassword);
 
         // APIにデータを送信
         onSubmit(newData);

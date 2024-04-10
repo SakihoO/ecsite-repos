@@ -15,10 +15,11 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "admin",
+    "password": "int2005sakiho",
+    "database": "repos_db",
+    "host": "ecsite-repos-sakiho-db.cjginto4mmhu.ap-northeast-1.rds.amazonaws.com",
+    "dialect": "mysql",
+    "port": "3306"
   }
 }

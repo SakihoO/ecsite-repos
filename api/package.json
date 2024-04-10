@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "node index.js",
+        "start": "dotenv -e ./api/config/.env.production -- node index.js",
+        "dev": "dotenv -e ./api/config/.env.dev -- node index.js",
         "test": "jest",
         "seed": "npx sequelize db:seed:all"
     },

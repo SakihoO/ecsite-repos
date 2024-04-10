@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  api:
+    command: [sh, -c, npm install && npm run start && tail -f /dev/null]
+    # logging:
+    #   driver: awslogs
+    #   options:
+    #     awslogs-region: ap-northeast-1
+    #     awslogs-group: /aws/EC2/Hubee/node/stg

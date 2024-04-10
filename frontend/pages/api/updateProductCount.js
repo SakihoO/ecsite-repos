@@ -1,5 +1,5 @@
 /* 商品個数の更新用APIエンドポイント */
-import mysql from 'mysql';
+import pool from './db.connection';
 
 export default async function handler(req, res) {
     if(req.method === 'PUT') {
@@ -7,29 +7,18 @@ export default async function handler(req, res) {
         const { change } = req.body;
 
         try {
-            const connection = mysql.createConnection({
-                host: 'localhost',
-                user: 'sakihookamoto',
-                password: 'int01',
-                database: 'repos_db',
-                port: '3306'
-            });
+            const connection = await pool.getConnection();
 
-            connection.connect();
-            connection.query(
+            const [result] = await connection.query(
                 `UPDATE cart SET product_count = product_count + ? WHERE product_id = ?`,
-                [change, product_id],
-                function(error, result, fields) {
-                    if(error) {
-                        console.error('商品の個数の更新中にエラーが発生しました:', error);
-                        res.status(500).json({ message: '商品の個数の更新に失敗しました。'});
-                    } else {
-                        res.status(200).end();
-                    }
-                }
+                [change, product_id]
             );
-            connection.end();
-        } catch(error) {
+
+            // 成功時はステータスコード200を返す
+            res.status(200).end();
+
+            connection.release();
+        } catch (error) {
             console.error('商品の個数の更新に失敗しました:', error);
             res.status(500).json({ message: '商品の個数の更新に失敗しました。' });
         }
