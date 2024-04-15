@@ -1,3 +1,4 @@
+/* MySQL接続情報 */
 import mysql from 'mysql2/promise';
 
 const pool = mysql.createPool({
@@ -7,8 +8,7 @@ const pool = mysql.createPool({
     password: process.env.NEXT_PUBLIC_MYSQL_PASSWORD,
     port: parseInt(process.env.NEXT_PUBLIC_PORT),
     connectionLimit: 10, // 接続プールの最大数
-    waitForConnections: true, // 接続が利用可能になるまで待機する
-    timezone: 'JST',
+    waitForConnections: true // 接続が利用可能になるまで待機する
 });
 
 export default pool;

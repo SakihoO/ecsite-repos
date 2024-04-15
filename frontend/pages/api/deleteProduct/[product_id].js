@@ -3,7 +3,7 @@ import pool from '../db.connection';
 
 export default async function handler(req, res) {
     const { product_id } = req.query;
-    
+
     if (req.method === 'DELETE') {
         try {
             const connection = await pool.getConnection();

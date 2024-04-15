@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env APP_ENV=dev next dev",
     "build": "cross-env APP_ENV=prod next build",
-    "start": "cross-env APP_ENV=prod next start",
+    "start": "npm run build && cross-env APP_ENV=prod next start",
     "build-stg": "APP_ENV=staging npx next build",
     "build-prod": "APP_ENV=production npx next build"
   },
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/material-ui": "^0.21.16",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",

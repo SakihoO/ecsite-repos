@@ -73,12 +73,10 @@ const RegisterForm = ({ onSubmit }) => {
     const onSubmitForm = async (data) => {
         if (userNameError || passwordError || errors.user_name || errors.user_name_confirmation || errors.password || errors.password_confirmation) return;
 
-        console.log(data.password);
         // パスワードをハッシュ化
         const hashedPassword = await hashPassword(data.password);
         //ハッシュ化したパスワードを含む新しいオブジェクトを作成
         const newData = { ...data, password: hashedPassword };
-        console.log(hashedPassword);
 
         // APIにデータを送信
         onSubmit(newData);
@@ -93,7 +91,10 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.box}>
                         <input id="family_name" {...register('family_name', {
                             required: true,
-                            pattern: { value: /^[ぁ-んァ-ン一-龥]+$/ }
+                            pattern: {
+                                value: /^[ぁ-んァ-ン一-龥]+$/,
+                                message: '日本語で入力してください。'
+                             }
                         })} placeholder="例）山田" />
                         {errors.family_name && errors.family_name.type === "pattern" && (
                             <div className={styles.error}>日本語で入力してください。</div>
@@ -108,7 +109,10 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.box}>
                         <input id="first_name" {...register('first_name', {
                             required: true,
-                            pattern: { value: /^[ぁ-んァ-ン一-龥]+$/ }
+                            pattern: {
+                                value: /^[ぁ-んァ-ン一-龥]+$/,
+                                message:'日本語で入力してください。'
+                             }
                         })} placeholder="例）太郎" />
                         {errors.first_name && errors.first_name.type === "pattern" && (
                             <div className={styles.error}>日本語で入力してください。</div>
@@ -123,7 +127,10 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.box}>
                         <input id="post_code" {...register('post_code', {
                             required: true,
-                            pattern: { value: /^\d{7}$/ }
+                            pattern: {
+                                value: /^\d{7}$/,
+                                message:'郵便番号が正しくありません。'
+                            }
                         })} placeholder="111111（ハイフンの入力は不要です）" />
                         {errors.post_code && errors.post_code.type === "pattern" && (
                             <div className={styles.error}>郵便番号が正しくありません。</div>
@@ -150,7 +157,10 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.box}>
                         <input id="municipalities" {...register('municipalities', {
                             required: true,
-                            pattern: { value: /^[ぁ-んァ-ン一-龥]+$/ }
+                            pattern: {
+                                value: /^[ぁ-んァ-ン一-龥]+$/,
+                                message: '日本語で入力してください。'
+                             }
                         })} placeholder="例）港区六本木" />
                         {errors.municipalities && errors.municipalities.type === "pattern" && (
                             <div className={styles.error}>日本語で入力してください。</div>
@@ -182,7 +192,10 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.box}>
                         <input id="user_name" {...register('user_name', {
                             required: true,
-                            pattern: { value: /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/ }
+                            pattern: {
+                                value: /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                                message: 'メールアドレスが正しくありません。'
+                            }
                         })} placeholder="例）abcde@reposec.com" />
                         {errors.user_name && errors.user_name.type === "pattern" && (
                             <div className={styles.error}>メールアドレスが正しくありません。</div>
@@ -197,7 +210,10 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.box}>
                         <input id="user_name_confirmation" {...register('user_name_confirmation', {
                             required: true,
-                            pattern: { value: /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/ }
+                            pattern: {
+                                value: /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                                message: 'メールアドレスが一致しません。'
+                            }
                         })}
                         placeholder="例）abcde@reposec.com"
                         onChange={handleUserNameConfirmChange} />
@@ -217,10 +233,13 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.box}>
                         <input id="password" type='password' {...register('password', {
                             required: true,
-                            pattern: { value: /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,}$/i }
+                            pattern: {
+                                value: /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,}$/i,
+                                message: 'パスワードは半角英数字8文字以上である必要があります。'
+                            }
                         })} placeholder="半角英数字8文字以上" />
                         {errors.password && errors.password.type === "pattern" && (
-                            <div className={styles.error}>パスワードが正しくありません。</div>
+                            <div className={styles.error}>パスワードは半角英数字8文字以上である必要があります。</div>
                         )}
                         {errors.password && errors.password.type !== "pattern" && (
                             <div className={styles.error}>パスワードを入力してください。</div>
@@ -254,5 +273,3 @@ const RegisterForm = ({ onSubmit }) => {
 };
 
 export default RegisterForm;
-// hashPassword関数を他のファイルからも利用可能にするためのエクスポート文
-export { hashPassword };

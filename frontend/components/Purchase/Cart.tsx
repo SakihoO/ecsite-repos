@@ -10,7 +10,7 @@ interface Product {
     product_id: number;
     product_name: string;
     price: number;
-    total_count: number;
+    total_count: number | string;
     img_full_path: string;
     id: number;
 }
@@ -42,6 +42,7 @@ export default function Cart() {
                 const response = await fetch(`/api/cart?user_id=${user_id}&purchase_status=未購入`);
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data);
                     setProducts(data);
                     calTotalAmount(data);
                 } else {
@@ -58,31 +59,42 @@ export default function Cart() {
         }
     }, [isLoggedIn]);
 
-    /* 商品の個数を更新できるようにする処理 */
+    /* 商品の個数を更新できるようにする処理 indexはproducts 配列内の特定の商品の位置を示す */
     const handlePrdCountUpdate = async (index: number, change: number) => {
         const updatedProducts = [...products];
-        const newPrdCount = products[index].total_count + change;
-        if (newPrdCount >= 1 && newPrdCount <= 10) {
-            updatedProducts[index].total_count = newPrdCount;
-            setProducts(updatedProducts);
 
-            // データベースの該当商品の個数を更新するためのAPIエンドポイントを呼び出す
+        // cart.jsで定義したtotal_countが文字列で取れてしまうため、型変更を行う
+        const numUpdatedProducts = Number(updatedProducts[index].total_count);
+        const newPrdCount = numUpdatedProducts + change;
+
+        // 商品個数の最低値を1、最高値を10に設定
+        if (newPrdCount >= 1 && newPrdCount <= 10) {
+            // 配列updatedProductsのtotal_countに新しい値(newPrdCount)を代入する
+            updatedProducts[index].total_count = newPrdCount;
+
             try {
-                // products配列から特定の商品を取得するためにindexを使用し、商品のproduct_idを取得する
                 const response = await fetch(`/api/updateProductCount?product_id=${products[index].product_id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ change }) // 増減する数をパラメータとして渡す
+                    body: JSON.stringify({ change })
                 });
-                if(!response.ok) {
-                    console.error('商品の個数の更新に失敗しました:' ,response.statusText);
+
+                if (!response.ok) {
+                    throw new Error(`APIエラー: ${response.statusText}`);
                 } else {
-                    calTotalAmount(updatedProducts);
+                // 商品情報の更新が成功した場合に状態を更新
+                setProducts(updatedProducts);
+                calTotalAmount(updatedProducts);
                 }
-            } catch(error) {
-                console.error('商品の個数の更新に失敗しました:', error);
+
+            } catch (error) {
+                if (error instanceof Error) {
+                    console.error('APIエラー:', error.message);
+                } else {
+                    console.error('APIエラー:', error);
+                }
             }
         }
     };
@@ -109,7 +121,7 @@ export default function Cart() {
     /* 全ての商品の小計を合算する関数 */
     const calTotalAmount = (products: Product[]) => {
         const total = products.reduce((accumulator, product) => {
-            return accumulator + (product.price * product.total_count);
+            return accumulator + (product.price * Number(product.total_count));
         }, 0);
         setTotalAmount(total);
     };
@@ -174,7 +186,7 @@ export default function Cart() {
                                     <td className={styles.prdPrice}>¥{Number(product.price).toLocaleString()}</td>
                                     <td className={styles.prdQty}>
                                         <button onClick={() => {
-                                            console.log('+更新Product ID:', product.product_id);
+                                            console.log('-更新Product ID:', product.product_id);
                                             handlePrdCountUpdate(index, -1)
                                         }}>-</button>
                                             <input
@@ -183,11 +195,11 @@ export default function Cart() {
                                                 readOnly
                                             />
                                         <button onClick={() => {
-                                            console.log('-更新Product ID:', product.product_id);
+                                            console.log('+更新Product ID:', product.product_id);
                                             handlePrdCountUpdate(index, +1)
                                         }}>+</button>
                                     </td>
-                                    <td className={styles.subTotal}>¥{(product.price * product.total_count).toLocaleString()}</td>
+                                    <td className={styles.subTotal}>¥{(product.price * Number(product.total_count)).toLocaleString()}</td>
                                     <td className={styles.deleteBtn}>
                                         <button onClick={() => {
                                             console.log('削除Product ID:', product.product_id);

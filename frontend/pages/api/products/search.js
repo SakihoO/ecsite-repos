@@ -1,27 +1,25 @@
 /* 商品検索用APIエンドポイント */
+import pool from '../db.connection.js';
 
-// import connection from "../../../../api/mysql/connection";
-import { createRouter } from "next-connect";
-import connection from '../db.connection.js';
-
-const router = createRouter();
-
-router.get(async (req, res) => {
+export default async function handler(req, res) {
     try {
         // リクエストから検索キーワードを取得
         const searchTerm = req.query.search;
 
-        // SQLクエリを部分一致検索を行うように修正
-        const query = `SELECT * FROM mst_product WHERE product_name LIKE '%${searchTerm}%'`;
+        const connection = await pool.getConnection();
 
-        const [results, fields] = await connection.promise().query(query);
+        try {
+            // SQLクエリを部分一致検索を行うように修正
+            const query = `SELECT * FROM mst_product WHERE product_name LIKE '%${searchTerm}%'`;
 
-        res.json(results);
-    } catch (err){
+            const [results, fields] = await connection.query(query);
+
+            res.json(results);
+        } finally {
+            connection.release();
+        }
+    } catch (err) {
         console.log("接続終了サーチ(異常)", err);
         res.status(500).json({ error: 'Internal Server Error Search' });
     }
-    console.log("接続終了サーチ(正常)");
-})
-
-export default router.handler();
+}

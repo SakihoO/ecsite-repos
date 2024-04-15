@@ -1,8 +1,7 @@
-// 商品詳細ページ用APIエンドポイント
+/* 商品詳細ページ用APIエンドポイント */
 import pool from "../db.connection";
 import { createRouter } from "next-connect";
 
-// ハンドラ関数をデフォルトエクスポート
 export default async function handler(req, res) {
     try {
         // リクエストのクエリパラメータからidを取得
@@ -47,5 +46,6 @@ export default async function handler(req, res) {
         console.error("データ取得エラー", err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-}// handler関数をGETリクエストに関連付けたNext.jsのルーターを作成する
+}
+// handler関数をGETリクエストに関連付けたNext.jsのルーターを作成する
 const router = createRouter().get(handler);
