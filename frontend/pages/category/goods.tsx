@@ -16,7 +16,7 @@ interface Product {
     img_full_path: string;
 }
 
-export default function goods() {
+export default function Goods() {
     const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {

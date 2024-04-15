@@ -1,21 +1,14 @@
 /* 購入手続き画面へ情報を受け渡すAPIエンドポイント */
-import mysql from 'mysql';
+import pool from './db.connection';
 
 export default async function handler(req,res) {
     if (req.method === 'GET') {
         try {
             const user_id = req.query.user_id;
 
-            const connection = mysql.createConnection({
-                host: 'localhost',
-                user: 'sakihookamoto',
-                password: 'int01',
-                database: 'repos_db',
-                port: '3306'
-            });
+            const connection = await pool.getConnection();
 
-            connection.connect();
-            connection.query(
+            const [result] = await connection.query(
                 `SELECT
                     mst_user.family_name,
                     mst_user.first_name,
@@ -32,17 +25,12 @@ export default async function handler(req,res) {
                 INNER JOIN mst_user ON cart.user_id = mst_user.id
                 INNER JOIN mst_product ON cart.product_id = mst_product.id
                 WHERE cart.user_id = ? AND cart.purchase_status = '未購入'`,
-                [user_id],
-                function (error, result, fields) {
-                    if (error) {
-                        console.error('購入情報の取得に失敗しました:', error);
-                        res.status(500).json({ message: '購入情報の取得に失敗しました' });
-                    } else {
-                        res.status(200).json(result);
-                    }
-                }
+                [user_id]
             );
-            connection.end();
+
+            res.status(200).json(result);
+
+            connection.release();
         } catch (error) {
             console.error('購入情報の取得に失敗しました。:', error);
             res.status(500).json({ message: '購入情報の取得に失敗しました。:' });

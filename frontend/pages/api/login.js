@@ -1,53 +1,44 @@
-/* ログイン認証用API */
-import mysql from 'mysql';
+/* ログイン認証用API（平文パスワード - DBに保存されたハッシュ化されたパスワードの比較） */
+import pool from './db.connection';
 import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
-    if(req.method !== 'POST') {
-        // メソッドが許可されていない場合は405エラーを返す
-        return res.status(405).end();
+    if (req.method !== 'POST') {
+        return res.status(405).end(); // 許可されていないメソッドの場合は405エラーを返す
     }
 
     const { user_name, password } = req.body;
 
-    //MySQL接続情報
-    const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'sakihookamoto',
-        password: 'int01',
-        database: 'repos_db',
-        port: '3306'
-    });
+    try {
+        const connection = await pool.getConnection();
 
-    // データベースに接続してユーザーを検索する
-    connection.connect();
-    connection.query(
-        `SELECT * FROM mst_user WHERE user_name = ?`,
-        [user_name, password],
-        function (error, result, fields) {
-            if (error) {
-                console.error('ログイン中にエラーが発生しました。:', error);
-                res.status(500).json({ message: 'ログイン中にエラーが発生しました。' });
+        const sql = `SELECT * FROM mst_user WHERE user_name = ?`;
+        const result = await connection.execute(sql, [user_name]); // パスワードはクエリ内で比較するため、パラメータから除外
+
+        // DB接続終了後、パスワード比較前にコネクションを解放する
+        connection.release();
+
+        if (result.length > 0) {
+            const hashedPassword = result[0][0].password; // データベースから取得したハッシュ化されたパスワード 配列構造のため[0][0]でないとエラーになる
+
+            // ハッシュ化されたパスワードを比較
+            const resultCompare = bcrypt.compareSync(password, hashedPassword);
+            if (resultCompare) {
+                // パスワードが一致する場合 -> ログイン成功
+                console.log('ログインに成功しました。');
+                res.status(200).json({ message: 'ログインに成功しました。', id: result[0][0].id }); // ユーザーIDを返す
             } else {
-                if (result.length > 0) {
-                    // ユーザーが見つかった場合 -> パスワードを比較する
-                    // データベースから取得したハッシュ化されたパスワード
-                    const hashedPassword = result[0].password;
-
-                    // bcryptを使用して、DBから取得したハッシュ化されたパスワードと、送信された平文のパスワードを比較する
-                    if (bcrypt.compareSync(password, hashedPassword)) {
-                        // パスワードが一致する場合 -> ログイン成功
-                        res.status(200).json({ message: 'ログインに成功しました。', id: result[0].id }); // ユーザーIDを返す
-                    } else {
-                        // パスワードが一致しない場合
-                        res.status(401).json({ message: 'パスワードが一致しません。'});
-                    }
-                } else {
-                    // ユーザーが見つからない場合
-                    res.status(401).json({ message: 'ユーザー名またはパスワードが正しくありません。'});
-                }
+                // パスワードが一致しない場合
+                console.log("パスワードが一致しません");
+                res.status(401).json({ message: 'パスワードが一致しません。'});
             }
+
+        } else {
+            console.log("認証していない");
+            res.status(401).json({ message: 'ユーザー名またはパスワードが正しくありません。'});
         }
-    );
-    connection.end();
+    } catch (err) {
+        console.error("MySQLデータ取得エラー", err);
+        res.status(500).json({ error: 'Internal Server Error '});
+    }
 }

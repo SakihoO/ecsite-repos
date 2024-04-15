@@ -1,44 +1,14 @@
 version: '3'
 services:
-  db:
-    build: ./docker/mysql
-    image: mysql:5.7
-    platform: linux/x86_64
-    container_name: mysql_container
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_DATABASE: repos_db
-      MYSQL_ROOT_PASSWORD: int20051220
-      MYSQL_USER: sakihookamoto
-      MYSQL_PASSWORD: int01
-    volumes:
-      - ./conf/db/my.cnf:/etc/mysql/conf.d/mysql.cnf
-      # - ./db/init_db:/docker-entrypoint-initdb.d
-      - ./docker/mysql/mysql_data:/var/lib/mysql
-      # - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-    # healthcheck:  ## 後述のservice_healthyのための設定を記述
-    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]  ## 実行するコマンド
-    #   timeout: 20s ## 実行するコマンドのタイムアウト時間
-    #   retries: 10 ## リトライ回数
-
   api:
     image: 'node:16.13.0-alpine'
     container_name: api_container
     ports:
-      - 3030:3030
+      - "3030:3030"
     volumes:
       - ./:/api
-    working_dir: /api  ## 作業ディレクトリを指定する
-    command: |  ## 指定した作業ディレクトリでコマンドを実行する
-      sh -c 'npm install &&
-      node index.js'
-    # tty: true  ## コマンド入力を行うのでttyをtrueにする(コマンド受付中の状態にする)
-    command: tail -f /dev/null
-    depends_on: ## 起動順番を制御する(DBの起動後に起動させる)※ 「依存させる」 と呼ぶ
-      - db
-      # db:
-      #   condition: service_healthy  ## 依存先のコンテナが起動 かつ、 healthcheck が通ったら起動する
+    working_dir: /api
+    command: [sh, -c, npm install && npm run dev && tail -f /dev/null]
 
   web:
     image: 'nginx:1.17.10-alpine'

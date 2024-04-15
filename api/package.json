@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "node index.js",
+        "start": "dotenv -e ./api/config/.env.production -- node index.js",
+        "dev": "dotenv -e ./api/config/.env.dev -- node index.js",
         "test": "jest",
         "seed": "npx sequelize db:seed:all"
     },
@@ -14,7 +15,6 @@
     "dependencies": {
         "aws-sdk": "^2.1537.0",
         "axios": "^1.6.5",
-        "bcrypt": "^5.1.1",
         "connect-mongo": "^5.1.0",
         "connect-redis": "^7.1.0",
         "cors": "^2.8.5",

@@ -8,17 +8,11 @@ ECSite repos is a shopping site for interior products.<br/>
 # モジュールインストール
 npm install
 
-# 開発環境でプロジェクトを実行
+# プロジェクトをビルドする（ローカル開発環境）
 npm run dev
-```
 
-## ビルド方法
-```zsh
-# プロジェクトをビルドする（開発環境）
-npm run build
-
-# プロジェクト起動
-npm start
+# プロジェクトをビルドする（本番環境）
+npm run start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

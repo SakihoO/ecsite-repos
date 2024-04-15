@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+  db:
+    build: ./docker/mysql
+    image: mysql:5.7
+    platform: linux/x86_64
+    container_name: mysql_container
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: repos_db
+      MYSQL_ROOT_PASSWORD: int2005sakiho
+      MYSQL_USER: sakihookamoto
+      MYSQL_PASSWORD: int01
+    volumes:
+      - ./conf/db/my.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./docker/mysql/mysql_data:/var/lib/mysql
+
+  api:
+    image: 'node:16.13.0-alpine'
+    container_name: api_container
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./:/api
+    working_dir: /api
+    environment:
+      NEXT_PUBLIC_MYSQL_HOST: mysql_container
+      NEXT_PUBLIC_MYSQL_DATABASE: repos_db
+      NEXT_PUBLIC_MYSQL_USERNAME: sakihookamoto
+      NEXT_PUBLIC_MYSQL_PASSWORD: int01
+      NEXT_PUBLIC_PORT: 3306
+    command: [sh, -c, npm install && npm run dev && tail -f /dev/null]
+    depends_on: ## 起動順番を制御する(DBの起動後に起動させる)※ 「依存させる」 と呼ぶ
+      - db
