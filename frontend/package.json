@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env APP_ENV=dev next dev",
     "build": "cross-env APP_ENV=prod next build",
-    "start": "npm run build && cross-env APP_ENV=prod pm2 start --name ecsite-repos --no-daemon npm -- start",
+    "start": "npm run build && cross-env APP_ENV=prod next start",
+    "pm2-start": "npx pm2 start npm  -- start",
+    "pm2-restart": "npx pm2 restart npm",
     "build-stg": "APP_ENV=staging npx next build",
     "build-prod": "APP_ENV=production npx next build"
   },
