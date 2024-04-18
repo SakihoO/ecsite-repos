@@ -9,9 +9,9 @@ export default async function handler(req, res) {
         try {
             const connection = await pool.getConnection();
 
-            // Cartテーブルに同じproduct_idが存在するかどうかを確認する
+            // Cartテーブルに同じproduct_idが存在し、かつpurchase_statusが「購入済み」でないかどうかを確認する
             const [result] = await connection.query(
-                `SELECT * FROM cart WHERE user_id = ? AND product_id = ?`,
+                `SELECT * FROM cart WHERE user_id = ? AND product_id = ? AND (purchase_status IS NULL OR purchase_status <> '購入済み')`,
                 [user_id, product_id]
             );
 
