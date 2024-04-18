@@ -100,6 +100,7 @@ export default function ProductDetail() {
                             />
                             <button onClick={() => setProduct_count(Math.min(product_count + 1, 10))}>+</button>
                         </div>
+                        <p className={utilStyles.prdAltText}>おひとり様10点まで</p>
                         <div className={utilStyles.prdPrice}>¥{Number(product.price).toLocaleString()}</div>
                         <Button
                             onClick={handleAddToCart}

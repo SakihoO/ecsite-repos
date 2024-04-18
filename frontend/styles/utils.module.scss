@@ -56,7 +56,7 @@
     display: flex;
     font-size: 1.4vw;
     font-weight: 500;
-    margin: 7vw 0 2vw;
+    margin: 7vw 0 0;
     span {
         padding-right: 2vw;
     }
@@ -82,6 +82,12 @@
         transform: translateY(5px);
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.1);
     }
+}
+.prdAltText {
+    color: #a6a6a6;
+    font-size: 1vw;
+    font-weight: 200;
+    margin-top: 0;
 }
 .prdPrice {
     padding-bottom: 2vw;

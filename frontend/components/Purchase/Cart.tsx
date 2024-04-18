@@ -165,7 +165,7 @@ export default function Cart() {
                             <th></th>
                             <th>商品名</th>
                             <th>単価</th>
-                            <th>個数</th>
+                            <th>個数<p className={styles.prdAltText}>おひとり様10点まで</p></th>
                             <th>小計</th>
                             <th></th>
                         </tr>
