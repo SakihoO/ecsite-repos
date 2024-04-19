@@ -74,6 +74,12 @@ export default function ProductDetail() {
         }
     };
 
+    // 商品個数に応じて価格を動的に表示する処理
+    const displayProductPrice = (price, count) => {
+        const totalPrice = price * count;
+        return `¥${totalPrice.toLocaleString()}`;
+    };
+
     return (
         <Layouts>
             <Header searchQuery={undefined} />
@@ -101,7 +107,7 @@ export default function ProductDetail() {
                             <button onClick={() => setProduct_count(Math.min(product_count + 1, 10))}>+</button>
                         </div>
                         <p className={utilStyles.prdAltText}>おひとり様10点まで</p>
-                        <div className={utilStyles.prdPrice}>¥{Number(product.price).toLocaleString()}</div>
+                        <div className={utilStyles.prdPrice}>{displayProductPrice(product.price, product_count)}</div>
                         <Button
                             onClick={handleAddToCart}
                             text={'カートに入れる'}
