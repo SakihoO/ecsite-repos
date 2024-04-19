@@ -147,7 +147,7 @@ export default function Cart() {
                     alert('購入情報の取得に失敗しました。');
                 }
             } catch (error) {
-                console.error('購入情報の取得sに失敗しました:', error);
+                console.error('購入情報の取得に失敗しました:', error);
                 alert('購入情報の取得に失敗しました。catchエラー');
             }
         } else {
@@ -165,7 +165,7 @@ export default function Cart() {
                             <th></th>
                             <th>商品名</th>
                             <th>単価</th>
-                            <th>個数</th>
+                            <th>個数<p className={styles.prdAltText}>おひとり様10点まで</p></th>
                             <th>小計</th>
                             <th></th>
                         </tr>

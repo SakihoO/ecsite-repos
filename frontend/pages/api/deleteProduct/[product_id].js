@@ -8,8 +8,9 @@ export default async function handler(req, res) {
         try {
             const connection = await pool.getConnection();
 
+            // Cartテーブルに削除しようとしているproduct_idが存在し、かつpurchase_statusが「未購入」かどうかを確認する
             const [result] = await connection.query(
-                `DELETE FROM cart WHERE product_id = ?`,
+                `DELETE FROM cart WHERE product_id = ? AND purchase_status = '未購入'`,
                 [product_id]
             );
 

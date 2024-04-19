@@ -25,6 +25,7 @@ export default function ProductDetail() {
     const { id } = router.query;
     const [product, setProduct] = useState<Product | null>(null);
     const [product_count, setProduct_count] = useState(1);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if(id) {
@@ -67,11 +68,23 @@ export default function ProductDetail() {
                 router.push('/purchase/cart');
             } else {
                 console.error('カートに追加でエラーが発生しました:', response.statusText);
-                alert('ログインしていません。商品をカートに追加するために先にログインしてください。');
+                setError('同一商品の購入はおひとり様10点までとなっております。');
             }
         } catch (error) {
             console.error('カートに追加でエラーが発生しました:', error);
+            setError('ログインしていません。商品をカートに追加するために先にログインしてください。');
         }
+    };
+
+    // 商品個数に応じて価格を動的に表示する処理
+    const displayProductPrice = (price, count) => {
+        const totalPrice = price * count;
+        return `¥${totalPrice.toLocaleString()}`;
+    };
+
+    // エラーダイアログの「OK」をクリックするとエラーダイアログを削除する処理
+    const handleOkButtonClick = () => {
+        setError(null);
     };
 
     return (
@@ -100,12 +113,19 @@ export default function ProductDetail() {
                             />
                             <button onClick={() => setProduct_count(Math.min(product_count + 1, 10))}>+</button>
                         </div>
-                        <div className={utilStyles.prdPrice}>¥{Number(product.price).toLocaleString()}</div>
+                        <p className={utilStyles.prdAltText}>おひとり様10点まで</p>
+                        <div className={utilStyles.prdPrice}>{displayProductPrice(product.price, product_count)}</div>
                         <Button
                             onClick={handleAddToCart}
                             text={'カートに入れる'}
                             variant={'halfButton'}
                         />
+                        {error && (
+                            <div className={utilStyles.errorBox}>
+                                <p className={utilStyles.errorText}>{error}</p>
+                                <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

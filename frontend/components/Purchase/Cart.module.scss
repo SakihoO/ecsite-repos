@@ -24,6 +24,15 @@
 .table tr {
     border-bottom: 1px solid #eae7e7;
 }
+.table th:nth-of-type(4) {
+    padding: 1rem 0 0;
+}
+.prdAltText {
+    color: #a6a6a6;
+    font-size: 0.8vw;
+    font-weight: 200;
+    margin: 0 0 0.4rem;
+}
 .prdImg {
     width: 20%;
     img {
