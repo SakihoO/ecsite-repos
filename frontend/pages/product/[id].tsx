@@ -25,6 +25,7 @@ export default function ProductDetail() {
     const { id } = router.query;
     const [product, setProduct] = useState<Product | null>(null);
     const [product_count, setProduct_count] = useState(1);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if(id) {
@@ -67,10 +68,11 @@ export default function ProductDetail() {
                 router.push('/purchase/cart');
             } else {
                 console.error('カートに追加でエラーが発生しました:', response.statusText);
-                alert('ログインしていません。商品をカートに追加するために先にログインしてください。');
+                setError('同一商品の購入はおひとり様10点までとなっております。');
             }
         } catch (error) {
             console.error('カートに追加でエラーが発生しました:', error);
+            setError('ログインしていません。商品をカートに追加するために先にログインしてください。');
         }
     };
 
@@ -78,6 +80,11 @@ export default function ProductDetail() {
     const displayProductPrice = (price, count) => {
         const totalPrice = price * count;
         return `¥${totalPrice.toLocaleString()}`;
+    };
+
+    // エラーダイアログの「OK」をクリックするとエラーダイアログを削除する処理
+    const handleOkButtonClick = () => {
+        setError(null);
     };
 
     return (
@@ -113,6 +120,12 @@ export default function ProductDetail() {
                             text={'カートに入れる'}
                             variant={'halfButton'}
                         />
+                        {error && (
+                            <div className={utilStyles.errorBox}>
+                                <p className={utilStyles.errorText}>{error}</p>
+                                <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

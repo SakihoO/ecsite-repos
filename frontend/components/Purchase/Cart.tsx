@@ -147,7 +147,7 @@ export default function Cart() {
                     alert('購入情報の取得に失敗しました。');
                 }
             } catch (error) {
-                console.error('購入情報の取得sに失敗しました:', error);
+                console.error('購入情報の取得に失敗しました:', error);
                 alert('購入情報の取得に失敗しました。catchエラー');
             }
         } else {

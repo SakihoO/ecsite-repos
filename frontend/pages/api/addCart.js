@@ -22,13 +22,22 @@ export default async function handler(req, res) {
                     [user_id, product_id, product_count, purchase_status]
                 );
                 res.status(200).json({ message: 'カートに商品を追加しました。' });
+
             } else {
-                // Cartテーブルに同じproduct_idが存在する場合、該当のレコードのproduct_countを+1する
-                await connection.query(
-                    `UPDATE cart SET product_count = product_count + ? WHERE user_id = ? AND product_id = ?`,
-                    [product_count, user_id, product_id]
-                );
-                res.status(200).json({ message: 'カートの商品を更新しました。' });
+                // 現在DBに登録されている商品個数を取得する
+                const currentProductCount = result[0].product_count;
+
+                if (currentProductCount + product_count > 10) {
+                    // DBに登録されている商品個数と、追加する個数が10以上の場合はエラーメッセージを返す
+                    res.status(400).json({ message: 'カートに同じ商品が10個入っています。' });
+                } else {
+                    // Cartテーブルに同じproduct_idが存在する場合、該当のレコードのproduct_countを+1する
+                    await connection.query(
+                        `UPDATE cart SET product_count = product_count + ? WHERE user_id = ? AND product_id = ?`,
+                        [product_count, user_id, product_id]
+                    );
+                    res.status(200).json({ message: 'カートの商品を更新しました。' });
+                }
             }
 
             connection.release();
