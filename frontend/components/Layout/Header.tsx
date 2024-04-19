@@ -44,7 +44,7 @@ const Header = ({ searchQuery }) => {
     const handleSearch = async (searchTerm) => {
         try {
             // バックエンドのエンドポイントURLを構築
-            const apiUrl = `http://localhost:3000/api/products/search?search=${searchTerm}`;
+            const apiUrl = `/api/products/search?search=${searchTerm}`;
             // GETリクエストを送信して検索結果を取得
             const response = await fetch(apiUrl);
             const data = await response.json();
