@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./Header.module.scss";
+import utilStyles from "../../styles/utils.module.scss"
 import SearchForm from "../Products/SearchForm";
 import SearchResultList from "../Products/SearchResultList";
 import { useEffect, useState } from "react";
@@ -11,6 +12,7 @@ const Header = ({ searchQuery }) => {
     const [showSearchResult] = useState(false);  // 検索結果リストを表示するかどうかを制御する
     const [isLoggedIn, setIsLoggedIn] = useState(false); // ログイン状態を管理する
     const router = useRouter();
+    const [error, setError] = useState<string | null>(null);
 
     /* ログイン状態をセッションストレージで管理する */
     useEffect(() => {
@@ -57,12 +59,17 @@ const Header = ({ searchQuery }) => {
                 router.push(`/product/searchResult?query=${searchTerm}`);
             } else {
                 // 検索結果が0件の場合
-                alert("該当する商品はありませんでした。キーワードを変えて検索してください。");
+                setError("該当する商品はありませんでした。キーワードを変えて検索してください。");
             }
         } catch (error) {
             console.error('検索中にエラーが出ました：', error);
         }
     };
+
+        // エラーダイアログの「OK」をクリックするとエラーダイアログを削除する処理
+        const handleOkButtonClick = () => {
+            setError(null);
+        };
 
     return (
         <div className={styles.header}>
@@ -81,6 +88,13 @@ const Header = ({ searchQuery }) => {
                 {showSearchResult && searchResults &&
                     <SearchResultList results={searchResults} searchQuery={searchQuery} />
                 }
+
+                {error && (
+                    <div className={utilStyles.errorBox}>
+                        <p className={utilStyles.errorText}>{error}</p>
+                        <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                    </div>
+                )}
 
                 {/* ログイン状態に応じて、ログインアイコンを切り替える */}
                 {isLoggedIn ? (
