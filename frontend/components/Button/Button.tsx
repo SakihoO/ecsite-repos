@@ -5,7 +5,7 @@ interface ButtonProps {
     onClick: () => void;
     link?: string;
     text: string;
-    variant?: "default" | "back" | "halfButton";
+    variant?: "default" | "back" | "halfButton" | "halfBtnLongTxt";
     type?: "button" | "submit" | "reset";
 }
 
@@ -25,6 +25,8 @@ const Button: React.FC<ButtonProps> = ({ onClick, link, text, variant = "default
         buttonClassName = styles.variantBack;
     } else if (variant === "halfButton") {
         buttonClassName = styles.variantHalfButton;
+    } else if (variant ==="halfBtnLongTxt") {
+        buttonClassName = styles.variantHalfBtnLongTxt;
     }
 
     return (

@@ -96,7 +96,7 @@ const Header = ({ searchQuery }) => {
                     </div>
                 )}
 
-                {/* ログイン状態に応じて、ログインアイコンを切り替える */}
+                {/* 条件付きレンダリングでログイン状態に応じて、ログインアイコンを切り替える */}
                 {isLoggedIn ? (
                     <div className={styles.iconLogin}>
                         <button onClick={handleLogout} className={styles.button}>
@@ -113,12 +113,16 @@ const Header = ({ searchQuery }) => {
                     </div>
                 )}
 
-                <div className={styles.iconCart}>
-                    <Link href="/purchase/cart">
-                        <div className={styles.iconTxt}>カート</div>
-                        <img src="/icon/iconCart.png" />
-                    </Link>
-                </div>
+                {/* 条件付きレンダリングでログイン状態に応じて、カートアイコンの表示/非表示を切り替える */}
+                {isLoggedIn ? (
+                    <div className={styles.iconCart}>
+                        <Link href="/purchase/cart">
+                            <div className={styles.iconTxt}>カート</div>
+                            <img src="/icon/iconCart.png" />
+                        </Link>
+                    </div>
+                ) : null}
+
             </div>
         </div>
     );

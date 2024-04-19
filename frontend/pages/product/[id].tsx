@@ -23,9 +23,24 @@ interface Product {
 export default function ProductDetail() {
     const router = useRouter();
     const { id } = router.query;
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [product, setProduct] = useState<Product | null>(null);
     const [product_count, setProduct_count] = useState(1);
     const [error, setError] = useState<string | null>(null);
+
+    /* ログイン状態をセッションストレージで管理する */
+    useEffect(() => {
+        // コンポーネントがマウントされた時に実行されるロジック
+        const checkLoggedIn = () => {
+            const isLoggedInSession = sessionStorage.getItem("isLoggedIn");
+            if (isLoggedInSession === "true") {
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+        };
+        checkLoggedIn(); // マウント時にログイン状態をチェックする
+    }, []);
 
     useEffect(() => {
         if(id) {
@@ -76,6 +91,10 @@ export default function ProductDetail() {
         }
     };
 
+    const handleToLogin = () => {
+        router.push('/member/login');
+    }
+
     // 商品個数に応じて価格を動的に表示する処理
     const displayProductPrice = (price, count) => {
         const totalPrice = price * count;
@@ -103,23 +122,45 @@ export default function ProductDetail() {
                         <div className={utilStyles.prdName}>{product.product_name}</div>
                         <div className={utilStyles.prdTxt}><span>Category -</span>{product.category_name}</div>
                         <div className={utilStyles.prdSize}><span>Size -</span>{product.product_size}</div>
-                        <div className={utilStyles.prdQty}><span>個数</span>
-                            <button onClick={() => setProduct_count(Math.max(product_count - 1, 1))}>-</button>
-                            <input
-                                type="text"
-                                value={product_count}
-                                readOnly
-                                placeholder="1"
-                            />
-                            <button onClick={() => setProduct_count(Math.min(product_count + 1, 10))}>+</button>
-                        </div>
-                        <p className={utilStyles.prdAltText}>おひとり様10点まで</p>
+
+                        {/* ログイン状態に応じて、商品個数の表示/非表示を切り替える */}
+                        { isLoggedIn ? (
+                            <div>
+                                <div className={utilStyles.prdQty}><span>個数</span>
+                                    <button onClick={() => setProduct_count(Math.max(product_count - 1, 1))}>-</button>
+                                    <input
+                                        type="text"
+                                        value={product_count}
+                                        readOnly
+                                        placeholder="1"
+                                    />
+                                    <button onClick={() => setProduct_count(Math.min(product_count + 1, 10))}>+</button>
+                                </div>
+                                <p className={utilStyles.prdAltText}>おひとり様10点まで</p>
+                            </div>
+                        ): null}
+
                         <div className={utilStyles.prdPrice}>{displayProductPrice(product.price, product_count)}</div>
-                        <Button
-                            onClick={handleAddToCart}
-                            text={'カートに入れる'}
-                            variant={'halfButton'}
-                        />
+
+                        {/* ログイン状態に応じて、ボタンを切り替える */}
+                        { isLoggedIn ? (
+                            <div>
+                                <Button
+                                    onClick={handleAddToCart}
+                                    text={'カートに入れる'}
+                                    variant={'halfButton'}
+                                />
+                            </div>
+                        ) : (
+                            <div>
+                                <Button
+                                    onClick={handleToLogin}
+                                    text={'ログインまたは会員登録をする'}
+                                    variant={'halfBtnLongTxt'}
+                                />
+                            </div>
+                        )}
+
                         {error && (
                             <div className={utilStyles.errorBox}>
                                 <p className={utilStyles.errorText}>{error}</p>
