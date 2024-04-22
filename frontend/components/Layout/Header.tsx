@@ -6,6 +6,7 @@ import SearchResultList from "../Products/SearchResultList";
 import { useEffect, useState } from "react";
 import React from "react";
 import { useRouter } from "next/router";
+import CenteredMessage from "./CenterMessage";
 
 const Header = ({ searchQuery }) => {
     const [searchResults, setSearchResults] = useState(null);  // 検索結果の状態を管理する
@@ -13,6 +14,7 @@ const Header = ({ searchQuery }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // ログイン状態を管理する
     const router = useRouter();
     const [error, setError] = useState<string | null>(null);
+    const [logoutMessage, setLogoutMessage] = useState(false);
 
     /* ログイン状態をセッションストレージで管理する */
     useEffect(() => {
@@ -36,7 +38,14 @@ const Header = ({ searchQuery }) => {
             sessionStorage.removeItem("user_id");
             // ログアウト後はログイン状態を更新し、ログインアイコンに切り替える
             setIsLoggedIn(false);
-            // ログアウト後はトップページに遷移する
+
+            // ログアウトメッセージを表示する
+            setLogoutMessage(true);
+            // ログアウト成功メッセージを非表示にするためのタイマーセット
+            setTimeout(() => {
+                setLogoutMessage(false);
+            }, 800);
+
             router.push("/");
         } catch (error) {
             console.error('ログアウト時にエラーが発生しました:', error);
@@ -90,9 +99,11 @@ const Header = ({ searchQuery }) => {
                 }
 
                 {error && (
-                    <div className={utilStyles.errorBox}>
-                        <p className={utilStyles.errorText}>{error}</p>
-                        <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                    <div className={utilStyles.errorContainer}>
+                        <div className={utilStyles.errorBox}>
+                            <div className={utilStyles.errorText}>{error}</div>
+                            <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                        </div>
                     </div>
                 )}
 
@@ -111,6 +122,10 @@ const Header = ({ searchQuery }) => {
                             <img src="/icon/iconLogin.png" />
                         </Link>
                     </div>
+                )}
+
+                {logoutMessage && (
+                    <CenteredMessage message="ログアウトしました" />
                 )}
 
                 {/* 条件付きレンダリングでログイン状態に応じて、カートアイコンの表示/非表示を切り替える */}
