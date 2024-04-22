@@ -246,13 +246,14 @@ const RegisterForm = ({ onSubmit }) => {
                         )}
                     </div>
                 </div>
+                <div className={styles.altPass}>半角英数字を組み合わせた8文字以上のパスワードを入力してください。</div>
                 <div className={styles.section}>
                     <div className={styles.title}><label htmlFor="password_confirmation">パスワード（確認）</label><span className={styles.required}>必須</span></div>
                     <div className={styles.box}>
                         <input id="password_confirmation" type='password' {...register('password_confirmation', {
                             required: true
                         })}
-                        placeholder="英数字8文字以上"
+                        placeholder="半角英数字8文字以上"
                         onChange={handlePasswordConfirmChange} />
                         {passwordError && (
                             <div className={styles.error}>パスワードが一致しません。</div>

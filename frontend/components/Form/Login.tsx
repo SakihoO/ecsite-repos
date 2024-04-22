@@ -3,14 +3,16 @@ import { useState } from "react";
 import styles from "./Login.module.scss";
 import Button from "../Button/Button";
 import { useRouter } from "next/router";
+import utilStyles from "../../styles/utils.module.scss"
+import CenteredMessage from "../Layout/CenterMessage";
 
 const Login = () => {
     const router = useRouter();
     const [id, setId] = useState('');
     const [user_name, setUser_name] = useState('');
     const [password, setPassword] = useState('');
-    const [loginMessage, setLoginMessage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+    const [loginMessage, setLoginMessage] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -27,9 +29,7 @@ const Login = () => {
 
             if (response.ok) {
                 // ログイン成功時の処理
-                setLoginMessage('ログインに成功しました。トップページに遷移します。');
-                // ログイン成功時にはエラーメッセージを空にする
-                setErrorMessage('');
+                setLoginMessage(true);
                 // ログイン成功時にログイン状態をセッションストレージに保存する
                 const data = await response.json();
                 sessionStorage.setItem("isLoggedIn", "true");
@@ -41,7 +41,7 @@ const Login = () => {
 
             } else {
                 // ログイン失敗時の処理
-                setErrorMessage('ログインに失敗しました。ユーザー名またはパスワードが正しくありません。')
+                setError('ログインに失敗しました。ユーザー名またはパスワードが正しくありません。')
             }
         } catch (error) {
             // エラーハンドリング
@@ -54,10 +54,17 @@ const Login = () => {
         router.push('/member/register');
     }
 
+    // エラーダイアログの「OK」をクリックするとエラーダイアログを削除する処理
+    const handleOkButtonClick = () => {
+        setError(null);
+    };
+
     return (
         <div className={styles.body}>
-            {loginMessage && <div className={styles.loginSuccess}>{loginMessage}</div>}
-            {errorMessage && <div className={styles.loginFail}>{errorMessage}</div>}
+            {loginMessage && (
+                <CenteredMessage message="ログインに成功しました" />
+            )}
+
             <form onSubmit={handleSubmit}>
                 <div className={styles.section}>
                     <div className={styles.title}><label htmlFor="user_name">ユーザー名</label></div>
@@ -93,6 +100,14 @@ const Login = () => {
                     text={'会員登録'}
                 />
             </form>
+            {error && (
+                <div className={utilStyles.errorContainer}>
+                    <div className={utilStyles.errorBox}>
+                        <div className={utilStyles.errorText}>{error}</div>
+                        <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

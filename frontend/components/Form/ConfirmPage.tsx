@@ -68,10 +68,6 @@ const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, han
         <div className={styles.title}>メールアドレス</div>
         <div className={styles.value}>{formData.user_name}</div>
       </div>
-      <div className={styles.section}>
-        <div className={styles.title}>パスワード</div>
-        <div className={styles.value}>{formData.password.replace(/./g, '*')}</div>
-      </div>
       <Button
         onClick={handleRegister}
         text={'この内容で送信する'}
