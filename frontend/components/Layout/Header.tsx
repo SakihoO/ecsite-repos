@@ -44,9 +44,9 @@ const Header = ({ searchQuery }) => {
             // ログアウト成功メッセージを非表示にするためのタイマーセット
             setTimeout(() => {
                 setLogoutMessage(false);
+                window.location.href = '/'; // トップページに遷移する
             }, 800);
 
-            router.push("/");
         } catch (error) {
             console.error('ログアウト時にエラーが発生しました:', error);
         }
