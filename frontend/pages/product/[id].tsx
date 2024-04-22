@@ -162,9 +162,11 @@ export default function ProductDetail() {
                         )}
 
                         {error && (
-                            <div className={utilStyles.errorBox}>
-                                <p className={utilStyles.errorText}>{error}</p>
-                                <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                            <div className={utilStyles.errorContainer}>
+                                <div className={utilStyles.errorBox}>
+                                    <div className={utilStyles.errorText}>{error}</div>
+                                    <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                                </div>
                             </div>
                         )}
                     </div>
