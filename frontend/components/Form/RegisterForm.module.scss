@@ -14,6 +14,9 @@
     padding: 1.0vw 1.6vw;
     align-items: center;
 }
+.section:nth-child(10) {
+    padding: 1.0vw 1.6vw 0.2vw;
+}
 .section:last-of-type {
     padding: 1.0vw 1.6vw 3.0vw;
 }
@@ -59,6 +62,11 @@
 .box input::placeholder {
     font-weight: 400;
     opacity: 0.8;
+}
+.altPass {
+    font-size: 0.6rem;
+    color: #c4c4c4;
+    margin-left: 34vw;
 }
 
 .error {
