@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import styles from "./Cart.module.scss"
 import { useRouter } from "next/router";
-import session from "next-session";
 import Button from "../Button/Button";
+import utilStyles from "../../styles/utils.module.scss"
 
 // 各カラムのデータ型を指定
 interface Product {
@@ -20,6 +20,7 @@ export default function Cart() {
     const [products, setProducts] = useState<Product[]>([]);
     const [totalAmount, setTotalAmount] = useState<number>(0);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         // セッションストレージからログイン状態を取得する
@@ -139,22 +140,26 @@ export default function Cart() {
                 const response = await fetch(`/api/purchaseInfo?user_id=${user_id}`);
                 if (response.ok) {
                     const data = await response.json();
-                    // 取得した情報をセッションストレージに保存するなどして、購入手続き画面で利用する
+                    // 取得した情報をセッションストレージに保存して購入手続き画面で利用する
                     sessionStorage.setItem("purchase_information", JSON.stringify(data));
-                    // sessionStorage.setItem("cart_id", id);
                     router.push('/purchase/confirm');
                 } else {
-                    alert('購入情報の取得に失敗しました。');
+                    setError('購入情報の取得に失敗しました。');
                 }
             } catch (error) {
                 console.error('購入情報の取得に失敗しました:', error);
-                alert('購入情報の取得に失敗しました。catchエラー');
+                setError('購入情報の取得に失敗しました。');
             }
         } else {
             // カートに商品が存在しない場合はエラーダイアログを表示する
-            alert('カートに商品が入っていません。')
+            setError('カートに商品が入っていません。')
         }
     }
+
+    // エラーダイアログの「OK」をクリックするとエラーダイアログを削除する処理
+    const handleOkButtonClick = () => {
+        setError(null);
+    };
 
     return (
         <div className={styles.body}>
@@ -221,6 +226,15 @@ export default function Cart() {
                 text={'買い物を続ける'}
                 variant={'back'}
             />
+
+            {error && (
+                <div className={utilStyles.errorContainer}>
+                    <div className={utilStyles.errorBox}>
+                        <div className={utilStyles.errorText}>{error}</div>
+                        <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

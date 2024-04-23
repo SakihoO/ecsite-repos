@@ -11,6 +11,7 @@ import utilStyles from "../../styles/utils.module.scss"
 export default function Page() {
   const [formData, setFormData] = useState(null);
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   /* 登録フォームで入力した値をセッションストレージから取得する処理 */
   useEffect(() => {
@@ -40,17 +41,22 @@ export default function Page() {
         router.push('/member/thanks'); // ユーザーが正常に登録された場合のリダイレクト先
       } else { // ユーザーの登録に失敗した場合
         console.error('ユーザー登録が失敗しました。');
-        alert("このメールアドレスは既に使用されています");
+        setError('このメールアドレスは既に使用されています');
       }
     } catch (error) { // 非同期処理中にエラーが発生した場合に実行されるエラーハンドリング
       console.error('Error registering user:', error);
-      alert("申し訳ありませんが、ユーザー登録中にエラーが発生しました。後でもう一度お試しください。");
+      setError('ユーザー登録中にエラーが発生しました。後でもう一度お試しください。');
     }
   };
 
   /* 戻るボタンをクリックした際の挙動 */
   const handleGoBack = () => {
     router.back();
+  };
+
+  // エラーダイアログの「OK」をクリックするとエラーダイアログを削除する処理
+  const handleOkButtonClick = () => {
+    setError(null);
   };
 
   return (
@@ -64,6 +70,14 @@ export default function Page() {
           <div className={utilStyles.inner}>
             <ConfirmPage formData={formData} handleRegister={handleRegister} handleGoBack={handleGoBack} />
           </div>
+          {error && (
+            <div className={utilStyles.errorContainer}>
+                <div className={utilStyles.errorBox}>
+                    <div className={utilStyles.errorText}>{error}</div>
+                    <button className={utilStyles.okButton} onClick={handleOkButtonClick}>OK</button>
+                </div>
+            </div>
+          )}
       </div>
       <Footer />
     </Layouts>
