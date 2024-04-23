@@ -33,9 +33,8 @@ const Header = ({ searchQuery }) => {
     /* ログアウトアイコンをクリックした際の処理 */
     const handleLogout = async () => {
         try {
-            // セッションストレージからログイン状態／user_idを削除
-            sessionStorage.removeItem("isLoggedIn");
-            sessionStorage.removeItem("user_id");
+            // セッションストレージから全てを削除
+            sessionStorage.clear();
             // ログアウト後はログイン状態を更新し、ログインアイコンに切り替える
             setIsLoggedIn(false);
 

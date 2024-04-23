@@ -34,6 +34,15 @@ const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, han
     }
   }, []);
 
+    // 送信ボタンがクリックされたときの処理
+    const handleRegisterClick = () => {
+      // ユーザー名をセッションストレージに保存
+      sessionStorage.setItem('user_name', formData.user_name);
+
+      // handleRegisterを実行して登録処理を行う
+      handleRegister();
+    };
+
   return (
     <div className={styles.inner}>
       <div className={styles.section}>
@@ -69,7 +78,7 @@ const ConfirmPage: React.FC<ConfirmPageProps> = ({ formData, handleRegister, han
         <div className={styles.value}>{formData.user_name}</div>
       </div>
       <Button
-        onClick={handleRegister}
+        onClick={handleRegisterClick}
         text={'この内容で送信する'}
       />
       <Button
