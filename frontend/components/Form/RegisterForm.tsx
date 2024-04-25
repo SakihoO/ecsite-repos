@@ -25,6 +25,10 @@ const RegisterForm = ({ onSubmit }) => {
     const [formData, setFormData] = useState(null);
     // useFormフックを使用してフォームの状態を管理する {}内はプロパティ
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    // メールアドレス（確認）の入力値が未入力でないかを状態管理するステート
+    const [userNameConfirmationFilled, setUserNameConfirmationFilled] = useState(false);
+    // パスワード（確認）の入力値が未入力でないかを状態管理するステート
+    const [passwordConfirmationFilled, setPasswordConfirmationFilled] = useState(false);
 
     /* セッションストレージからフォームデータを取得し、フォームの各フィールドに値を設定する
     確認画面の「戻る」ボタンをクリックした際は、登録フォームに入力値を保持した状態で戻る */
@@ -54,19 +58,24 @@ const RegisterForm = ({ onSubmit }) => {
         }
     }, []);
 
-    /* メールアドレス確認（user_name_confirmation）がメールアドレスと一致しているかを確認する */
+    /* メールアドレス確認（user_name_confirmation）が 1.未入力でないか 2.メールアドレスと一致しているか を確認する関数 */
     const handleUserNameConfirmChange = (e) => {
-        const { value } = e.target;
-        const originalValue = e.target.form.user_name.value;
-        setUserNameError(value !== originalValue || value === '' || originalValue === '');
+        const value = e.target.value; // メールアドレス（確認）の入力値をvalueに代入する
+        const isFilled = value.trim() !== ''; // メールアドレス（確認）の入力値が空でないかチェック
+        setUserNameConfirmationFilled(isFilled); // 空だった場合はsetUserNameConfirmationFilledの状態を更新する
+
+        const originalValue = e.target.form.user_name.value; // メールアドレス（user_name）の入力値を取得する
+
+        setUserNameError(value !== originalValue || value === ''); // メールアドレスが一致していない時、入力値が空の時にsetUserNameErrorの状態をtrueにする
     };
 
-    /* パスワード確認（password_confirmation）がパスワードと一致しているかを確認する */
+    /* パスワード確認（password_confirmation）が 1.未入力でないか 2.パスワードと一致しているか を確認する */
     const handlePasswordConfirmChange = (e) => {
-        const { value } = e.target;
+        const value = e.target.value;
+        const isFilled = value.trim() !== '';
+        setPasswordConfirmationFilled(isFilled);
         const originalValue = e.target.form.password.value;
-        const isPasswordValid = /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,}$/i.test(value);
-        setPasswordError(value !== originalValue || value === '' || originalValue === '' || !isPasswordValid);
+        setPasswordError(value !== originalValue || value === '');
     };
 
     /* 各項目のエラーが出ている場合は、フォームの送信を中止する。それ以外の場合はフォームのデータを送信する */
@@ -196,7 +205,7 @@ const RegisterForm = ({ onSubmit }) => {
                                 value: /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
                                 message: 'メールアドレスが正しくありません。'
                             }
-                        })} placeholder="例）abcde@reposec.com" />
+                        })} placeholder="例）abcde@repose.com" />
                         {errors.user_name && errors.user_name.type === "pattern" && (
                             <div className={styles.error}>メールアドレスが正しくありません。</div>
                         )}
@@ -215,16 +224,13 @@ const RegisterForm = ({ onSubmit }) => {
                                 message: 'メールアドレスが一致しません。'
                             }
                         })}
-                        placeholder="例）abcde@reposec.com"
+                        placeholder="例）abcde@repose.com"
                         onChange={handleUserNameConfirmChange} />
                         {userNameError && (
                             <div className={styles.error}>メールアドレスが一致しません。</div>
                         )}
-                        {errors.user_name_confirmation && errors.user_name_confirmation.type === "required" && (
+                        {errors.user_name_confirmation && !userNameConfirmationFilled && (
                             <div className={styles.error}>メールアドレス（確認）を入力してください。</div>
-                        )}
-                        {errors.user_name_confirmation && errors.user_name_confirmation.type === "pattern" && (
-                            <div className={styles.error}>メールアドレスが正しくありません。</div>
                         )}
                     </div>
                 </div>
@@ -251,14 +257,18 @@ const RegisterForm = ({ onSubmit }) => {
                     <div className={styles.title}><label htmlFor="password_confirmation">パスワード（確認）</label><span className={styles.required}>必須</span></div>
                     <div className={styles.box}>
                         <input id="password_confirmation" type='password' {...register('password_confirmation', {
-                            required: true
+                            required: true,
+                            pattern: {
+                                value: /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,}$/i,
+                                message: 'パスワードが一致しません。'
+                            }
                         })}
                         placeholder="半角英数字8文字以上"
                         onChange={handlePasswordConfirmChange} />
                         {passwordError && (
                             <div className={styles.error}>パスワードが一致しません。</div>
                         )}
-                        {errors.password_confirmation && errors.password_confirmation.type === "required" && (
+                        {errors.password_confirmation && !passwordConfirmationFilled && (
                             <div className={styles.error}>パスワード（確認）を入力してください。</div>
                         )}
                     </div>
