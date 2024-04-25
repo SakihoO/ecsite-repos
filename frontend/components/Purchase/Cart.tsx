@@ -190,7 +190,6 @@ export default function Cart() {
                                     <td className={styles.prdPrice}>¥{Number(product.price).toLocaleString()}</td>
                                     <td className={styles.prdQty}>
                                         <button onClick={() => {
-                                            console.log('-更新Product ID:', product.product_id);
                                             handlePrdCountUpdate(index, -1)
                                         }}>-</button>
                                             <input
@@ -199,14 +198,12 @@ export default function Cart() {
                                                 readOnly
                                             />
                                         <button onClick={() => {
-                                            console.log('+更新Product ID:', product.product_id);
                                             handlePrdCountUpdate(index, +1)
                                         }}>+</button>
                                     </td>
                                     <td className={styles.subTotal}>¥{(product.price * Number(product.total_count)).toLocaleString()}</td>
                                     <td className={styles.deleteBtn}>
                                         <button onClick={() => {
-                                            console.log('削除Product ID:', product.product_id);
                                             handleDelete(product.product_id);
                                         }}>削除</button>
                                     </td>

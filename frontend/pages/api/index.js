@@ -24,7 +24,7 @@ router.get(async (req, res) => {
 
     connection.release();
   } catch (err) {
-    console.log("接続終了(異常)", err);
+    console.error("接続終了(異常)", err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
   console.log("接続終了(正常)");

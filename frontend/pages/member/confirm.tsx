@@ -16,7 +16,6 @@ export default function Page() {
   /* 登録フォームで入力した値をセッションストレージから取得する処理 */
   useEffect(() => {
     const storedData = sessionStorage.getItem('formData');
-    // console.log('storedDataの値：', storedData); // storedData の値をログ出力
     if (storedData) {
       setFormData(JSON.parse(storedData)); // セッションストレージからフォームの値を取得
     }
@@ -37,7 +36,6 @@ export default function Page() {
         body: JSON.stringify(formData),
       });
       if (response.ok) { // レスポンスのステータスコードが成功を示すものかどうか
-        console.log('ユーザー登録が成功しました。');
         router.push('/member/thanks'); // ユーザーが正常に登録された場合のリダイレクト先
       } else { // ユーザーの登録に失敗した場合
         console.error('ユーザー登録が失敗しました。');

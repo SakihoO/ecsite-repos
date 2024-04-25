@@ -34,7 +34,7 @@ export default async function handler(req, res) {
             }
 
         } else {
-            console.log("認証していない");
+            console.log("user_nameが存在しない");
             res.status(401).json({ message: 'ユーザー名またはパスワードが正しくありません。'});
         }
     } catch (err) {

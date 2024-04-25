@@ -16,7 +16,6 @@ import { getCatsData } from "../lib/category";
 /* SSGでカテゴリーデータを持ってくる処理 */
 export async function getStaticProps() {
     const allCatData = getCatsData(); //id, title, thumbnail
-    // console.log(allCatData);
     return {
         props: {
             allCatData,

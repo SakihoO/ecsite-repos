@@ -65,7 +65,6 @@ export default function ProductDetail() {
 
     // 「カートに入れる」ボタンをクリックした際の処理
     const handleAddToCart = async () => {
-        console.log('追加Product ID:', id);
         try {
             const response = await fetch('/api/addCart', {
                 method: 'POST',
