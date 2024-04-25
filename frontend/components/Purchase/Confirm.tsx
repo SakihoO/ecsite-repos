@@ -94,7 +94,6 @@ export default function PurchaseConfirm()  {
                     });
 
                 if (response.ok) {
-                    console.log("購入が成功しました:", product.product_name);
                 } else {
                     console.error('購入に失敗しました:', product.product_name);
                 }
